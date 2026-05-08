@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="MyLife Hub">
 <title>MyLife Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@atlasicons/icons@1.0.0/fonts/atlas-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@icon/atlas-icons@1.0.1/atlas-icons.min.css">
 <style>
 :root {
   --bg: #0a0e14; --surface: #11161d; --surface2: #1a1f26;
@@ -22,7 +22,7 @@
 body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 h1,h2,h3,h4 { font-family: 'Inter', sans-serif; font-weight: 700; }
 #app { display: flex; flex-direction: column; min-height: 100vh; }
-i[class^="ai-"] { font-style: normal; }
+.atlas { font-size: 1.25rem; line-height: 1; }
 
 /* TOPBAR */
 .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
@@ -36,7 +36,7 @@ i[class^="ai-"] { font-style: normal; }
 /* BOTTOM NAV */
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); display: flex; z-index: 200; overflow-x: auto; }
 .nav-btn { flex: 1; min-width: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 4px 8px; background: none; border: none; cursor: pointer; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.58rem; gap: 3px; transition: color 0.2s; white-space: nowrap; font-weight: 500; }
-.nav-btn i { font-size: 1.25rem; }
+.nav-btn .atlas { font-size: 1.25rem; }
 .nav-btn.active { color: var(--accent); }
 
 /* PAGES */
@@ -46,9 +46,9 @@ i[class^="ai-"] { font-style: normal; }
 
 /* CARDS */
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; }
-.card-title { font-size: 0.7rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; }
+.card-title { font-size: 0.7rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
 .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.section-title { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.3px; }
+.section-title { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px; }
 
 /* BUTTONS */
 .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: var(--radius-sm); border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
@@ -99,7 +99,7 @@ select option { background: var(--surface2); }
 .modal-overlay.open { display: flex; }
 .modal { background: var(--surface); border-radius: var(--radius) var(--radius) 0 0; padding: 24px 20px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s ease; }
 @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-.modal-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; letter-spacing: -0.3px; }
+.modal-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px; }
 .modal-actions { display: flex; gap: 10px; margin-top: 16px; }
 
 /* TASK ITEM */
@@ -114,12 +114,14 @@ select option { background: var(--surface2); }
 
 /* META AI CHAT */
 .chat-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; }
-.chat-header { background: linear-gradient(135deg, rgba(0,229,184,0.1), rgba(159,122,234,0.1)); padding: 16px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
-.chat-avatar-big { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #0084ff); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+.chat-header { background: linear-gradient(135deg, rgba(0,229,184,0.1), rgba(0,132,255,0.1)); padding: 16px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.chat-avatar-big { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #0084ff, #00e5b8); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
 .chat-header-info { flex: 1; }
 .chat-header-name { font-weight: 700; font-size: 0.95rem; letter-spacing: -0.2px; }
 .chat-header-status { font-size: 0.72rem; color: var(--accent5); display: flex; align-items: center; gap: 4px; margin-top: 2px; font-weight: 500; }
 .chat-header-status::before { content: '●'; animation: pulse 2s infinite; }
+.chat-header-status.offline { color: var(--text-muted); }
+.chat-header-status.offline::before { animation: none; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 .chat-body { padding: 16px; }
 .chat-messages { height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding: 4px 0; margin-bottom: 14px; scroll-behavior: smooth; }
@@ -129,7 +131,7 @@ select option { background: var(--surface2); }
 .chat-msg { display: flex; gap: 10px; align-items: flex-end; }
 .chat-msg.user { flex-direction: row-reverse; }
 .msg-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
-.chat-msg.ai .msg-avatar { background: linear-gradient(135deg, var(--accent), #0084ff); }
+.chat-msg.ai .msg-avatar { background: linear-gradient(135deg, #0084ff, #00e5b8); }
 .chat-msg.user .msg-avatar { background: rgba(246,173,85,0.2); }
 .chat-bubble { max-width: 78%; padding: 11px 14px; border-radius: 16px; font-size: 0.87rem; line-height: 1.6; }
 .chat-msg.ai .chat-bubble { background: var(--surface2); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
@@ -139,7 +141,7 @@ select option { background: var(--surface2); }
 .chat-msg.user .chat-time { text-align: right; }
 .chat-input-row { display: flex; gap: 8px; align-items: center; }
 .chat-input-row input { flex: 1; border-radius: 99px; padding: 11px 16px; }
-.send-btn { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #0084ff); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; transition: transform 0.15s; color: #0a0e14; }
+.send-btn { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #0084ff, var(--accent)); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; transition: transform 0.15s; color: #0a0e14; }
 .send-btn:hover { transform: scale(1.08); }
 .typing { display: flex; gap: 4px; padding: 4px 0; align-items: center; }
 .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); animation: blink 1.2s infinite; }
@@ -147,7 +149,7 @@ select option { background: var(--surface2); }
 .typing span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes blink { 0%,100%{opacity:0.2} 50%{opacity:1} }
 .quick-prompts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-.quick-prompt-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--text-muted); padding: 7px 13px; border-radius: 99px; font-size: 0.75rem; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; white-space: nowrap; font-weight: 500; }
+.quick-prompt-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--text-muted); padding: 7px 13px; border-radius: 99px; font-size: 0.75rem; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; white-space: nowrap; font-weight: 500; display: flex; align-items: center; gap: 5px; }
 .quick-prompt-btn:hover { border-color: var(--accent); color: var(--accent); }
 
 /* FAITH */
@@ -191,7 +193,7 @@ select option { background: var(--surface2); }
 .note-date { font-size: 0.7rem; color: var(--text-dim); margin-top: 6px; }
 .greeting { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.5px; }
 .greeting-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-weight: 500; }
-.quick-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+.quick-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
 .qs-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; text-align: center; }
 .qs-icon { font-size: 1.4rem; }
 .qs-val { font-size: 1.2rem; font-weight: 800; color: var(--accent); letter-spacing: -0.3px; }
@@ -216,109 +218,109 @@ select option { background: var(--surface2); }
   <div class="greeting" id="greeting-text">Good morning 👋</div>
   <div class="greeting-sub">Here's your day at a glance</div>
   <div class="quick-stats">
-    <div class="qs-card"><div class="qs-icon">🗂</div><div class="qs-val" id="qs-tasks">0</div><div class="qs-label">Tasks Due</div></div>
+    <div class="qs-card"><div class="qs-icon">📋</div><div class="qs-val" id="qs-tasks">0</div><div class="qs-label">Tasks Due</div></div>
     <div class="qs-card"><div class="qs-icon">🔥</div><div class="qs-val" id="qs-streak">0</div><div class="qs-label">Day Streak</div></div>
     <div class="qs-card"><div class="qs-icon">💰</div><div class="qs-val" id="qs-expense">₱0</div><div class="qs-label">Today's Spend</div></div>
   </div>
-  <div class="card"><div class="card-title">📋 Today's Priority Tasks</div><div id="home-tasks-list"><div class="empty"><span class="emoji">✅</span>No urgent tasks!</div></div></div>
-  <div class="card"><div class="card-title">✝️ Faith Checklist Today</div><div id="home-faith-list"></div></div>
+  <div class="card"><div class="card-title"><i class="atlas atlas-file-text"></i> TODAY'S PRIORITY TASKS</div><div id="home-tasks-list"><div class="empty"><span class="emoji">✅</span>No urgent tasks!</div></div></div>
+  <div class="card"><div class="card-title"><i class="atlas atlas-book-open"></i> FAITH CHECKLIST TODAY</div><div id="home-faith-list"></div></div>
   <div class="card" style="border-color:rgba(0,229,184,0.3);background:rgba(0,229,184,0.04);">
-    <div class="card-title">💡 Daily Spark</div>
+    <div class="card-title"><i class="atlas atlas-lightbulb"></i> DAILY SPARK</div>
     <div id="daily-quote" style="font-size:0.9rem;line-height:1.6;font-style:italic;color:var(--text-muted);"></div>
   </div>
 </div>
 
 <!-- WORK -->
 <div class="page" id="page-work">
-  <div class="section-header"><div class="section-title">🗂 Work Tracker</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-task')"><i class="ai-plus"></i> Task</button></div>
-  <div class="tabs">
-    <button class="tab-btn active" onclick="filterTasks('all',this)">All</button>
-    <button class="tab-btn" onclick="filterTasks('urgent',this)">🔴 Urgent</button>
-    <button class="tab-btn" onclick="filterTasks('high',this)">🟠 High</button>
-    <button class="tab-btn" onclick="filterTasks('pending',this)">Pending</button>
-    <button class="tab-btn" onclick="filterTasks('done',this)">Done</button>
+  <div class="section-header"><div class="section-title"><i class="atlas atlas-folder"></i> Work Tracker</div><button class="btn btn-primary btn-sm" data-modal="modal-task"><i class="atlas atlas-plus"></i> Task</button></div>
+  <div class="tabs" id="work-tabs">
+    <button class="tab-btn active" data-filter="all">All</button>
+    <button class="tab-btn" data-filter="urgent">🔴 Urgent</button>
+    <button class="tab-btn" data-filter="high">🟠 High</button>
+    <button class="tab-btn" data-filter="pending">Pending</button>
+    <button class="tab-btn" data-filter="done">Done</button>
   </div>
   <div id="tasks-list"></div>
 </div>
 
 <!-- SCHEDULE -->
 <div class="page" id="page-schedule">
-  <div class="section-header"><div class="section-title">📅 Schedule</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-event')"><i class="ai-plus"></i> Event</button></div>
+  <div class="section-header"><div class="section-title"><i class="atlas atlas-calendar"></i> Schedule</div><button class="btn btn-primary btn-sm" data-modal="modal-event"><i class="atlas atlas-plus"></i> Event</button></div>
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-      <button class="btn btn-ghost btn-sm" onclick="changeMonth(-1)">◀</button>
+      <button class="btn btn-ghost btn-sm" id="cal-prev"><i class="atlas atlas-arrow-left"></i></button>
       <div style="font-weight:700;font-size:0.95rem;" id="cal-month-label"></div>
-      <button class="btn btn-ghost btn-sm" onclick="changeMonth(1)">▶</button>
+      <button class="btn btn-ghost btn-sm" id="cal-next"><i class="atlas atlas-arrow-right"></i></button>
     </div>
     <div class="cal-grid" id="cal-day-labels"></div>
     <div class="cal-grid" id="cal-grid" style="margin-top:4px;"></div>
   </div>
   <div class="card">
-    <div class="card-title">📌 Daily To-Do</div>
+    <div class="card-title"><i class="atlas atlas-check-square"></i> DAILY TO-DO</div>
     <div id="todo-list"></div>
     <div style="display:flex;gap:8px;margin-top:10px;">
-      <input id="todo-input" placeholder="Add a to-do..." onkeydown="if(event.key==='Enter')addTodo()">
-      <button class="btn btn-primary btn-sm" onclick="addTodo()">Add</button>
+      <input id="todo-input" placeholder="Add a to-do...">
+      <button class="btn btn-primary btn-sm" id="todo-add-btn">Add</button>
     </div>
   </div>
-  <div class="card"><div class="card-title">📆 Events</div><div id="events-list"></div></div>
+  <div class="card"><div class="card-title"><i class="atlas atlas-calendar-event"></i> EVENTS</div><div id="events-list"></div></div>
 </div>
 
 <!-- EXPENSES -->
 <div class="page" id="page-expenses">
-  <div class="section-header"><div class="section-title">💰 Expenses</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-expense')"><i class="ai-plus"></i> Add</button></div>
+  <div class="section-header"><div class="section-title"><i class="atlas atlas-currency-peso"></i> Expenses</div><button class="btn btn-primary btn-sm" data-modal="modal-expense"><i class="atlas atlas-plus"></i> Add</button></div>
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-number" id="exp-today" style="color:var(--accent);">₱0</div><div class="stat-label">Today</div></div>
     <div class="stat-card"><div class="stat-number" id="exp-week" style="color:var(--accent2);">₱0</div><div class="stat-label">This Week</div></div>
     <div class="stat-card"><div class="stat-number" id="exp-month" style="color:var(--accent4);">₱0</div><div class="stat-label">This Month</div></div>
     <div class="stat-card"><div class="stat-number" id="exp-count" style="color:var(--accent5);">0</div><div class="stat-label">Entries</div></div>
   </div>
-  <div class="tabs">
-    <button class="tab-btn active" onclick="filterExpenses('all',this)">All</button>
-    <button class="tab-btn" onclick="filterExpenses('week',this)">This Week</button>
-    <button class="tab-btn" onclick="filterExpenses('month',this)">This Month</button>
-    <button class="tab-btn" onclick="filterExpenses('chart',this)">📊 Analysis</button>
+  <div class="tabs" id="exp-tabs">
+    <button class="tab-btn active" data-filter="all">All</button>
+    <button class="tab-btn" data-filter="week">This Week</button>
+    <button class="tab-btn" data-filter="month">This Month</button>
+    <button class="tab-btn" data-filter="chart"><i class="atlas atlas-chart-bar"></i> Analysis</button>
   </div>
   <div id="expenses-view"></div>
 </div>
 
 <!-- FAITH -->
 <div class="page" id="page-faith">
-  <div class="section-header"><div class="section-title">✝️ Faith & Sealing</div></div>
+  <div class="section-header"><div class="section-title"><i class="atlas atlas-book"></i> Faith & Sealing</div></div>
   <div class="card">
-    <div class="card-title">📖 Today's Checklist</div>
+    <div class="card-title"><i class="atlas atlas-clipboard-check"></i> TODAY'S CHECKLIST</div>
     <div id="faith-checklist"></div>
     <div class="divider"></div>
-    <button class="btn btn-primary" style="width:100%" onclick="saveFaithChecklist()">Save Today's Progress 🙌</button>
+    <button class="btn btn-primary" style="width:100%" id="save-faith-btn">Save Today's Progress 🙌</button>
   </div>
   <div class="card">
-    <div class="card-title">📗 Bible Reading Log</div>
+    <div class="card-title"><i class="atlas atlas-book-open"></i> BIBLE READING LOG</div>
     <div class="input-group"><label>Book & Chapter</label><input id="bible-ref" placeholder="e.g. John 3, Psalms 23"></div>
     <div class="input-group"><label>Notes / Reflection</label><textarea id="bible-note" placeholder="What did God speak to you today?"></textarea></div>
-    <button class="btn btn-primary" onclick="saveBibleNote()">Save Reading</button>
+    <button class="btn btn-primary" id="save-bible-btn">Save Reading</button>
     <div id="bible-notes-list" style="margin-top:14px;"></div>
   </div>
   <div class="card">
-    <div class="card-title">🙏 Tithes & Offerings</div>
+    <div class="card-title"><i class="atlas atlas-heart-handshake"></i> TITHES & OFFERINGS</div>
     <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
       <div class="input-group" style="flex:1;margin:0;min-width:100px;"><input id="tithe-amount" type="number" placeholder="Amount (₱)"></div>
       <div class="input-group" style="flex:1;margin:0;min-width:100px;"><select id="tithe-type"><option>Tithes</option><option>Offering</option><option>Special Offering</option></select></div>
-      <button class="btn btn-primary btn-sm" style="align-self:flex-end" onclick="saveTithe()">Add</button>
+      <button class="btn btn-primary btn-sm" style="align-self:flex-end" id="save-tithe-btn">Add</button>
     </div>
     <div id="tithe-list"></div>
   </div>
   <div class="card">
-    <div class="card-title">📝 Worship & Service Notes</div>
+    <div class="card-title"><i class="atlas atlas-note"></i> WORSHIP & SERVICE NOTES</div>
     <div class="input-group"><label>Title</label><input id="faith-note-title" placeholder="Sermon title, date..."></div>
     <div class="input-group"><label>Notes</label><textarea id="faith-note-text" placeholder="Your notes from worship service..."></textarea></div>
-    <button class="btn btn-primary" onclick="saveFaithNote()">Save Note</button>
+    <button class="btn btn-primary" id="save-faith-note-btn">Save Note</button>
     <div id="faith-notes-list" style="margin-top:14px;"></div>
   </div>
 </div>
 
 <!-- HABITS -->
 <div class="page" id="page-habits">
-  <div class="section-header"><div class="section-title">🔥 Consistency</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-habit')"><i class="ai-plus"></i> Habit</button></div>
+  <div class="section-header"><div class="section-title"><i class="atlas atlas-fire"></i> Consistency</div><button class="btn btn-primary btn-sm" data-modal="modal-habit"><i class="atlas atlas-plus"></i> Habit</button></div>
   <div class="card" style="background:linear-gradient(135deg,rgba(0,229,184,0.08),rgba(159,122,234,0.08));border-color:rgba(0,229,184,0.2);">
     <div style="display:flex;align-items:center;gap:14px;">
       <div style="font-size:2.5rem;">🔥</div>
@@ -333,10 +335,5 @@ select option { background: var(--surface2); }
 
 <!-- EXERCISE -->
 <div class="page" id="page-exercise">
-  <div class="section-header"><div class="section-title">💪 Exercise Plans</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-exercise')"><i class="ai-plus"></i> Plan</button></div>
-  <div class="card">
-    <div class="card-title">⚡ My Health Status</div>
-    <div class="input-group"><label>Fitness Level</label><select id="fitness-level" onchange="updateExercisePlan()"><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="active">Active</option></select></div>
-    <div class="input-group"><label>Health conditions</label><input id="health-condition" placeholder="e.g. bad knees, asthma..." onchange="saveHealthStatus()"></div>
-    <div class="input-group"><label>Goal</label><select id="fitness-goal" onchange="updateExercisePlan()"><option>General fitness</option><option>Weight loss</option><option>Build muscle</option><option>Improve endurance</option><option>Flexibility</option></select></div>
- 
+  <div class="section-header"><div class="section-title"><i class="atlas atlas-dumbbell"></i> Exercise Plans</div><button class="btn btn-primary btn-sm" data-modal="modal-exercise"><i class="atlas atlas-plus"></i> Plan</button></div>
+  <
