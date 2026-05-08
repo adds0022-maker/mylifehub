@@ -17,7 +17,7 @@
 <!-- FIREBASE v10 SDK -->
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-  import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, enableIndexedDbPersistence, query, orderBy, where, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+  import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, enableIndexedDbPersistence, query, orderBy, where, deleteDoc, updateDoc, addDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
   import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js';
   
   // Your Firebase Config
@@ -35,14 +35,14 @@
   const db = getFirestore(app);
   const analytics = getAnalytics(app);
   
-  // Enable offline persistence - app works without internet, syncs when back online
+  // Offline support
   enableIndexedDbPersistence(db).catch((err) => {
     console.log('Offline persistence failed: ', err.code);
   });
 
   // Make available globally
   window.db = db;
-  window.firestore = { collection, doc, setDoc, getDoc, onSnapshot, query, orderBy, where, deleteDoc, updateDoc };
+  window.firestore = { collection, doc, setDoc, getDoc, onSnapshot, query, orderBy, where, deleteDoc, updateDoc, addDoc };
   
   // Update sync status
   document.addEventListener('DOMContentLoaded', () => {
@@ -107,7 +107,7 @@ textarea{min-height:260px;resize:vertical;line-height:1.8;white-space:pre-wrap;}
 .note{background:var(--surface2);padding:18px;border-radius:18px;margin-top:14px;}
 .note pre{white-space:pre-wrap;font-family:'Inter',sans-serif;line-height:1.8;}
 .chat-box{height:420px;overflow:auto;margin-bottom:16px;display:flex;flex-direction:column;gap:12px;}
-.chat-msg{display:flex;gap:10px;}
+.chat-msg{margin-bottom:12px;display:flex;gap:10px;}
 .chat-msg.user{justify-content:flex-end;}
 .bubble{max-width:80%;padding:14px 16px;border-radius:18px;line-height:1.7;}
 .ai.bubble{background:var(--surface2);}
@@ -141,6 +141,9 @@ textarea{min-height:260px;resize:vertical;line-height:1.8;white-space:pre-wrap;}
   <div class="stat-card"><div class="stat-number" id="taskCount">0</div><div class="stat-label">Tasks</div></div>
   <div class="stat-card"><div class="stat-number" id="waterCount">0</div><div class="stat-label">Water</div></div>
   <div class="stat-card"><div class="stat-number" id="streakCount">0</div><div class="stat-label">Streak</div></div>
+</div>
+<div class="card"><div class="section-title">Today's Priority Tasks</div><div id="homeTasksList"></div></div>
+<div class="card"><div class="section-title">Faith Checklist Today</div><div id="homeFaithList"></div></div>
 </section>
 
 <!-- TASKS -->
@@ -178,7 +181,7 @@ textarea{min-height:260px;resize:vertical;line-height:1.8;white-space:pre-wrap;}
 <section class="page" id="faithPage">
 <div class="card">
   <div class="section-title">Offline Bible - KJV</div>
-  <select id="bookSelect"></select><br><br>
+  <select id="bookSelect"></select><br>
   <select id="chapterSelect"></select>
   <div class="note" style="margin-top:18px"><pre id="bibleContent"></pre></div>
   <br>
@@ -224,7 +227,6 @@ textarea{min-height:260px;resize:vertical;line-height:1.8;white-space:pre-wrap;}
   <div id="quizContainer"></div>
   <button class="btn" onclick="checkQuiz()" style="margin-top:12px;">Check Answers</button>
   <div id="quizResult" style="margin-top:12px;"></div>
-</div>
 </section>
 
 <!-- FITNESS -->
@@ -269,7 +271,7 @@ textarea{min-height:260px;resize:vertical;line-height:1.8;white-space:pre-wrap;}
 </div>
 </div>
 
-<script>
+<script type="module">
 // GLOBAL STATE
 let userId = localStorage.getItem('mylife_userid') || 'user_' + Math.random().toString(36).substring(7);
 localStorage.setItem('mylife_userid', userId);
@@ -289,6 +291,7 @@ function showPage(id,btn){
   if(id==='tasksPage') renderTasks();
   if(id==='faithPage') renderFaith();
   if(id==='growthPage') renderGrowth();
+  lucide.createIcons(); // Fix: re-render icons after page switch
 }
 
 // FIREBASE SYNC SETUP
@@ -298,7 +301,7 @@ function initApp() {
     return;
   }
   const { db, firestore } = window;
-  const { collection, doc, setDoc, onSnapshot, query, where, orderBy, deleteDoc, updateDoc } = firestore;
+  const { collection, doc, setDoc, onSnapshot, query, orderBy, where, deleteDoc, updateDoc, addDoc } = firestore;
   
   // Real-time tasks listener
   const qTasks = query(collection(db, 'users', userId, 'tasks'), orderBy('created', 'desc'));
@@ -352,7 +355,7 @@ async function addTask(){
   const difficulty = parseInt(document.getElementById('difficultyInput').value);
   if(!title) return;
   const { db, firestore } = window;
-  await firestore.setDoc(firestore.doc(firestore.collection(db, 'users', userId, 'tasks')), {
+  await firestore.addDoc(firestore.collection(db, 'users', userId, 'tasks'), {
     title, difficulty, completed: false, created: new Date().toISOString()
   });
   document.getElementById('taskInput').value='';
@@ -481,7 +484,7 @@ async function saveNote(){
   const text = document.getElementById('noteText').value.trim();
   if(!title) return;
   const { db, firestore } = window;
-  await firestore.setDoc(firestore.doc(firestore.collection(db, 'users', userId, 'notes')), {
+  await firestore.addDoc(firestore.collection(db, 'users', userId, 'notes'), {
     title, text, date: new Date().toISOString()
   });
   document.getElementById('noteTitle').value='';
@@ -520,7 +523,7 @@ async function saveTithe(){
   const type = document.getElementById('titheType').value;
   if(isNaN(amount)||amount<=0) return;
   const { db, firestore } = window;
-  await firestore.setDoc(firestore.doc(firestore.collection(db, 'users', userId, 'tithes')), {
+  await firestore.addDoc(firestore.collection(db, 'users', userId, 'tithes'), {
     amount, type, date: new Date().toISOString()
   });
   document.getElementById('titheAmount').value='';
@@ -553,9 +556,6 @@ async function logWater(){
   water++;
   const { db, firestore } = window;
   await firestore.setDoc(firestore.doc(db, 'users', userId), { water }, { merge: true });
-  if (water % 4 === 0 && 'Notification' in window && Notification.permission === 'granted') {
-    new Notification('Hydration Reminder', { body: `Great! You've had ${water} glasses today. Keep it up!` });
-  }
 }
 
 // GROWTH & QUIZ
@@ -594,14 +594,13 @@ function checkQuiz(){
   document.getElementById('quizResult').innerHTML = `<div class="verse-card"><strong>Score: ${score}/${quizQuestions.length}</strong><br>${score === quizQuestions.length? 'Perfect! You\'re crushing it!' : 'Keep studying! Review the topics you missed.'}</div>`;
 }
 
-// NOTIFICATION REMINDERS
-if('Notification' in window){
-  Notification.requestPermission().then(perm => {
-    if (perm === 'granted') {
-      // Daily reminder at 9 AM
-      const now = new Date();
-      const nineAM = new Date();
-      nineAM.setHours(9,0,0);
-      if (now > nineAM) nineAM.setDate(nineAM.getDate() + 1);
-      setTimeout(() => {
-        new Notification('MyLife Hub', { body: 'Good morning! Check your tasks and start your
+function renderGrowth(){
+  renderQuiz();
+}
+
+// AI CHAT - CONNECTS TO ME, META AI
+async function sendMessage(){
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  const
