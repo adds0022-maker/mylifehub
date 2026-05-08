@@ -3,52 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0f1923">
+<meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="light-content">
 <meta name="apple-mobile-web-app-title" content="MyLife Hub">
 <title>MyLife Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
   :root {
-    --bg: #0f1923;
-    --surface: #182030;
-    --surface2: #1e2a3a;
-    --border: #263244;
-    --accent: #4fd1c5;
-    --accent2: #f6ad55;
-    --accent3: #fc8181;
-    --accent4: #9f7aea;
-    --accent5: #68d391;
-    --text: #e2e8f0;
-    --text-muted: #718096;
-    --text-dim: #4a5568;
-    --radius: 14px;
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --surface2: #f5f5f5;
+    --border: #e5e5e5;
+    --accent: #4f46e5;
+    --accent2: #f59e0b;
+    --accent3: #ef4444;
+    --accent4: #8b5cf6;
+    --accent5: #10b981;
+    --text: #1a1a1a;
+    --text-muted: #737373;
+    --text-dim: #a3a3a3;
+    --radius: 12px;
     --radius-sm: 8px;
-    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-lg: 0 4px 12px rgba(0,0,0,0.08);
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
   }
-  h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
+  h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; font-weight: 600; }
   #app { display: flex; flex-direction: column; min-height: 100vh; }
   .topbar {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
-    padding: 14px 20px;
+    padding: 16px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: sticky; top: 0; z-index: 100;
+    box-shadow: var(--shadow);
   }
-  .topbar-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--accent); letter-spacing: -0.5px; }
+  .topbar-logo { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.3rem; color: var(--accent); }
   .topbar-logo span { color: var(--text-muted); font-weight: 400; }
-  .topbar-date { font-size: 0.75rem; color: var(--text-muted); }
+  .topbar-date { font-size: 0.8rem; color: var(--text-muted); }
   .main-content { flex: 1; padding: 20px; padding-bottom: 100px; max-width: 900px; margin: 0 auto; width: 100%; }
   .bottom-nav {
     position: fixed; bottom: 0; left: 0; right: 0;
@@ -57,562 +60,301 @@
     display: flex;
     z-index: 100;
     padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
   }
   .nav-btn {
     flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: 10px 4px 8px;
     background: none; border: none; cursor: pointer; color: var(--text-dim);
-    font-family: 'DM Sans', sans-serif; font-size: 0.6rem; gap: 4px;
+    font-family: 'Inter', sans-serif; font-size: 0.65rem; gap: 4px;
     transition: color 0.2s;
   }
-  .nav-btn .icon { font-size: 1.3rem; }
+  .nav-btn i { width: 22px; height: 22px; }
   .nav-btn.active { color: var(--accent); }
   .nav-btn:hover { color: var(--text-muted); }
   .page { display: none; animation: fadeIn 0.3s ease; }
   .page.active { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; }
-  .card-title { font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; }
-  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-  .section-title { font-size: 1.1rem; font-weight: 700; }
-  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: var(--radius-sm); border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; }
-  .btn-primary { background: var(--accent); color: #0f1923; }
-  .btn-primary:hover { opacity: 0.85; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .card-title { font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .section-title { font-size: 1.25rem; font-weight: 700; font-family: 'Poppins', sans-serif; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: var(--radius-sm); border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #4338ca; }
   .btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
-  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-danger { background: rgba(252,129,129,0.15); color: var(--accent3); border: 1px solid rgba(252,129,129,0.3); }
-  .btn-sm { padding: 5px 10px; font-size: 0.75rem; }
-  .input-group { margin-bottom: 12px; }
-  .input-group label { display: block; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 5px; }
-  input, select, textarea { width: 100%; padding: 10px 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
-  input:focus, select:focus, textarea:focus { border-color: var(--accent); }
-  textarea { resize: vertical; min-height: 80px; }
-  select option { background: var(--surface2); }
-  .badge { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 0.7rem; font-weight: 600; }
-  .badge-urgent { background: rgba(252,129,129,0.15); color: var(--accent3); }
-  .badge-high { background: rgba(246,173,85,0.15); color: var(--accent2); }
-  .badge-normal { background: rgba(79,209,197,0.15); color: var(--accent); }
-  .badge-low { background: rgba(104,211,145,0.15); color: var(--accent5); }
-  .badge-done { background: rgba(113,128,150,0.15); color: var(--text-muted); }
-  .progress-bar { background: var(--surface2); border-radius: 99px; height: 6px; overflow: hidden; }
-  .progress-fill { height: 100%; border-radius: 99px; transition: width 0.4s ease; }
-  .streak-grid { display: flex; gap: 4px; flex-wrap: wrap; }
-  .streak-dot { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 600; cursor: pointer; transition: transform 0.15s; }
-  .streak-dot:hover { transform: scale(1.15); }
-  .streak-dot.done { background: var(--accent); color: #0f1923; }
-  .streak-dot.missed { background: rgba(252,129,129,0.2); color: var(--accent3); }
-  .streak-dot.empty { background: var(--surface2); color: var(--text-dim); }
-  .chart-bar-wrap { display: flex; flex-direction: column; gap: 10px; }
-  .chart-row { display: flex; align-items: center; gap: 10px; }
-  .chart-label { font-size: 0.75rem; color: var(--text-muted); width: 70px; flex-shrink: 0; }
-  .chart-bar-bg { flex: 1; background: var(--surface2); border-radius: 99px; height: 10px; overflow: hidden; }
-  .chart-bar-fill { height: 100%; border-radius: 99px; }
-  .chart-val { font-size: 0.75rem; font-weight: 600; width: 60px; text-align: right; flex-shrink: 0; }
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: flex-end; justify-content: center; }
-  .modal-overlay.open { display: flex; }
-  .modal { background: var(--surface); border-radius: var(--radius) var(--radius) 0 0; padding: 24px 20px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s ease; }
-  @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-  .modal-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; }
-  .modal-actions { display: flex; gap: 10px; margin-top: 16px; }
-  .task-item { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 13px 14px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 12px; transition: border-color 0.2s; }
+  .btn-ghost:hover { background: var(--border); }
+  .btn-danger { background: rgba(239,68,68,0.1); color: var(--accent3); border: 1px solid rgba(239,68,68,0.2); }
+  .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
+  .input-group { margin-bottom: 14px; }
+  .input-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+  input, select, textarea { width: 100%; padding: 11px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); background: white; }
+  textarea { resize: vertical; min-height: 120px; white-space: pre-wrap; line-height: 1.6; }
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: 600; }
+  .badge-urgent { background: rgba(239,68,68,0.1); color: var(--accent3); }
+  .badge-high { background: rgba(245,158,11,0.1); color: var(--accent2); }
+  .badge-normal { background: rgba(79,70,229,0.1); color: var(--accent); }
+  .badge-low { background: rgba(16,185,129,0.1); color: var(--accent5); }
+  .badge-done { background: rgba(115,115,115,0.1); color: var(--text-muted); }
+  .progress-bar { background: var(--surface2); border-radius: 99px; height: 8px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 99px; transition: width 0.4s ease; background: var(--accent); }
+  .task-item { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 12px; transition: border-color 0.2s; }
   .task-item:hover { border-color: var(--accent); }
-  .task-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); background: none; cursor: pointer; flex-shrink: 0; margin-top: 2px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-  .task-check.done { background: var(--accent5); border-color: var(--accent5); }
+  .task-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--border); background: white; cursor: pointer; flex-shrink: 0; margin-top: 2px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+  .task-check.done { background: var(--accent5); border-color: var(--accent5); color: white; }
   .task-body { flex: 1; }
-  .task-name { font-size: 0.9rem; font-weight: 500; }
+  .task-name { font-size: 0.95rem; font-weight: 500; transition: all 0.2s; }
   .task-name.done { text-decoration: line-through; color: var(--text-muted); }
-  .task-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .task-meta { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   .task-actions { display: flex; gap: 6px; }
-  .chat-messages { height: 360px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 4px 0; margin-bottom: 14px; }
+  .task-difficulty { font-size: 0.7rem; background: var(--surface); padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border); }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .cal-day-label { text-align: center; font-size: 0.7rem; color: var(--text-muted); padding: 6px 0; font-weight: 600; }
+  .cal-day { aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; cursor: pointer; transition: all 0.15s; background: var(--surface2); color: var(--text); border: 1px solid transparent; }
+  .cal-day:hover { background: white; border-color: var(--accent); }
+  .cal-day.today { background: var(--accent); color: white; font-weight: 700; }
+  .cal-day.has-event { position: relative; font-weight: 600; }
+  .cal-day.has-event::after { content: ''; position: absolute; bottom: 4px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent2); }
+  .cal-day.empty { background: none; cursor: default; border: none; }
+  .verse-card { background: linear-gradient(135deg, rgba(79,70,229,0.05), rgba(139,92,246,0.05)); border: 1px solid rgba(79,70,229,0.15); border-radius: var(--radius); padding: 18px; }
+  .verse-text { font-size: 1rem; line-height: 1.7; font-style: italic; margin-bottom: 10px; }
+  .verse-ref { font-size: 0.85rem; color: var(--accent); font-weight: 600; text-align: right; }
+  .bookmark-group { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 10px; }
+  .bookmark-group-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+  .bookmark-verse { font-size: 0.85rem; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .bookmark-verse:last-child { border-bottom: none; }
+  .chat-messages { height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding: 4px 0; margin-bottom: 16px; }
   .chat-msg { display: flex; gap: 10px; }
   .chat-msg.user { flex-direction: row-reverse; }
-  .chat-bubble { max-width: 80%; padding: 11px 14px; border-radius: 14px; font-size: 0.88rem; line-height: 1.5; }
+  .chat-bubble { max-width: 80%; padding: 12px 16px; border-radius: 16px; font-size: 0.92rem; line-height: 1.6; }
   .chat-msg.ai .chat-bubble { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-bottom-left-radius: 4px; }
-  .chat-msg.user .chat-bubble { background: var(--accent); color: #0f1923; border-bottom-right-radius: 4px; }
-  .chat-avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
-  .chat-msg.ai .chat-avatar { background: rgba(79,209,197,0.15); }
-  .chat-msg.user .chat-avatar { background: rgba(246,173,85,0.15); }
-  .chat-input-row { display: flex; gap: 8px; }
+  .chat-msg.user .chat-bubble { background: var(--accent); color: white; border-bottom-right-radius: 4px; }
+  .chat-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--surface2); border: 1px solid var(--border); }
+  .chat-input-row { display: flex; gap: 10px; }
   .chat-input-row input { flex: 1; }
-  .typing { display: flex; gap: 4px; padding: 8px 12px; }
-  .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); animation: blink 1.2s infinite; }
-  .typing span:nth-child(2) { animation-delay: 0.2s; }
-  .typing span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes blink { 0%,100%{opacity:0.2} 50%{opacity:1} }
-  .faith-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .empty { text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 0.9rem; }
+  .empty i { width: 48px; height: 48px; margin: 0 auto 12px; display: block; color: var(--text-dim); }
+  .greeting { font-size: 1.75rem; font-weight: 700; margin-bottom: 6px; font-family: 'Poppins', sans-serif; }
+  .greeting-sub { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px; }
+  .quick-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  .qs-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; text-align: center; box-shadow: var(--shadow); }
+  .qs-card i { width: 28px; height: 28px; margin: 0 auto 8px; color: var(--accent); }
+  .qs-val { font-family: 'Poppins', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+  .qs-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
+  .tabs { display: flex; gap: 6px; background: var(--surface2); padding: 6px; border-radius: var(--radius-sm); margin-bottom: 18px; }
+  .tab-btn { flex: 1; padding: 9px; background: none; border: none; cursor: pointer; color: var(--text-muted); font-family: 'Inter', sans-serif; font-size: 0.85rem; border-radius: 6px; transition: all 0.2s; }
+  .tab-btn.active { background: var(--surface); color: var(--text); font-weight: 600; box-shadow: var(--shadow); }
+  .faith-item { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); }
   .faith-item:last-child { border-bottom: none; }
-  .faith-icon { font-size: 1.4rem; width: 36px; text-align: center; }
-  .faith-label { flex: 1; font-size: 0.9rem; font-weight: 500; }
-  .faith-toggle { width: 42px; height: 24px; border-radius: 99px; background: var(--surface2); border: 1px solid var(--border); cursor: pointer; position: relative; transition: background 0.2s; flex-shrink: 0; }
+  .faith-item i { width: 24px; height: 24px; color: var(--accent); }
+  .faith-label { flex: 1; font-size: 0.95rem; font-weight: 500; }
+  .faith-toggle { width: 46px; height: 26px; border-radius: 99px; background: var(--surface2); border: 1px solid var(--border); cursor: pointer; position: relative; transition: background 0.2s; flex-shrink: 0; }
   .faith-toggle.on { background: var(--accent5); border-color: var(--accent5); }
-  .faith-toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: white; transition: left 0.2s; }
-  .faith-toggle.on::after { left: 21px; }
-  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-  .stat-card { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
-  .stat-number { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; }
-  .stat-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
-  .tabs { display: flex; gap: 4px; background: var(--surface2); padding: 4px; border-radius: var(--radius-sm); margin-bottom: 16px; }
-  .tab-btn { flex: 1; padding: 8px; background: none; border: none; cursor: pointer; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 0.8rem; border-radius: 6px; transition: all 0.2s; }
-  .tab-btn.active { background: var(--surface); color: var(--text); font-weight: 600; }
-  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-  .cal-day-label { text-align: center; font-size: 0.65rem; color: var(--text-muted); padding: 4px 0; font-weight: 600; }
-  .cal-day { aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; cursor: pointer; transition: all 0.15s; background: var(--surface2); color: var(--text-muted); }
-  .cal-day:hover { background: var(--border); color: var(--text); }
-  .cal-day.today { background: var(--accent); color: #0f1923; font-weight: 700; }
-  .cal-day.has-event { position: relative; color: var(--text); }
-  .cal-day.has-event::after { content: ''; position: absolute; bottom: 3px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent2); }
-  .cal-day.empty { background: none; cursor: default; }
-  .exercise-card { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 10px; }
-  .exercise-name { font-weight: 600; font-size: 0.9rem; }
-  .exercise-detail { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+  .faith-toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: white; transition: left 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+  .faith-toggle.on::after { left: 23px; }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; align-items: flex-end; justify-content: center; backdrop-filter: blur(4px); }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--surface); border-radius: var(--radius) var(--radius) 0 0; padding: 24px 20px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s ease; box-shadow: 0 -4px 24px rgba(0,0,0,0.1); }
+  @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; font-family: 'Poppins', sans-serif; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+  .note-item { background: var(--surface2); border-left: 3px solid var(--accent4); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 14px; margin-bottom: 10px; }
+  .note-title { font-weight: 600; font-size: 0.92rem; margin-bottom: 6px; }
+  .note-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; white-space: pre-wrap; }
+  .note-date { font-size: 0.75rem; color: var(--text-dim); margin-top: 8px; }
   @media (min-width: 600px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } .main-content { padding: 28px 32px; padding-bottom: 100px; } }
-  .divider { height: 1px; background: var(--border); margin: 16px 0; }
-  .empty { text-align: center; padding: 32px 0; color: var(--text-muted); font-size: 0.88rem; }
-  .empty .emoji { font-size: 2.5rem; display: block; margin-bottom: 10px; }
-  .note-item { background: var(--surface2); border-left: 3px solid var(--accent4); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 14px; margin-bottom: 8px; }
-  .note-title { font-weight: 600; font-size: 0.88rem; }
-  .note-text { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5; }
-  .note-date { font-size: 0.7rem; color: var(--text-dim); margin-top: 6px; }
-  .greeting { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; }
-  .greeting-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
-  .quick-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-  .qs-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; text-align: center; }
-  .qs-icon { font-size: 1.4rem; }
-  .qs-val { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--accent); }
-  .qs-label { font-size: 0.62rem; color: var(--text-muted); }
+  .divider { height: 1px; background: var(--border); margin: 18px 0; }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .stat-card { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; text-align: center; }
+  .stat-number { font-family: 'Poppins', sans-serif; font-size: 2rem; font-weight: 700; }
+  .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+  .hydration-btn { background: linear-gradient(135deg, #60a5fa, #3b82f6); color: white; border: none; padding: 12px; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .exercise-alt { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); border-radius: 6px; padding: 8px; margin-top: 8px; font-size: 0.8rem; color: var(--accent5); }
+  .loading { text-align: center; padding: 20px; color: var(--text-muted); }
+  .sync-status { position: fixed; top: 70px; right: 20px; background: var(--surface); border: 1px solid var(--border); padding: 8px 14px; border-radius: 99px; font-size: 0.75rem; z-index: 50; box-shadow: var(--shadow); display: flex; align-items: center; gap: 6px; }
+  .sync-status.online { color: var(--accent5); }
+  .sync-status.offline { color: var(--accent3); }
 </style>
 </head>
-
-  <body>
+<body>
 <div id="app">
+  <div class="sync-status offline" id="sync-status"><i data-lucide="wifi-off"></i> Offline</div>
   <div class="topbar">
     <div class="topbar-logo">MyLife<span>Hub</span></div>
     <div class="topbar-date" id="topbar-date"></div>
   </div>
   <div class="main-content">
+    <!-- HOME PAGE -->
     <div class="page active" id="page-home">
-      <div class="greeting" id="greeting-text">Good morning 👋</div>
+      <div class="greeting" id="greeting-text">Good morning</div>
       <div class="greeting-sub">Here's your day at a glance</div>
       <div class="quick-stats">
-        <div class="qs-card"><div class="qs-icon">🗂</div><div class="qs-val" id="qs-tasks">0</div><div class="qs-label">Tasks Due</div></div>
-        <div class="qs-card"><div class="qs-icon">🔥</div><div class="qs-val" id="qs-streak">0</div><div class="qs-label">Day Streak</div></div>
-        <div class="qs-card"><div class="qs-icon">💰</div><div class="qs-val" id="qs-expense">₱0</div><div class="qs-label">Today's Spend</div></div>
+        <div class="qs-card"><i data-lucide="list-todo"></i><div class="qs-val" id="qs-tasks">0</div><div class="qs-label">Tasks Due</div></div>
+        <div class="qs-card"><i data-lucide="flame"></i><div class="qs-val" id="qs-streak">0</div><div class="qs-label">Day Streak</div></div>
+        <div class="qs-card"><i data-lucide="droplets"></i><div class="qs-val" id="qs-water">0</div><div class="qs-label">Glasses Today</div></div>
       </div>
-      <div class="card"><div class="card-title">📋 Today's Priority Tasks</div><div id="home-tasks-list"><div class="empty"><span class="emoji">✅</span>No tasks for today. Add some!</div></div></div>
-      <div class="card"><div class="card-title">✝️ Faith Checklist Today</div><div id="home-faith-list"></div></div>
-      <div class="card" style="border-color: rgba(79,209,197,0.3); background: rgba(79,209,197,0.05);"><div class="card-title">💡 Daily Spark</div><div id="daily-quote" style="font-size: 0.9rem; line-height: 1.6; font-style: italic; color: var(--text-muted);">Loading your daily spark...</div></div>
+      <div class="card"><div class="card-title">Today's Priority Tasks</div><div id="home-tasks-list"></div></div>
+      <div class="card"><div class="card-title">Daily Verse</div><div id="daily-verse" class="verse-card"></div></div>
+      <div class="card"><div class="card-title">Faith Checklist Today</div><div id="home-faith-list"></div></div>
     </div>
+
+    <!-- WORK PAGE -->
     <div class="page" id="page-work">
-      <div class="section-header"><div class="section-title">🗂 Work Tracker</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-task')">+ Task</button></div>
+      <div class="section-header"><div class="section-title">Work Tracker</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-task')"><i data-lucide="plus"></i> Task</button></div>
+      <div class="card" style="margin-bottom: 16px;">
+        <div class="card-title">Overall Progress</div>
+        <div class="progress-bar"><div class="progress-fill" id="task-progress-bar" style="width:0%"></div></div>
+        <div style="text-align: right; font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;" id="task-progress-text">0% Complete</div>
+      </div>
       <div class="tabs">
         <button class="tab-btn active" onclick="filterTasks('all', this)">All</button>
-        <button class="tab-btn" onclick="filterTasks('urgent', this)">🔴 Urgent</button>
-        <button class="tab-btn" onclick="filterTasks('high', this)">🟠 High</button>
+        <button class="tab-btn" onclick="filterTasks('urgent', this)">Urgent</button>
         <button class="tab-btn" onclick="filterTasks('pending', this)">Pending</button>
         <button class="tab-btn" onclick="filterTasks('done', this)">Done</button>
       </div>
       <div id="tasks-list"></div>
     </div>
+
+    <!-- SCHEDULE PAGE -->
     <div class="page" id="page-schedule">
-      <div class="section-header"><div class="section-title">📅 Schedule</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-event')">+ Event</button></div>
+      <div class="section-header"><div class="section-title">Schedule</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-event')"><i data-lucide="plus"></i> Event</button></div>
       <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <button class="btn btn-ghost btn-sm" onclick="changeMonth(-1)">◀</button>
-          <div style="font-weight:700;font-size:0.95rem;" id="cal-month-label"></div>
-          <button class="btn btn-ghost btn-sm" onclick="changeMonth(1)">▶</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <button class="btn btn-ghost btn-sm" onclick="changeMonth(-1)"><i data-lucide="chevron-left"></i></button>
+          <div style="font-weight:700;font-size:1rem;font-family:'Poppins'" id="cal-month-label"></div>
+          <button class="btn btn-ghost btn-sm" onclick="changeMonth(1)"><i data-lucide="chevron-right"></i></button>
         </div>
         <div class="cal-grid" id="cal-day-labels"></div>
-        <div class="cal-grid" id="cal-grid" style="margin-top:4px;"></div>
+        <div class="cal-grid" id="cal-grid" style="margin-top:6px;"></div>
       </div>
       <div class="card">
-        <div class="card-title">📌 Daily To-Do</div>
+        <div class="card-title">Daily To-Do</div>
         <div id="todo-list"></div>
-        <div style="display:flex;gap:8px;margin-top:10px;">
+        <div style="display:flex;gap:8px;margin-top:12px;">
           <input id="todo-input" placeholder="Add a to-do..." onkeydown="if(event.key==='Enter')addTodo()">
           <button class="btn btn-primary btn-sm" onclick="addTodo()">Add</button>
         </div>
       </div>
-      <div class="card"><div class="card-title">📆 Events</div><div id="events-list"></div></div>
     </div>
-    <div class="page" id="page-expenses">
-      <div class="section-header"><div class="section-title">💰 Expenses</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-expense')">+ Add</button></div>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-number" id="exp-today" style="color:var(--accent);">₱0</div><div class="stat-label">Today</div></div>
-        <div class="stat-card"><div class="stat-number" id="exp-week" style="color:var(--accent2);">₱0</div><div class="stat-label">This Week</div></div>
-        <div class="stat-card"><div class="stat-number" id="exp-month" style="color:var(--accent4);">₱0</div><div class="stat-label">This Month</div></div>
-        <div class="stat-card"><div class="stat-number" id="exp-count" style="color:var(--accent5);">0</div><div class="stat-label">Entries</div></div>
-      </div>
-      <div class="tabs">
-        <button class="tab-btn active" onclick="filterExpenses('all', this)">All</button>
-        <button class="tab-btn" onclick="filterExpenses('week', this)">This Week</button>
-        <button class="tab-btn" onclick="filterExpenses('month', this)">This Month</button>
-        <button class="tab-btn" onclick="filterExpenses('chart', this)">Analysis</button>
-      </div>
-      <div id="expenses-view"></div>
-    </div>
+
+    <!-- FAITH PAGE -->
     <div class="page" id="page-faith">
-      <div class="section-header"><div class="section-title">✝️ Faith & Sealing</div></div>
+      <div class="section-header"><div class="section-title">Faith & Sealing</div></div>
       <div class="card">
-        <div class="card-title">📖 Today's Checklist</div>
+        <div class="card-title">Today's Checklist</div>
         <div id="faith-checklist"></div>
         <div class="divider"></div>
         <button class="btn btn-primary" style="width:100%" onclick="saveFaithChecklist()">Save Today's Progress</button>
       </div>
       <div class="card">
-        <div class="card-title">📗 Bible Reading Log</div>
-        <div class="input-group"><label>Book & Chapter</label><input id="bible-ref" placeholder="e.g. John 3, Psalms 23"></div>
-        <div class="input-group"><label>Notes / Reflection</label><textarea id="bible-note" placeholder="What did God speak to you today?"></textarea></div>
-        <button class="btn btn-primary" onclick="saveBibleNote()">Save Reading</button>
-        <div id="bible-notes-list" style="margin-top:14px;"></div>
+        <div class="card-title">Bible Reading - Offline KJV</div>
+        <div class="input-group"><label>Book</label><select id="bible-book"></select></div>
+        <div class="input-group"><label>Chapter</label><select id="bible-chapter"></select></div>
+        <div id="bible-text" style="max-height: 300px; overflow-y: auto; padding: 12px; background: var(--surface2); border-radius: var(--radius-sm); font-size: 0.9rem; line-height: 1.8; margin-bottom: 12px;"></div>
+        <button class="btn btn-primary btn-sm" onclick="bookmarkVerse()"><i data-lucide="bookmark"></i> Bookmark Current Verse</button>
       </div>
       <div class="card">
-        <div class="card-title">🙏 Tithes & Offerings</div>
-        <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <div class="card-title">Bookmark Groups</div>
+        <div id="bookmark-groups"></div>
+        <button class="btn btn-ghost btn-sm" style="margin-top:10px" onclick="createBookmarkGroup()"><i data-lucide="plus"></i> New Group</button>
+      </div>
+      <div class="card">
+        <div class="card-title">Tithes & Offerings - Weekly</div>
+        <div style="display:flex;gap:8px;margin-bottom:10px;">
           <div class="input-group" style="flex:1;margin:0"><input id="tithe-amount" type="number" placeholder="Amount (₱)"></div>
-          <div class="input-group" style="flex:1;margin:0"><select id="tithe-type"><option>Tithes</option><option>Offering</option><option>Special Offering</option></select></div>
+          <div class="input-group" style="flex:1;margin:0"><select id="tithe-type"><option>Tithes</option><option>Offering</option><option>Special</option></select></div>
           <button class="btn btn-primary btn-sm" style="margin-top:0;align-self:flex-end" onclick="saveTithe()">Add</button>
         </div>
         <div id="tithe-list"></div>
       </div>
       <div class="card">
-        <div class="card-title">📝 Worship & General Notes</div>
+        <div class="card-title">Service Notes</div>
         <div class="input-group"><label>Title</label><input id="faith-note-title" placeholder="Sermon title, date, etc."></div>
         <div class="input-group"><label>Notes</label><textarea id="faith-note-text" placeholder="Your notes from worship service..."></textarea></div>
         <button class="btn btn-primary" onclick="saveFaithNote()">Save Note</button>
-        <div id="faith-notes-list" style="margin-top:14px;"></div>
+        <div id="faith-notes-list" style="margin-top:16px;"></div>
       </div>
     </div>
-    <div class="page" id="page-habits">
-      <div class="section-header"><div class="section-title">🔥 Consistency</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-habit')">+ Habit</button></div>
-      <div class="card" style="background:linear-gradient(135deg,rgba(79,209,197,0.08),rgba(159,122,234,0.08));border-color:rgba(79,209,197,0.2);">
-        <div style="display:flex;align-items:center;gap:14px;">
-          <div style="font-size:2.5rem;">🔥</div>
-          <div>
-            <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--accent);" id="total-streak">0</div>
-            <div style="font-size:0.8rem;color:var(--text-muted);">Longest active streak (days)</div>
-          </div>
-        </div>
-      </div>
-      <div id="habits-list"></div>
-    </div>
-    <div class="page" id="page-exercise">
-      <div class="section-header"><div class="section-title">💪 Exercise Plans</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-exercise')">+ Plan</button></div>
-      <div class="card">
-        <div class="card-title">⚡ My Health Status</div>
-        <div class="input-group"><label>Current fitness level</label><select id="fitness-level" onchange="updateExercisePlan()"><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="active">Active</option></select></div>
-        <div class="input-group"><label>Health conditions (optional)</label><input id="health-condition" placeholder="e.g. bad knees, asthma, etc." onchange="saveHealthStatus()"></div>
-        <div class="input-group"><label>Goal</label><select id="fitness-goal" onchange="updateExercisePlan()"><option>General fitness</option><option>Weight loss</option><option>Build muscle</option><option>Improve endurance</option><option>Flexibility</option></select></div>
-      </div>
-      <div class="card"><div class="card-title">📅 Suggested Weekly Plan</div><div id="exercise-plan"></div></div>
-      <div class="card"><div class="card-title">🗓 My Custom Plans</div><div id="custom-exercise-list"></div></div>
-    </div>
+
+    <!-- GROWTH PAGE -->
     <div class="page" id="page-growth">
-      <div class="section-header"><div class="section-title">🧠 Growth & Learning</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-growth')">+ Plan</button></div>
-      <div class="card"><div class="card-title">🎯 Active Learning Plans</div><div id="growth-plans-list"></div></div>
+      <div class="section-header"><div class="section-title">Growth & Learning</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-growth')"><i data-lucide="plus"></i> Plan</button></div>
+      <div class="card"><div class="card-title">1-Month Coding Study Plan</div><div id="coding-plan"></div></div>
+      <div class="card"><div class="card-title">Active Learning Plans</div><div id="growth-plans-list"></div></div>
       <div class="card">
-        <div class="card-title">📚 Topics to Explore</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;" id="topic-tags"></div>
-        <div style="display:flex;gap:8px;"><input id="topic-input" placeholder="Add a topic..."><button class="btn btn-primary btn-sm" onclick="addTopic()">Add</button></div>
-      </div>
-      <div class="card" style="border-color:rgba(159,122,234,0.3);">
-        <div class="card-title">🌱 Mindset & Mental Health</div>
-        <div id="mindset-list"></div>
-        <div class="divider"></div>
-        <div class="input-group"><label>Daily Reflection</label><textarea id="mindset-reflection" placeholder="How are you feeling today? What's on your mind?"></textarea></div>
-        <button class="btn btn-primary" onclick="saveMindsetReflection()">Save Reflection</button>
+        <div class="card-title">Daily Motivation</div>
+        <div id="daily-quote" style="font-size: 0.95rem; line-height: 1.7; font-style: italic; color: var(--text-muted); padding: 12px; background: var(--surface2); border-radius: var(--radius-sm);"></div>
       </div>
     </div>
+
+    <!-- EXERCISE PAGE -->
+    <div class="page" id="page-exercise">
+      <div class="section-header"><div class="section-title">Fitness</div></div>
+      <div class="card">
+        <button class="hydration-btn" onclick="logWater()"><i data-lucide="droplets"></i> Log Water - <span id="water-count">0</span> glasses</button>
+      </div>
+      <div class="card">
+        <div class="card-title">No Equipment Workout</div>
+        <div id="no-equipment-exercises"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">With Equipment Alternatives</div>
+        <div id="equipment-exercises"></div>
+      </div>
+    </div>
+
+    <!-- AI PAGE -->
     <div class="page" id="page-ai">
-      <div class="section-header"><div class="section-title">🤖 AI Support</div></div>
+      <div class="section-header"><div class="section-title">Meta AI Support</div></div>
       <div class="card" style="padding:0;overflow:hidden;">
-        <div style="background:linear-gradient(135deg,rgba(79,209,197,0.1),rgba(159,122,234,0.1));padding:16px 18px;border-bottom:1px solid var(--border);">
-          <div style="font-weight:700;font-size:0.95rem;">Claude — Your Personal Life Coach</div>
-          <div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">Ask anything: motivation, planning, faith, health, growth...</div>
+        <div style="background:linear-gradient(135deg,rgba(79,70,229,0.08),rgba(139,92,246,0.08));padding:18px;border-bottom:1px solid var(--border);">
+          <div style="font-weight:700;font-size:1rem;font-family:'Poppins'">Meta AI — Your Personal Life Coach</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Ask me anything: motivation, planning, faith, health, growth...</div>
         </div>
-        <div style="padding:16px;">
+        <div style="padding:18px;">
           <div class="chat-messages" id="chat-messages"></div>
           <div class="chat-input-row">
             <input id="chat-input" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendChat()">
-            <button class="btn btn-primary" onclick="sendChat()">Send</button>
+            <button class="btn btn-primary" onclick="sendChat()"><i data-lucide="send"></i></button>
           </div>
-        </div>
-      </div>
-      <div class="card" style="margin-top:14px;">
-        <div class="card-title">💡 Quick Prompts</div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;">
-          <button class="btn btn-ghost btn-sm" onclick="quickPrompt('Motivate me to stay consistent today')">🔥 Motivate me</button>
-          <button class="btn btn-ghost btn-sm" onclick="quickPrompt('Help me plan my schedule for today')">📅 Plan my day</button>
-          <button class="btn btn-ghost btn-sm" onclick="quickPrompt('Give me a Bible verse and reflection for today')">✝️ Daily verse</button>
-          <button class="btn btn-ghost btn-sm" onclick="quickPrompt('Give me a mental health tip for today')">🧠 Mental health tip</button>
-          <button class="btn btn-ghost btn-sm" onclick="quickPrompt('What should I focus on for personal growth this week?')">🌱 Growth tip</button>
-          <button class="btn btn-ghost btn-sm" onclick="quickPrompt('Give me a beginner-friendly workout for today')">💪 Workout idea</button>
         </div>
       </div>
     </div>
   </div>
+
   <nav class="bottom-nav">
-    <button class="nav-btn active" onclick="showPage('home', this)"><span class="icon">🏠</span>Home</button>
-    <button class="nav-btn" onclick="showPage('work', this)"><span class="icon">🗂</span>Work</button>
-    <button class="nav-btn" onclick="showPage('schedule', this)"><span class="icon">📅</span>Schedule</button>
-    <button class="nav-btn" onclick="showPage('expenses', this)"><span class="icon">💰</span>Expenses</button>
-    <button class="nav-btn" onclick="showPage('faith', this)"><span class="icon">✝️</span>Faith</button>
-    <button class="nav-btn" onclick="showPage('habits', this)"><span class="icon">🔥</span>Habits</button>
-    <button class="nav-btn" onclick="showPage('exercise', this)"><span class="icon">💪</span>Fitness</button>
-    <button class="nav-btn" onclick="showPage('growth', this)"><span class="icon">🧠</span>Growth</button>
-    <button class="nav-btn" onclick="showPage('ai', this)"><span class="icon">🤖</span>AI</button>
+    <button class="nav-btn active" onclick="showPage('home', this)"><i data-lucide="home"></i>Home</button>
+    <button class="nav-btn" onclick="showPage('work', this)"><i data-lucide="briefcase"></i>Work</button>
+    <button class="nav-btn" onclick="showPage('schedule', this)"><i data-lucide="calendar"></i>Schedule</button>
+    <button class="nav-btn" onclick="showPage('faith', this)"><i data-lucide="book-open"></i>Faith</button>
+    <button class="nav-btn" onclick="showPage('growth', this)"><i data-lucide="brain"></i>Growth</button>
+    <button class="nav-btn" onclick="showPage('exercise', this)"><i data-lucide="dumbbell"></i>Fitness</button>
+    <button class="nav-btn" onclick="showPage('ai', this)"><i data-lucide="sparkles"></i>AI</button>
   </nav>
 </div>
 
-    <div class="modal-overlay" id="modal-task">
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-task">
   <div class="modal">
-    <div class="modal-title">➕ New Task</div>
+    <div class="modal-title">New Task</div>
     <div class="input-group"><label>Task Name</label><input id="task-name" placeholder="What needs to be done?"></div>
-    <div class="input-group"><label>Urgency</label><select id="task-urgency"><option value="urgent">🔴 Urgent</option><option value="high">🟠 High</option><option value="normal" selected>🔵 Normal</option><option value="low">🟢 Low</option></select></div>
+    <div class="input-group"><label>Difficulty / Weight %</label><input type="number" id="task-difficulty" placeholder="10 = easy, 50 = hard" value="10" min="1" max="100"></div>
+    <div class="input-group"><label>Urgency</label><select id="task-urgency"><option value="urgent">Urgent</option><option value="high">High</option><option value="normal" selected>Normal</option><option value="low">Low</option></select></div>
     <div class="input-group"><label>Deadline</label><input type="datetime-local" id="task-deadline"></div>
-    <div class="input-group"><label>Notes</label><textarea id="task-notes" placeholder="Optional details..."></textarea></div>
     <div class="modal-actions"><button class="btn btn-primary" style="flex:1" onclick="addTask()">Add Task</button><button class="btn btn-ghost" onclick="closeModal('modal-task')">Cancel</button></div>
   </div>
 </div>
+
 <div class="modal-overlay" id="modal-event">
   <div class="modal">
-    <div class="modal-title">📆 New Event</div>
+    <div class="modal-title">New Event</div>
     <div class="input-group"><label>Event Name</label><input id="event-name" placeholder="Event title"></div>
     <div class="input-group"><label>Date & Time</label><input type="datetime-local" id="event-datetime"></div>
-    <div class="input-group"><label>Notes</label><textarea id="event-notes" placeholder="Optional..."></textarea></div>
     <div class="modal-actions"><button class="btn btn-primary" style="flex:1" onclick="addEvent()">Add Event</button><button class="btn btn-ghost" onclick="closeModal('modal-event')">Cancel</button></div>
   </div>
 </div>
-<div class="modal-overlay" id="modal-expense">
-  <div class="modal">
-    <div class="modal-title">💰 Add Expense</div>
-    <div class="input-group"><label>Description</label><input id="exp-desc" placeholder="What did you spend on?"></div>
-    <div class="input-group"><label>Amount (₱)</label><input type="number" id="exp-amount" placeholder="0.00"></div>
-    <div class="input-group"><label>Category</label><select id="exp-category"><option>Food</option><option>Transport</option><option>Bills</option><option>Shopping</option><option>Health</option><option>Giving</option><option>Others</option></select></div>
-    <div class="input-group"><label>Date</label><input type="date" id="exp-date"></div>
-    <div class="modal-actions"><button class="btn btn-primary" style="flex:1" onclick="addExpense()">Add</button><button class="btn btn-ghost" onclick="closeModal('modal-expense')">Cancel</button></div>
-  </div>
-</div>
-<div class="modal-overlay" id="modal-habit">
-  <div class="modal">
-    <div class="modal-title">🔥 New Habit</div>
-    <div class="input-group"><label>Habit Name</label><input id="habit-name" placeholder="e.g. Morning Prayer, Reading, etc."></div>
-    <div class="input-group"><label>Emoji Icon</label><input id="habit-icon" placeholder="📖" maxlength="2"></div>
-    <div class="modal-actions"><button class="btn btn-primary" style="flex:1" onclick="addHabit()">Add Habit</button><button class="btn btn-ghost" onclick="closeModal('modal-habit')">Cancel</button></div>
-  </div>
-</div>
-<div class="modal-overlay" id="modal-exercise">
-  <div class="modal">
-    <div class="modal-title">💪 Custom Exercise Plan</div>
-    <div class="input-group"><label>Plan Name</label><input id="ex-plan-name" placeholder="e.g. Morning Routine"></div>
-    <div class="input-group"><label>Day</label><select id="ex-day"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></div>
-    <div class="input-group"><label>Exercises (one per line)</label><textarea id="ex-exercises" placeholder="Push-ups: 3x15&#10;Squats: 3x20&#10;Plank: 3x30s"></textarea></div>
-    <div class="modal-actions"><button class="btn btn-primary" style="flex:1" onclick="addCustomExercise()">Save Plan</button><button class="btn btn-ghost" onclick="closeModal('modal-exercise')">Cancel</button></div>
-  </div>
-</div>
+
 <div class="modal-overlay" id="modal-growth">
   <div class="modal">
-    <div class="modal-title">🧠 Learning Plan</div>
-    <div class="input-group"><label>What do you want to learn?</label><input id="growth-topic" placeholder="e.g. Public Speaking, Python, Finance..."></div>
-    <div class="input-group"><label>Why is this important to you?</label><input id="growth-why" placeholder="Your motivation..."></div>
-    <div class="input-group"><label>Daily time commitment</label><select id="growth-time"><option>15 minutes</option><option>30 minutes</option><option>1 hour</option><option>2 hours</option></select></div>
-    <div class="input-group"><label>Duration goal</label><select id="growth-duration"><option>1 week</option><option>2 weeks</option><option>1 month</option><option>3 months</option></select></div>
-    <div class="modal-actions"><button class="btn btn-primary" style="flex:1" onclick="addGrowthPlan()">Start Plan</button><button class="btn btn-ghost" onclick="closeModal('modal-growth')">Cancel</button></div>
-  </div>
-</div>
-
-    <script>
-function save(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e){} }
-function load(key, def) { try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch(e){ return def; } }
-let tasks = load('mlh_tasks', []);
-let events = load('mlh_events', []);
-let todos = load('mlh_todos', []);
-let expenses = load('mlh_expenses', []);
-let habits = load('mlh_habits', []);
-let faithChecks = load('mlh_faith', {});
-let bibleNotes = load('mlh_bible', []);
-let tithes = load('mlh_tithes', []);
-let faithNotes = load('mlh_faithnotes', []);
-let customExercises = load('mlh_exercises', []);
-let growthPlans = load('mlh_growth', []);
-let topics = load('mlh_topics', ['Communication', 'Leadership', 'Finance', 'Faith', 'Health']);
-let mindsetReflections = load('mlh_mindset', []);
-let chatHistory = [];
-let calViewDate = new Date();
-let currentTaskFilter = 'all';
-let currentExpFilter = 'all';
-const FAITH_ITEMS = [
-  { key: 'sealing', icon: '📖', label: 'Sealing (Word Study)' },
-  { key: 'bible', icon: '📗', label: 'Bible Reading' },
-  { key: 'evangelism', icon: '🌍', label: 'Evangelism' },
-  { key: 'tithes', icon: '💝', label: 'Tithes & Offerings' },
-  { key: 'worship', icon: '🙌', label: 'Worship Service' },
-];
-function showPage(id, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  btn.classList.add('active');
-  if (id === 'schedule') renderCalendar();
-  if (id === 'expenses') renderExpenses();
-  if (id === 'habits') renderHabits();
-  if (id === 'faith') renderFaith();
-  if (id === 'exercise') renderExercisePlan();
-  if (id === 'growth') renderGrowth();
-  if (id === 'home') renderHome();
-  if (id === 'work') renderTasks();
-  if (id === 'ai' && chatHistory.length === 0) initChat();
-}
-function openModal(id) {
-  document.getElementById(id).classList.add('open');
-  const now = new Date();
-  const pad = n => String(n).padStart(2,'0');
-  const dt = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-  const dtl = `${dt}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
-  if (id==='modal-task') document.getElementById('task-deadline').value = dtl;
-  if (id==='modal-event') document.getElementById('event-datetime').value = dtl;
-  if (id==='modal-expense') document.getElementById('exp-date').value = dt;
-}
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if(e.target===o) o.classList.remove('open'); }));
-function today() { const n = new Date(); const p = n => String(n).padStart(2,'0'); return `${n.getFullYear()}-${p(n.getMonth()+1)}-${p(n.getDate())}`; }
-function formatDate(dt) { if (!dt) return ''; const d = new Date(dt); return d.toLocaleDateString('en-PH', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }); }
-function formatDateOnly(dt) { if (!dt) return ''; const d = new Date(dt); return d.toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' }); }
-function isThisWeek(dateStr) { const d = new Date(dateStr); const now = new Date(); const start = new Date(now); start.setDate(now.getDate() - now.getDay()); start.setHours(0,0,0,0); const end = new Date(start); end.setDate(start.getDate()+7); return d >= start && d < end; }
-function isThisMonth(dateStr) { const d = new Date(dateStr); const now = new Date(); return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear(); }
-function renderHome() {
-  const h = new Date().getHours();
-  const greet = h < 12 ? 'Good morning 👋' : h < 17 ? 'Good afternoon 👋' : 'Good evening 👋';
-  document.getElementById('greeting-text').textContent = greet;
-  const todayTasks = tasks.filter(t => !t.done && t.deadline && t.deadline.startsWith(today()));
-  document.getElementById('qs-tasks').textContent = todayTasks.length;
-  const longestStreak = habits.length ? Math.max(...habits.map(h => h.streak||0), 0) : 0;
-  document.getElementById('qs-streak').textContent = longestStreak;
-  const todayExp = expenses.filter(e => e.date === today()).reduce((s,e)=>s+e.amount,0);
-  document.getElementById('qs-expense').textContent = '₱' + todayExp.toLocaleString();
-  const urgentTasks = tasks.filter(t => !t.done && (t.urgency==='urgent'||t.urgency==='high')).slice(0,3);
-  const tl = document.getElementById('home-tasks-list');
-  if (!urgentTasks.length) { tl.innerHTML = '<div class="empty"><span class="emoji">✅</span>All clear! No urgent tasks.</div>'; }
-  else { tl.innerHTML = urgentTasks.map(t => `<div class="task-item"><div class="task-body"><div class="task-name">${t.name}</div><div class="task-meta"><span class="badge badge-${t.urgency}">${t.urgency}</span>${t.deadline?formatDate(t.deadline):''}</div></div></div>`).join(''); }
-  const todayKey = today();
-  const fl = document.getElementById('home-faith-list');
-  fl.innerHTML = FAITH_ITEMS.map(fi => { const done = faithChecks[todayKey]?.[fi.key]; return `<div class="faith-item"><span class="faith-icon">${fi.icon}</span><span class="faith-label">${fi.label}</span><span style="font-size:1.2rem">${done?'✅':'⬜'}</span></div>`; }).join('');
-  const quotes = ["Every day is a new beginning. Take a deep breath and start again.","Consistency is what transforms average into excellence.","Your faith is your foundation. Build on it every day.","Small daily improvements lead to staggering long-term results.","You are more capable than you think. Keep going.","Progress over perfection. Show up today.","God's plans for you are greater than your fears.","Your growth is happening even when you can't see it."];
-  document.getElementById('daily-quote').textContent = `"${quotes[new Date().getDate() % quotes.length]}"`;
-}
-function addTask() {
-  const name = document.getElementById('task-name').value.trim();
-  if (!name) return alert('Please enter a task name.');
-  tasks.push({ id: Date.now(), name, urgency: document.getElementById('task-urgency').value, deadline: document.getElementById('task-deadline').value, notes: document.getElementById('task-notes').value, done: false, created: new Date().toISOString() });
-  save('mlh_tasks', tasks); closeModal('modal-task');
-  document.getElementById('task-name').value=''; document.getElementById('task-notes').value='';
-  renderTasks();
-}
-function toggleTask(id) { const t = tasks.find(t=>t.id===id); if(t){t.done=!t.done;save('mlh_tasks',tasks);renderTasks();} }
-function deleteTask(id) { tasks=tasks.filter(t=>t.id!==id); save('mlh_tasks',tasks); renderTasks(); }
-function filterTasks(f, btn) { currentTaskFilter=f; document.querySelectorAll('#page-work .tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderTasks(); }
-function renderTasks() {
-  let filtered = [...tasks];
-  if (currentTaskFilter==='urgent') filtered=filtered.filter(t=>t.urgency==='urgent'&&!t.done);
-  else if (currentTaskFilter==='high') filtered=filtered.filter(t=>t.urgency==='high'&&!t.done);
-  else if (currentTaskFilter==='pending') filtered=filtered.filter(t=>!t.done);
-  else if (currentTaskFilter==='done') filtered=filtered.filter(t=>t.done);
-  filtered.sort((a,b)=>{ const ord={urgent:0,high:1,normal:2,low:3}; if(a.done!==b.done) return a.done?1:-1; return (ord[a.urgency]||2)-(ord[b.urgency]||2); });
-  const el = document.getElementById('tasks-list');
-  if (!filtered.length) { el.innerHTML='<div class="empty"><span class="emoji">🗂</span>No tasks here.</div>'; return; }
-  el.innerHTML = filtered.map(t => `<div class="task-item"><button class="task-check ${t.done?'done':''}" onclick="toggleTask(${t.id})">${t.done?'✓':''}</button><div class="task-body"><div class="task-name ${t.done?'done':''}">${t.name}</div><div class="task-meta"><span class="badge badge-${t.done?'done':t.urgency}">${t.done?'Done':t.urgency}</span>${t.deadline?'⏰ '+formatDate(t.deadline):''}${t.notes?'<span style="color:var(--text-dim)">📝 '+t.notes.substring(0,40)+'</span>':''}</div></div><div class="task-actions"><button class="btn btn-danger btn-sm" onclick="deleteTask(${t.id})">✕</button></div></div>`).join('');
-}
-function renderCalendar() {
-  const y=calViewDate.getFullYear(), m=calViewDate.getMonth();
-  const now=new Date();
-  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('cal-month-label').textContent=`${months[m]} ${y}`;
-  document.getElementById('cal-day-labels').innerHTML=days.map(d=>`<div class="cal-day-label">${d}</div>`).join('');
-  const first=new Date(y,m,1).getDay();
-  const daysInMonth=new Date(y,m+1,0).getDate();
-  let html='';
-  for(let i=0;i<first;i++) html+='<div class="cal-day empty"></div>';
-  for(let d=1;d<=daysInMonth;d++){
-    const dateStr=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isToday=d===now.getDate()&&m===now.getMonth()&&y===now.getFullYear();
-    const hasEv=events.some(e=>e.datetime&&e.datetime.startsWith(dateStr));
-    html+=`<div class="cal-day ${isToday?'today':''} ${hasEv?'has-event':''}" onclick="selectCalDay('${dateStr}')">${d}</div>`;
-  }
-  document.getElementById('cal-grid').innerHTML=html;
-  renderTodos(); renderEvents();
-}
-function changeMonth(d){calViewDate.setMonth(calViewDate.getMonth()+d);renderCalendar();}
-function selectCalDay(dateStr){renderEvents(dateStr);}
-function addTodo(){const val=document.getElementById('todo-input').value.trim();if(!val)return;todos.push({id:Date.now(),text:val,done:false,date:today()});save('mlh_todos',todos);document.getElementById('todo-input').value='';renderTodos();}
-function toggleTodo(id){const t=todos.find(t=>t.id===id);if(t){t.done=!t.done;save('mlh_todos',todos);renderTodos();}}
-function deleteTodo(id){todos=todos.filter(t=>t.id!==id);save('mlh_todos',todos);renderTodos();}
-function renderTodos(){
-  const todayTodos=todos.filter(t=>t.date===today());
-  const el=document.getElementById('todo-list');
-  if(!todayTodos.length){el.innerHTML='<div class="empty"><span class="emoji">📌</span>No to-dos yet.</div>';return;}
-  el.innerHTML=todayTodos.map(t=>`<div class="task-item" style="padding:10px 12px"><button class="task-check ${t.done?'done':''}" onclick="toggleTodo(${t.id})">${t.done?'✓':''}</button><div class="task-name ${t.done?'done':''}" style="flex:1">${t.text}</div><button class="btn btn-danger btn-sm" onclick="deleteTodo(${t.id})">✕</button></div>`).join('');
-}
-function addEvent(){const name=document.getElementById('event-name').value.trim();if(!name)return alert('Enter event name.');events.push({id:Date.now(),name,datetime:document.getElementById('event-datetime').value,notes:document.getElementById('event-notes').value});save('mlh_events',events);closeModal('modal-event');document.getElementById('event-name').value='';document.getElementById('event-notes').value='';renderCalendar();}
-function renderEvents(filter){let evs=[...events];if(filter)evs=evs.filter(e=>e.datetime&&e.datetime.startsWith(filter));evs.sort((a,b)=>a.datetime>b.datetime?1:-1);const el=document.getElementById('events-list');if(!evs.length){el.innerHTML='<div class="empty"><span class="emoji">📆</span>No events.</div>';return;}el.innerHTML=evs.map(e=>`<div class="task-item" style="padding:10px 12px"><div class="task-body"><div class="task-name">${e.name}</div><div class="task-meta">📅 ${formatDate(e.datetime)} ${e.notes?'· '+e.notes:''}</div></div><button class="btn btn-danger btn-sm" onclick="deleteEvent(${e.id})">✕</button></div>`).join('');}
-function deleteEvent(id){events=events.filter(e=>e.id!==id);save('mlh_events',events);renderCalendar();}
-function addExpense(){const desc=document.getElementById('exp-desc').value.trim();const amount=parseFloat(document.getElementById('exp-amount').value);if(!desc||isNaN(amount)||amount<=0)return alert('Enter valid description and amount.');expenses.push({id:Date.now(),desc,amount,category:document.getElementById('exp-category').value,date:document.getElementById('exp-date').value||today()});save('mlh_expenses',expenses);closeModal('modal-expense');document.getElementById('exp-desc').value='';document.getElementById('exp-amount').value='';renderExpenses();}
-function filterExpenses(f,btn){currentExpFilter=f;document.querySelectorAll('#page-expenses .tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderExpenses();}
-function renderExpenses(){
-  const todayExp=expenses.filter(e=>e.date===today()).reduce((s,e)=>s+e.amount,0);
-  const weekExp=expenses.filter(e=>isThisWeek(e.date)).reduce((s,e)=>s+e.amount,0);
-  const monthExp=expenses.filter(e=>isThisMonth(e.date)).reduce((s,e)=>s+e.amount,0);
-  document.getElementById('exp-today').textContent='₱'+todayExp.toLocaleString();
-  document.getElementById('exp-week').textContent='₱'+weekExp.toLocaleString();
-  document.getElementById('exp-month').textContent='₱'+monthExp.toLocaleString();
-  document.getElementById('exp-count').textContent=expenses.length;
-  let filtered=[...expenses];
-  if(currentExpFilter==='week')filtered=filtered.filter(e=>isThisWeek(e.date));
-  else if(currentExpFilter==='month')filtered=filtered.filter(e=>isThisMonth(e.date));
-  const el=document.getElementById('expenses-view');
-  if(currentExpFilter==='chart'){renderExpenseChart(el);return;}
-  filtered.sort((a,b)=>b.date>a.date?1:-1);
-  if(!filtered.length){el.innerHTML='<div class="empty"><span class="emoji">💰</span>No expenses yet.</div>';return;}
-  const cats={'Food':'🍽','Transport':'🚗','Bills':'💡','Shopping':'🛍','Health':'💊','Giving':'🙏','Others':'📦'};
-  el.innerHTML=filtered.map(e=>`<div class="task-item" style="padding:10px 12px"><div style="font-size:1.4rem">${cats[e.category]||'📦'}</div><div class="task-body"><div class="task-name">${e.desc}</div><div class="task-meta">${e.category} · ${formatDateOnly(e.date)}</div></div><div style="font-weight:700;color:var(--accent3);">₱${e.amount.toLocaleString()}</div><button class="btn btn-danger btn-sm" onclick="deleteExpense(${e.id})">✕</button></div>`).join('');
-}
-function renderExpenseChart(el){const cats=['Food','Transport','Bills','Shopping','Health','Giving','Others'];const colors=['var(--accent)','var(--accent2)','var(--accent4)','var(--accent5)','var(--accent3)','#b794f4','#76e4f7'];const monthExps=expenses.filter(e=>isThisMonth(e.date));const totals=cats.map(c=>monthExps.filter(e=>e.category===c).reduce((s,e)=>s+e.amount,0));const max=Math.max(...totals,1);const weekExps=expenses.filter(e=>isThisWeek(e.date));const weekTotals=cats.map(c=>weekExps.filter(e=>e.category===c).reduce((s,e)=>s+e.amount,0));el.innerHTML=`<div class="card"><div class="card-title">📊 This Month by Category</div><div class="chart-bar-wrap">${cats.map((c,i)=>`<div class="chart-row"><div class="chart-label">${c}</div><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:${(totals[i]/max*100).toFixed(1)}%;background:${colors[i]}"></div></div><div class="chart-val" style="color:${colors[i]}">₱${totals[i].toLocaleString()}</div></div>`).join('')}</div></div><div class="card"><div class="card-title">📊 This Week by Category</div><div class="chart-bar-wrap">${cats.map((c,i)=>`<div class="chart-row"><div class="chart-label">${c}</div><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:${(weekTotals[i]/Math.max(...weekTotals,1)*100).toFixed(1)}%;background:${colors[i]}"></div></div><div class="chart-val" style="color:${colors[i]}">₱${weekTotals[i].toLocaleString()}</div></div>`).join('')}</div></div>`;}
-function deleteExpense(id){expenses=expenses.filter(e=>e.id!==id);save('mlh_expenses',expenses);renderExpenses();}
-function renderFaith(){const todayKey=today();const saved=faithChecks[todayKey]||{};document.getElementById('faith-checklist').innerHTML=FAITH_ITEMS.map(fi=>`<div class="faith-item"><span class="faith-icon">${fi.icon}</span><span class="faith-label">${fi.label}</span><div class="faith-toggle ${saved[fi.key]?'on':''}" id="ft-${fi.key}" onclick="toggleFaithItem('${fi.key}')"></div></div>`).join('');renderBibleNotes();renderTithes();renderFaithNotes();}
-function toggleFaithItem(key){const todayKey=today();if(!faithChecks[todayKey])faithChecks[todayKey]={};faithChecks[todayKey][key]=!faithChecks[todayKey][key];const el=document.getElementById('ft-'+key);el.classList.toggle('on',faithChecks[todayKey][key]);}
-function saveFaithChecklist(){save('mlh_faith',faithChecks);alert('Faith checklist saved! 🙌');}
-function saveBibleNote(){const ref=document.getElementById('bible-ref').value.trim();if(!ref)return;bibleNotes.unshift({id:Date.now(),ref,note:document.getElementById('bible-note').value,date:today()});save('mlh_bible',bibleNotes);document.getElementById('bible-ref').value='';document.getElementById('bible-note').value='';renderBibleNotes();}
-function renderBibleNotes(){const el=document.getElementById('bible-notes-list');if(!bibleNotes.length){el.innerHTML='<div class="empty">No readings yet.</div>';return;}el.innerHTML=bibleNotes.slice(0,5).map(n=>`<div class="note-item"><div class="note-title">📗 ${n.ref}</div>${n.note?`<div class="note-text">${n.note}</div>`:''}<div class="note-date">${formatDateOnly(n.date)}</div></div>`).join('');}
-function saveTithe(){const amt=parseFloat(document.getElementById('tithe-amount').value);if(isNaN(amt)||amt<=0)return;tithes.unshift({id:Date.now(),amount:amt,type:document.getElementById('tithe-type').value,date:today()});save('mlh_tithes',tithes);document.getElementById('tithe-amount').value='';renderTithes();}
-function renderTithes(){const el=document.getElementById('tithe-list');if(!tithes.length){el.innerHTML='<div class="empty">No records yet.</div>';return;}el.innerHTML=tithes.slice(0,5).map(t=>`<div class="task-item" style="padding:8px 10px"><div class="task-body"><div class="task-name">${t.type}</div><div class="task-meta">${formatDateOnly(t.date)}</div></div><div style="font-weight:700;color:var(--accent5)">₱${t.amount.toLocaleString()}</div></div>`).join('');}
-function saveFaithNote(){const title=document.getElementById('faith-note-title').value.trim();if(!title)return;faithNotes.unshift({id:Date.now(),title,text:document.getElementById('faith-note-text').value,date:today()});save('mlh_faithnotes',faithNotes);document.getElementById('faith-note-title').value='';document.getElementById('faith-note-text').value='';renderFaithNotes();}
-function renderFaithNotes(){const el=document.getElementById('faith-notes-list');if(!faithNotes.length){el.innerHTML='<div class="empty">No notes yet.</div>';return;}el.innerHTML=faithNotes.slice(0,5).map(n=>`<div class="note-item"><div class="note-title">📝 ${n.title}</div>${n.text?`<div class="note-text">${n.text}</div>`:''}<div class="note-date">${formatDateOnly(n.date)}</div></div>`).join('');}
-function addHabit(){const name=document.getElementById('habit-name').value.trim();if(!name)return;habits.push({id:Date.now(),name,icon:document.getElementById('habit-icon').value||'⭐',streak:0,log:{}});save('mlh_habits',habits);closeModal('modal-habit');document.getElementById('habit-name').value='';document.getElementById('habit-icon').value='';renderHabits();}
-function toggleHabitDay(hid,dateStr){const h=habits.find(h=>h.id===hid);if(!h)return;h.log[dateStr]=!h.log[dateStr];let streak=0;const d=new Date();while(true){const key=d.toISOString().split('T')[0];if(h.log[key]){streak++;d.setDate(d.getDate()-1);}else break;}h.streak=streak;save('mlh_habits',habits);renderHabits();const ls=Math.max(...habits.map(h=>h.streak||0),0);document.getElementById('total-streak').textContent=ls;}
-function renderHabits(){const ls=habits.length?Math.max(...habits.map(h=>h.streak||0),0):0;document.getElementById('total-streak').textContent=ls;const el=document.getElementById('habits-list');if(!habits.length){el.innerHTML='<div class="empty"><span class="emoji">🔥</span>No habits yet. Add one!</div>';return;}const now=new Date();el.innerHTML=habits.map(h=>{let dots='';for(let i=20;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);const key=d.toISOString().split('T')[0];const day=d.getDate();const done=h.log[key];dots+=`<div class="streak-dot ${done?'done':'empty'}" onclick="toggleHabitDay(${h.id},'${key}')" title="${key}">${day}</div>`;}return`<div class="card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><span style="font-size:1.4rem">${h.icon}</span><div style="flex:1"><div style="font-weight:600">${h.name}</div><div style="font-size:0.75rem;color:var(--accent)">🔥 ${h.streak} day streak</div></div><button class="btn btn-danger btn-sm" onclick="deleteHabit(${h.id})">✕</button></div><div class="streak-grid">${dots}</div></div>`;}).join('');}
-function deleteHabit(id){habits=habits.filter(h=>h.id!==id);save('mlh_habits',habits);renderHabits();}
-const EXERCISE_PLANS={beginner:{'General fitness':[{day:'Mon',name:'Walk + Stretch',detail:'30min brisk walk, 10min stretching'},{day:'Tue',name:'Rest or Light Yoga',detail:'Gentle stretching, breathing'},{day:'Wed',name:'Bodyweight Basics',detail:'Push-ups 2x10, Squats 2x15, Plank 2x20s'},{day:'Thu',name:'Walk',detail:'30min walk at a comfortable pace'},{day:'Fri',name:'Core & Balance',detail:'Crunches 2x15, Bird-dog, Single leg stand'},{day:'Sat',name:'Active Play',detail:'Dance, swim, bike — any fun movement'},{day:'Sun',name:'Rest & Recovery',detail:'Full rest or gentle walk'}],'Weight loss':[{day:'Mon',name:'Cardio Walk',detail:'40min brisk walk'},{day:'Tue',name:'Bodyweight Circuit',detail:'Jumping jacks 3x20, Squats 3x15, Mountain climbers 3x10'},{day:'Wed',name:'Rest',detail:'Active rest: light stretching'},{day:'Thu',name:'Cardio',detail:'40min walk or beginner jog'},{day:'Fri',name:'Full Body',detail:'Push-ups, Squats, Lunges — 2 rounds each'},{day:'Sat',name:'Fun Activity',detail:'Swimming, dancing, cycling'},{day:'Sun',name:'Rest',detail:'Full rest'}]},intermediate:{'General fitness':[{day:'Mon',name:'Upper Body',detail:'Push-ups 3x15, Dips 3x12, Shoulder press 3x12'},{day:'Tue',name:'Cardio',detail:'30min jog or cycling'},{day:'Wed',name:'Lower Body',detail:'Squats 3x20, Lunges 3x15, Calf raises 3x20'},{day:'Thu',name:'Rest / Yoga',detail:'Stretching and recovery'},{day:'Fri',name:'Full Body HIIT',detail:'20min HIIT: burpees, jump squats, push-ups'},{day:'Sat',name:'Core',detail:'Plank 3x45s, Russian twists, Bicycle crunches'},{day:'Sun',name:'Rest',detail:'Full recovery'}]},active:{'General fitness':[{day:'Mon',name:'Strength - Push',detail:'Bench press, Overhead press, Tricep dips'},{day:'Tue',name:'Cardio HIIT',detail:'45min intense cardio or interval training'},{day:'Wed',name:'Strength - Pull',detail:'Rows, Pull-ups, Bicep curls'},{day:'Thu',name:'Active Recovery',detail:'Yoga, swimming, or easy cycle'},{day:'Fri',name:'Strength - Legs',detail:'Squats, Deadlifts, Leg press, Lunges'},{day:'Sat',name:'Sport / Cardio',detail:'Basketball, running, cycling, any sport'},{day:'Sun',name:'Rest',detail:'Full recovery'}]}};
-function updateExercisePlan(){saveHealthStatus();renderExercisePlan();}
-function saveHealthStatus(){save('mlh_health',{level:document.getElementById('fitness-level').value,condition:document.getElementById('health-condition').value,goal:document.getElementById('fitness-goal').value});}
-function renderExercisePlan(){const hs=load('mlh_health',{});if(hs.level)document.getElementById('fitness-level').value=hs.level;if(hs.condition)document.getElementById('health-condition').value=hs.condition;if(hs.goal)document.getElementById('fitness-goal').value=hs.goal;const level=document.getElementById('fitness-level').value;const goal=document.getElementById('fitness-goal').value;const plans=EXERCISE_PLANS[level]?.[goal]||EXERCISE_PLANS[level]?.['General fitness']||EXERCISE_PLANS.beginner['General fitness'];document.getElementById('exercise-plan').innerHTML=plans.map(p=>`<div class="exercise-card"><div style="display:flex;gap:10px;align-items:center"><div style="background:rgba(79,209,197,0.1);border-radius:6px;padding:4px 10px;font-size:0.75rem;font-weight:700;color:var(--accent)">${p.day}</div><div><div class="exercise-name">${p.name}</div><div class="exercise-detail">${p.detail}</div></div></div></div>`).join('');const el=document.getElementById('custom-exercise-list');if(!customExercises.length){el.innerHTML='<div class="empty">No custom plans yet.</div>';return;}el.innerHTML=customExercises.map(e=>`<div class="exercise-card"><div style="display:flex;justify-content:space-between;align-items:center"><div><div class="exercise-name">${e.name} <span style="color:var(--text-muted);font-size:0.75rem">(${e.day})</span></div><div class="exercise-detail" style="white-space:pre-line">${e.exercises}</div></div><button class="btn btn-danger btn-sm" onclick="deleteExercise(${e.id})">✕</button></div></div>`).join('');}
-function addCustomExercise(){const name=document.getElementById('ex-plan-name').value.trim();if(!name)return;customExercises.push({id:Date.now(),name,day:document.getElementById('ex-day').value,exercises:document.getElementById('ex-exercises').value});save('mlh_exercises',customExercises);closeModal('modal-exercise');document.getElementById('ex-plan-name').value='';document.getElementById('ex-exercises').value='';renderExercisePlan();}
-function deleteExercise(id){customExercises=customExercises.filter(e=>e.id!==id);save('mlh_exercises',customExercises);renderExercisePlan();}
-function addGrowthPlan(){const topic=document.getElementById('growth-topic').value.trim();if(!topic)return;growthPlans.push({id:Date.now(),topic,why:document.getElementById('growth-why').value,time:document.getElementById('growth-time').value,duration:document.getElementById('growth-duration').value,progress:0,started:today()});save('mlh_growth',growthPlans);closeModal('modal-growth');document.getElementById('growth-topic').value='';document.getElementById('growth-why').value='';renderGrowth();}
-function addTopic(){const t=document.getElementById('topic-input').value.trim();if(!t)return;topics.push(t);save('mlh_topics',topics);document.getElementById('topic-input').value='';renderTopics();}
-function removeTopic(i){topics.splice(i,1);save('mlh_topics',topics);renderTopics();}
-function renderTopics(){const colors=['var(--accent)','var(--accent2)','var(--accent4)','var(--accent5)','var(--accent3)'];document.getElementById('topic-tags').innerHTML=topics.map((t,i)=>`<span style="background:rgba(79,209,197,0.1);color:${colors[i%colors.length]};padding:5px 12px;border-radius:99px;font-size:0.78rem;cursor:pointer" onclick="removeTopic(${i})">${t} ✕</span>`).join('');}
-function saveMindsetReflection(){const text=document.getElementById('mindset-reflection').value.trim();if(!text)return;mindsetReflections.unshift({id:Date.now(),text,date:today()});save('mlh_mindset',mindsetReflections);document.getElementById('mindset-reflection').value='';renderMindset();}
-function renderMindset(){const el=document.getElementById('mindset-list');const mindsetTips=['🌱 Embrace a growth mindset — every failure is feedback.','🧘 Practice gratitude: name 3 things you\'re thankful for today.','💭 Your thoughts shape your reality. Choose them wisely.','🤝 Surround yourself with people who push you to grow.','⏰ Focus on progress, not perfection.'];const tip=mindsetTips[new Date().getDate()%mindsetTips.length];let html=`<div style="background:rgba(159,122,234,0.1);border-radius:8px;padding:12px;font-size:0.85rem;color:var(--accent4);margin-bottom:12px">${tip}</div>`;if(mindsetReflections.length){html+=mindsetReflections.slice(0,3).map(r=>`<div class="note-item" style="border-color:var(--accent4)"><div class="note-text">${r.text}</div><div class="note-date">${formatDateOnly(r.date)}</div></div>`).join('');}el.innerHTML=html;}
-function renderGrowth(){const el=document.getElementById('growth-plans-list');if(!growthPlans.length){el.innerHTML='<div class="empty"><span class="emoji">🧠</span>No learning plans yet. Add one!</div>';}else{el.innerHTML=growthPlans.map(p=>`<div class="card" style="padding:14px;margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="flex:1"><div style="font-weight:700;font-size:0.95rem">📚 ${p.topic}</div>${p.why?`<div style="font-size:0.78rem;color:var(--text-muted);margin-top:3px">Why: ${p.why}</div>`:''}<div style="font-size:0.75rem;color:var(--accent);margin-top:4px">⏱ ${p.time}/day · ${p.duration}</div><div style="font-size:0.72rem;color:var(--text-dim);margin-top:2px">Started ${formatDateOnly(p.started)}</div></div><button class="btn btn-danger btn-sm" onclick="deleteGrowthPlan(${p.id})">✕</button></div><div style="margin-top:10px"><div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-bottom:4px"><span>Progress</span><span>${p.progress||0}%</span></div><div class="progress-bar"><div class="progress-fill" style="width:${p.progress||0}%;background:var(--accent4)"></div></div><input type="range" min="0" max="100" value="${p.progress||0}" style="width:100%;margin-top:6px;accent-color:var(--accent4)" onchange="updateGrowthProgress(${p.id},this.value)"></div></div>`).join('');}renderTopics();renderMindset();}
-function updateGrowthProgress(id,val){const p=growthPlans.find(p=>p.id===id);if(p){p.progress=parseInt(val);save('mlh_growth',growthPlans);renderGrowth();}}
-function deleteGrowthPlan(id){growthPlans=growthPlans.filter(p=>p.id!==id);save('mlh_growth',growthPlans);renderGrowth();}
-function initChat(){chatHistory=[];addChatMsg('ai',"Hi! I'm your AI life coach inside MyLife Hub. 😊 I'm here to help you with motivation, planning, faith, health, growth, and anything you need. What's on your mind today?");}
-function addChatMsg(role,text){const el=document.getElementById('chat-messages');const div=document.createElement('div');div.className=`chat-msg ${role}`;div.innerHTML=`<div class="chat-avatar">${role==='ai'?'🤖':'👤'}</div><div class="chat-bubble">${text.replace(/\n/g,'<br>')}</div>`;el.appendChild(div);el.scrollTop=el.scrollHeight;}
-function showTyping(){const el=document.getElementById('chat-messages');const div=document.createElement('div');div.className='chat-msg ai';div.id='typing-indicator';div.innerHTML=`<div class="chat-avatar">🤖</div><div class="chat-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;el.appendChild(div);el.scrollTop=el.scrollHeight;}
-function removeTyping(){const t=document.getElementById('typing-indicator');if(t)t.remove();}
-function quickPrompt(text){document.getElementById('chat-input').value=text;sendChat();}
-async function sendChat(){const input=document.getElementById('chat-input');const msg=input.value.trim();if(!msg)return;input.value='';addChatMsg('user',msg);chatHistory.push({role:'user',content:msg});showTyping();const systemPrompt=`You are a warm, encouraging personal life coach inside MyLife Hub. Help the user with work tasks, daily schedules, expenses, faith journey (Bible reading, evangelism, tithes, worship), consistency and habits, exercise and health, personal growth, mindset and mental health. Be concise, practical, and uplifting. Use emojis where appropriate. Give actionable advice. Connect faith principles with practical life coaching when relevant.`;try{const response=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:systemPrompt,messages:chatHistory})});const data=await response.json();removeTyping();const reply=data.content?.map(c=>c.text||'').join('')||"Sorry, I couldn't respond right now. Try again!";addChatMsg('ai',reply);chatHistory.push({role:'assistant',content:reply});}catch(e){removeTyping();addChatMsg('ai',"Hmm, I'm having trouble connecting right now. Please check your internet and try again. 🙏");}}
-function init(){const now=new Date();document.getElementById('topbar-date').textContent=now.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});renderHome();renderTasks();renderCalendar();}
-init();
-</script>
-</body>
-</html>
+    <div class="modal
