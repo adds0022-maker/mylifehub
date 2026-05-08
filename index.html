@@ -10,65 +10,67 @@
 <title>MyLife Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
+<!-- FIREBASE SDK - NEEDED FOR SYNC -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+  import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, enableIndexedDbPersistence } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+  
+  // 🔥 REPLACE THIS ENTIRE OBJECT WITH YOUR FIREBASE CONFIG
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+  // 🔥 END REPLACE
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  
+  // Enable offline persistence - works without internet, syncs when back online
+  enableIndexedDbPersistence(db).catch((err) => {
+    console.log('Offline persistence failed: ', err);
+  });
+
+  // Make db globally available
+  window.db = db;
+  window.firestore = { collection, doc, setDoc, getDoc, onSnapshot };
+  
+  // Update sync status
+  document.addEventListener('DOMContentLoaded', () => {
+    const statusEl = document.getElementById('sync-status');
+    if (firebaseConfig.apiKey === "YOUR_API_KEY") {
+      statusEl.innerHTML = '<i data-lucide="wifi-off"></i> Offline - Add Firebase Config';
+      statusEl.classList.add('offline');
+    } else {
+      statusEl.innerHTML = '<i data-lucide="cloud"></i> Online';
+      statusEl.classList.add('online');
+      statusEl.classList.remove('offline');
+    }
+    lucide.createIcons();
+  });
+</script>
 <style>
   :root {
-    --bg: #fafafa;
-    --surface: #ffffff;
-    --surface2: #f5f5f5;
-    --border: #e5e5e5;
-    --accent: #4f46e5;
-    --accent2: #f59e0b;
-    --accent3: #ef4444;
-    --accent4: #8b5cf6;
-    --accent5: #10b981;
-    --text: #1a1a1a;
-    --text-muted: #737373;
-    --text-dim: #a3a3a3;
-    --radius: 12px;
-    --radius-sm: 8px;
-    --shadow: 0 1px 3px rgba(0,0,0,0.08);
-    --shadow-lg: 0 4px 12px rgba(0,0,0,0.08);
+    --bg: #fafafa; --surface: #ffffff; --surface2: #f5f5f5; --border: #e5e5e5;
+    --accent: #4f46e5; --accent2: #f59e0b; --accent3: #ef4444; --accent4: #8b5cf6; --accent5: #10b981;
+    --text: #1a1a1a; --text-muted: #737373; --text-dim: #a3a3a3;
+    --radius: 12px; --radius-sm: 8px; --shadow: 0 1px 3px rgba(0,0,0,0.08); --shadow-lg: 0 4px 12px rgba(0,0,0,0.08);
   }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
   h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; font-weight: 600; }
   #app { display: flex; flex-direction: column; min-height: 100vh; }
-  .topbar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky; top: 0; z-index: 100;
-    box-shadow: var(--shadow);
-  }
+  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
   .topbar-logo { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.3rem; color: var(--accent); }
   .topbar-logo span { color: var(--text-muted); font-weight: 400; }
   .topbar-date { font-size: 0.8rem; color: var(--text-muted); }
   .main-content { flex: 1; padding: 20px; padding-bottom: 100px; max-width: 900px; margin: 0 auto; width: 100%; }
-  .bottom-nav {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    display: flex;
-    z-index: 100;
-    padding-bottom: env(safe-area-inset-bottom);
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
-  }
-  .nav-btn {
-    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 10px 4px 8px;
-    background: none; border: none; cursor: pointer; color: var(--text-dim);
-    font-family: 'Inter', sans-serif; font-size: 0.65rem; gap: 4px;
-    transition: color 0.2s;
-  }
+  .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); display: flex; z-index: 100; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -2px 8px rgba(0,0,0,0.04); }
+  .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 4px 8px; background: none; border: none; cursor: pointer; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.65rem; gap: 4px; transition: color 0.2s; }
   .nav-btn i { width: 22px; height: 22px; }
   .nav-btn.active { color: var(--accent); }
   .nav-btn:hover { color: var(--text-muted); }
@@ -163,7 +165,6 @@
   .note-title { font-weight: 600; font-size: 0.92rem; margin-bottom: 6px; }
   .note-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; white-space: pre-wrap; }
   .note-date { font-size: 0.75rem; color: var(--text-dim); margin-top: 8px; }
-  @media (min-width: 600px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } .main-content { padding: 28px 32px; padding-bottom: 100px; } }
   .divider { height: 1px; background: var(--border); margin: 18px 0; }
   .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
   .stat-card { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; text-align: center; }
@@ -171,7 +172,6 @@
   .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
   .hydration-btn { background: linear-gradient(135deg, #60a5fa, #3b82f6); color: white; border: none; padding: 12px; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
   .exercise-alt { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); border-radius: 6px; padding: 8px; margin-top: 8px; font-size: 0.8rem; color: var(--accent5); }
-  .loading { text-align: center; padding: 20px; color: var(--text-muted); }
   .sync-status { position: fixed; top: 70px; right: 20px; background: var(--surface); border: 1px solid var(--border); padding: 8px 14px; border-radius: 99px; font-size: 0.75rem; z-index: 50; box-shadow: var(--shadow); display: flex; align-items: center; gap: 6px; }
   .sync-status.online { color: var(--accent5); }
   .sync-status.offline { color: var(--accent3); }
@@ -288,7 +288,7 @@
       </div>
     </div>
 
-    <!-- EXERCISE PAGE -->
+    <!-- FITNESS PAGE -->
     <div class="page" id="page-exercise">
       <div class="section-header"><div class="section-title">Fitness</div></div>
       <div class="card">
@@ -337,24 +337,4 @@
 <!-- MODALS -->
 <div class="modal-overlay" id="modal-task">
   <div class="modal">
-    <div class="modal-title">New Task</div>
-    <div class="input-group"><label>Task Name</label><input id="task-name" placeholder="What needs to be done?"></div>
-    <div class="input-group"><label>Difficulty / Weight %</label><input type="number" id="task-difficulty" placeholder="10 = easy, 50 = hard" value="10" min="1" max="100"></div>
-    <div class="input-group"><label>Urgency</label><select id="task-urgency"><option value="urgent">Urgent</option><option value="high">High</option><option value="normal" selected>Normal</option><option value="low">Low</option></select></div>
-    <div class="input-group"><label>Deadline</label><input type="datetime-local" id="task-deadline"></div>
-    <div class="modal-actions"><button class="btn btn-primary" style="flex:1" onclick="addTask()">Add Task</button><button class="btn btn-ghost" onclick="closeModal('modal-task')">Cancel</button></div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-event">
-  <div class="modal">
-    <div class="modal-title">New Event</div>
-    <div class="input-group"><label>Event Name</label><input id="event-name" placeholder="Event title"></div>
-    <div class="input-group"><label>Date & Time</label><input type="datetime-local" id="event-datetime"></div>
-    <div class="modal-actions"><button class="btn btn-primary" style="flex:1" onclick="addEvent()">Add Event</button><button class="btn btn-ghost" onclick="closeModal('modal-event')">Cancel</button></div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-growth">
-  <div class="modal">
-    <div class="modal
+    <
