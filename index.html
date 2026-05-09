@@ -3,220 +3,310 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0f1923">
+<meta name="theme-color" content="#f8f7f4">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="light-content">
 <meta name="apple-mobile-web-app-title" content="MyLife Hub">
 <title>MyLife Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1923;--surf:#182030;--surf2:#1e2a3a;--bord:#263244;--a:#4fd1c5;--a2:#f6ad55;--a3:#fc8181;--a4:#9f7aea;--a5:#68d391;--txt:#e2e8f0;--muted:#718096;--dim:#4a5568;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;}
-h1,h2,h3{font-family:'Syne',sans-serif;}
+:root{
+  --bg:#f8f7f4;--surf:#ffffff;--surf2:#f1f0ed;--surf3:#e8e6e1;
+  --bord:#e2e0db;--bord2:#d4d1ca;
+  --blue:#2563eb;--blue2:#1d4ed8;--blue-l:#eff6ff;--blue-t:rgba(37,99,235,0.1);
+  --green:#059669;--green-l:#ecfdf5;--green-t:rgba(5,150,105,0.1);
+  --amber:#d97706;--amber-l:#fffbeb;--amber-t:rgba(217,119,6,0.1);
+  --red:#dc2626;--red-l:#fef2f2;--red-t:rgba(220,38,38,0.1);
+  --purple:#7c3aed;--purple-l:#f5f3ff;--purple-t:rgba(124,58,237,0.1);
+  --txt:#1a1917;--txt2:#44403c;--txt3:#78716c;--txt4:#a8a29e;
+  --r:16px;--r-sm:10px;--r-xs:6px;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.05);
+  --shadow-md:0 4px 16px rgba(0,0,0,.1),0 1px 4px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;font-size:15px;}
 
 /* TOPBAR */
-.topbar{background:var(--surf);border-bottom:1px solid var(--bord);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--a);}
-.logo span{color:var(--muted);font-weight:400;}
-.topdate{font-size:0.75rem;color:var(--muted);}
+.topbar{background:var(--surf);border-bottom:1px solid var(--bord);padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 0 var(--bord);}
+.logo{font-size:1.2rem;font-weight:700;color:var(--blue);letter-spacing:-0.5px;}
+.logo span{color:var(--txt3);font-weight:400;}
+.topright{display:flex;align-items:center;gap:10px;}
+.topdate{font-size:0.72rem;color:var(--txt3);font-weight:500;}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 2px var(--green-l);}
+.sync-dot.off{background:var(--txt4);box-shadow:none;}
 
-/* PAGES - THE CRITICAL FIX */
-.pg{display:none !important;}
-.pg.show{display:block !important;}
+/* LAYOUT */
+.wrap{padding:20px 16px 110px;max-width:860px;margin:0 auto;}
 
-.wrap{padding:18px;padding-bottom:110px;max-width:860px;margin:0 auto;}
+/* PAGES */
+.pg{display:none;}
+.pg.show{display:block;animation:fadeUp .22s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* BOTTOM NAV */
-.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--surf);border-top:1px solid var(--bord);display:flex;z-index:999;overflow-x:auto;}
-.nb{flex:1;min-width:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 2px 7px;background:none;border:none;cursor:pointer;color:var(--dim);font-size:0.55rem;gap:3px;font-family:'DM Sans',sans-serif;}
-.nb .ic{font-size:1.2rem;line-height:1;}
-.nb.on{color:var(--a);}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--surf);border-top:1px solid var(--bord);display:flex;z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,.06);}
+.nb{flex:1;min-width:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 2px 10px;background:none;border:none;cursor:pointer;color:var(--txt4);font-size:0.52rem;font-weight:600;gap:3px;font-family:'Poppins',sans-serif;letter-spacing:.3px;text-transform:uppercase;transition:color .15s;}
+.nb svg{width:22px;height:22px;transition:transform .15s;}
+.nb.on{color:var(--blue);}
+.nb.on svg{transform:translateY(-1px);}
 
 /* CARDS */
-.card{background:var(--surf);border:1px solid var(--bord);border-radius:14px;padding:18px;margin-bottom:14px;}
-.ctitle{font-size:0.68rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
-.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.stitle{font-size:1.1rem;font-weight:700;}
+.card{background:var(--surf);border:1px solid var(--bord);border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:var(--shadow);}
+.card-sm{padding:14px;}
+.ctitle{font-size:0.65rem;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--txt4);margin-bottom:14px;}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.stitle{font-size:1.15rem;font-weight:700;color:var(--txt);letter-spacing:-0.3px;}
+
+/* SECTION PILLS */
+.section-pill{display:inline-flex;align-items:center;gap:6px;background:var(--blue-l);color:var(--blue);font-size:0.72rem;font-weight:600;padding:5px 12px;border-radius:99px;margin-bottom:18px;}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;transition:opacity 0.2s;}
-.bp{background:var(--a);color:#0f1923;}
-.bg{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);}
-.bd{background:rgba(252,129,129,0.15);color:var(--a3);border:1px solid rgba(252,129,129,0.3);}
-.sm{padding:5px 10px;font-size:0.75rem;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--r-sm);border:none;cursor:pointer;font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:600;transition:all .15s;letter-spacing:.1px;}
+.btn svg{width:16px;height:16px;}
+.bp{background:var(--blue);color:#fff;}
+.bp:hover{background:var(--blue2);}
+.bg{background:var(--surf2);color:var(--txt2);border:1px solid var(--bord);}
+.bg:hover{border-color:var(--bord2);}
+.bd{background:var(--red-t);color:var(--red);border:1px solid rgba(220,38,38,.2);}
+.bsm{padding:6px 12px;font-size:0.75rem;}
+.btn-icon{width:34px;height:34px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;padding:0;}
 
 /* INPUTS */
-.ig{margin-bottom:12px;}
-.ig label{display:block;font-size:0.78rem;color:var(--muted);margin-bottom:5px;}
-input,select,textarea{width:100%;padding:10px 12px;background:var(--surf2);border:1px solid var(--bord);border-radius:8px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;}
-input:focus,select:focus,textarea:focus{border-color:var(--a);}
-textarea{resize:vertical;min-height:80px;}
-select option{background:var(--surf2);}
+.ig{margin-bottom:14px;}
+.ig label{display:block;font-size:0.75rem;font-weight:600;color:var(--txt3);margin-bottom:6px;letter-spacing:.2px;}
+input,select,textarea{width:100%;padding:11px 14px;background:var(--surf2);border:1.5px solid var(--bord);border-radius:var(--r-sm);color:var(--txt);font-family:'Poppins',sans-serif;font-size:0.88rem;outline:none;transition:border-color .15s,box-shadow .15s;}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-t);}
+textarea{resize:vertical;min-height:140px;line-height:1.7;}
+select option{background:#fff;}
 
 /* BADGES */
-.badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:0.7rem;font-weight:600;}
-.bu{background:rgba(252,129,129,0.15);color:var(--a3);}
-.bh{background:rgba(246,173,85,0.15);color:var(--a2);}
-.bn{background:rgba(79,209,197,0.15);color:var(--a);}
-.bl{background:rgba(104,211,145,0.15);color:var(--a5);}
-.bd2{background:rgba(113,128,150,0.15);color:var(--muted);}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:0.68rem;font-weight:600;}
+.b-urgent{background:var(--red-t);color:var(--red);}
+.b-high{background:var(--amber-t);color:var(--amber);}
+.b-normal{background:var(--blue-t);color:var(--blue);}
+.b-low{background:var(--green-t);color:var(--green);}
+.b-done{background:var(--surf2);color:var(--txt4);}
+.b-purple{background:var(--purple-t);color:var(--purple);}
 
 /* TASK ITEM */
-.ti{background:var(--surf2);border:1px solid var(--bord);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px;}
-.tc{width:20px;height:20px;border-radius:50%;border:2px solid var(--bord);background:none;cursor:pointer;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;}
-.tc.done{background:var(--a5);border-color:var(--a5);}
-.tn{font-size:0.9rem;font-weight:500;}
-.tn.done{text-decoration:line-through;color:var(--muted);}
-.tm{font-size:0.72rem;color:var(--muted);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;}
+.ti{background:var(--surf);border:1.5px solid var(--bord);border-radius:var(--r-sm);padding:14px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px;transition:border-color .15s,box-shadow .15s;}
+.ti:hover{border-color:var(--bord2);box-shadow:var(--shadow);}
+.ti.done-item{opacity:.6;}
+.tchk{width:22px;height:22px;border-radius:6px;border:2px solid var(--bord2);background:none;cursor:pointer;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.tchk.done{background:var(--green);border-color:var(--green);}
+.tbody{flex:1;min-width:0;}
+.tname{font-size:0.88rem;font-weight:500;color:var(--txt);line-height:1.4;}
+.tname.done{text-decoration:line-through;color:var(--txt4);}
+.tmeta{font-size:0.72rem;color:var(--txt3);margin-top:5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.tprog{margin-top:8px;}
+.tpbar{height:4px;background:var(--surf3);border-radius:99px;overflow:hidden;}
+.tpfill{height:100%;border-radius:99px;background:var(--blue);transition:width .3s;}
 
 /* TABS */
-.tabs{display:flex;gap:4px;background:var(--surf2);padding:4px;border-radius:8px;margin-bottom:14px;overflow-x:auto;}
-.tb{flex:1;min-width:fit-content;padding:7px 10px;background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.75rem;border-radius:6px;font-family:'DM Sans',sans-serif;white-space:nowrap;}
-.tb.on{background:var(--surf);color:var(--txt);font-weight:600;}
+.tabs{display:flex;gap:4px;background:var(--surf2);padding:4px;border-radius:var(--r-sm);margin-bottom:16px;overflow-x:auto;}
+.tabs::-webkit-scrollbar{display:none;}
+.tb{flex:1;min-width:fit-content;padding:7px 12px;background:none;border:none;cursor:pointer;color:var(--txt3);font-size:0.75rem;font-weight:600;border-radius:var(--r-xs);font-family:'Poppins',sans-serif;white-space:nowrap;transition:all .15s;}
+.tb.on{background:var(--surf);color:var(--blue);box-shadow:0 1px 4px rgba(0,0,0,.08);}
 
-/* STATS */
-.sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.sc{background:var(--surf2);border:1px solid var(--bord);border-radius:8px;padding:14px;text-align:center;}
-.sn{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;}
-.sl{font-size:0.72rem;color:var(--muted);margin-top:2px;}
+/* STATS GRID */
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.sg4{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.sc{background:var(--surf);border:1px solid var(--bord);border-radius:var(--r-sm);padding:16px;text-align:center;box-shadow:var(--shadow);}
+.sn{font-size:1.6rem;font-weight:700;font-family:'Poppins',sans-serif;letter-spacing:-1px;}
+.sl{font-size:0.7rem;color:var(--txt3);margin-top:3px;font-weight:500;}
 
 /* PROGRESS */
-.pbar{background:var(--surf2);border-radius:99px;height:6px;overflow:hidden;}
-.pfill{height:100%;border-radius:99px;transition:width 0.4s;}
+.pbar{background:var(--surf3);border-radius:99px;height:8px;overflow:hidden;}
+.pfill{height:100%;border-radius:99px;transition:width .4s;}
 
 /* STREAK */
-.sgrid{display:flex;gap:4px;flex-wrap:wrap;}
-.sd{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:600;cursor:pointer;}
-.sd.done{background:var(--a);color:#0f1923;}
-.sd.empty{background:var(--surf2);color:var(--dim);}
+.sgrid{display:flex;gap:3px;flex-wrap:wrap;}
+.sd{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:600;cursor:pointer;transition:transform .1s,background .15s;}
+.sd:hover{transform:scale(1.12);}
+.sd.done{background:var(--green);color:#fff;}
+.sd.empty{background:var(--surf2);color:var(--txt4);}
+
+/* CALENDAR */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.cal-title{font-weight:700;font-size:0.95rem;color:var(--txt);}
+.cgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.cdl{text-align:center;font-size:0.65rem;font-weight:700;color:var(--txt3);padding:6px 0;letter-spacing:.5px;text-transform:uppercase;}
+.cd{aspect-ratio:1;border-radius:var(--r-xs);display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:500;cursor:pointer;background:var(--surf2);color:var(--txt3);transition:all .1s;}
+.cd:hover{background:var(--surf3);}
+.cd.today{background:var(--blue);color:#fff;font-weight:700;}
+.cd.has-ev{color:var(--txt);font-weight:600;position:relative;}
+.cd.has-ev::after{content:'';position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--amber);}
+.cd.other-month{opacity:.3;}
+.cd.empty{background:none;cursor:default;}
+
+/* FAITH TOGGLE */
+.fi{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--bord);}
+.fi:last-child{border-bottom:none;}
+.fi-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.2rem;}
+.fi-label{flex:1;font-size:0.88rem;font-weight:500;color:var(--txt);}
+.fi-sub{font-size:0.72rem;color:var(--txt3);margin-top:2px;}
+.ftog{width:44px;height:26px;border-radius:99px;background:var(--surf3);border:2px solid var(--bord);cursor:pointer;position:relative;transition:all .2s;flex-shrink:0;}
+.ftog.on{background:var(--green);border-color:var(--green);}
+.ftog::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:white;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.ftog.on::after{left:20px;}
+
+/* NOTE */
+.ni{background:var(--surf2);border-left:3px solid var(--purple);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:14px;margin-bottom:10px;}
+.ntitle{font-weight:600;font-size:0.88rem;color:var(--txt);}
+.ntext{font-size:0.82rem;color:var(--txt2);margin-top:6px;line-height:1.7;white-space:pre-wrap;}
+.ndate{font-size:0.68rem;color:var(--txt4);margin-top:8px;}
+
+/* HOME */
+.greeting{font-size:1.4rem;font-weight:700;color:var(--txt);margin-bottom:3px;letter-spacing:-.3px;}
+.gsub{font-size:0.82rem;color:var(--txt3);margin-bottom:20px;}
+.qs3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px;}
+.qsc{background:var(--surf);border:1px solid var(--bord);border-radius:var(--r-sm);padding:14px;text-align:center;box-shadow:var(--shadow);}
+.qsi{font-size:1.3rem;margin-bottom:4px;}
+.qsv{font-size:1.3rem;font-weight:700;color:var(--blue);letter-spacing:-0.5px;}
+.qsl{font-size:0.62rem;color:var(--txt3);font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}
 
 /* CHART */
 .cbw{display:flex;flex-direction:column;gap:10px;}
 .cr{display:flex;align-items:center;gap:10px;}
-.cl{font-size:0.75rem;color:var(--muted);width:70px;flex-shrink:0;}
+.cl{font-size:0.72rem;color:var(--txt3);width:72px;flex-shrink:0;font-weight:500;}
 .cbg{flex:1;background:var(--surf2);border-radius:99px;height:10px;overflow:hidden;}
 .cbf{height:100%;border-radius:99px;}
-.cv{font-size:0.75rem;font-weight:600;width:60px;text-align:right;flex-shrink:0;}
+.cv{font-size:0.72rem;font-weight:600;width:64px;text-align:right;flex-shrink:0;}
 
 /* MODAL */
-.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:500;align-items:flex-end;justify-content:center;}
+.mo{display:none;position:fixed;inset:0;background:rgba(26,25,23,.5);z-index:500;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
 .mo.open{display:flex;}
-.mdl{background:var(--surf);border-radius:14px 14px 0 0;padding:24px 20px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;}
-.mt{font-size:1.1rem;font-weight:700;margin-bottom:18px;}
-.ma{display:flex;gap:10px;margin-top:16px;}
+.mdl{background:var(--surf);border-radius:var(--r) var(--r) 0 0;padding:24px 20px 32px;width:100%;max-width:600px;max-height:92vh;overflow-y:auto;animation:slideUp .25s ease;}
+@keyframes slideUp{from{transform:translateY(50px);opacity:0}to{transform:translateY(0);opacity:1}}
+.mt{font-size:1.05rem;font-weight:700;margin-bottom:20px;color:var(--txt);}
+.ma{display:flex;gap:10px;margin-top:18px;}
+.mdrag{width:36px;height:4px;background:var(--bord2);border-radius:99px;margin:0 auto 20px;}
 
-/* CALENDAR */
-.cgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
-.cdl{text-align:center;font-size:0.65rem;color:var(--muted);padding:4px 0;font-weight:600;}
-.cd{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.78rem;cursor:pointer;background:var(--surf2);color:var(--muted);}
-.cd.today{background:var(--a);color:#0f1923;font-weight:700;}
-.cd.ev{color:var(--txt);position:relative;}
-.cd.ev::after{content:'';position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--a2);}
-.cd.empty{background:none;cursor:default;}
+/* EXERCISE CARD */
+.ec{background:var(--surf2);border:1px solid var(--bord);border-radius:var(--r-sm);padding:14px;margin-bottom:10px;}
+.ec-day{display:inline-flex;align-items:center;padding:3px 10px;border-radius:99px;font-size:0.68rem;font-weight:700;background:var(--blue-l);color:var(--blue);margin-bottom:6px;}
+.en{font-weight:600;font-size:0.88rem;color:var(--txt);}
+.ed{font-size:0.78rem;color:var(--txt3);margin-top:3px;line-height:1.5;}
+.alt{font-size:0.74rem;color:var(--green);margin-top:4px;font-weight:500;}
 
-/* FAITH TOGGLE */
-.fi{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--bord);}
-.fi:last-child{border-bottom:none;}
-.ficon{font-size:1.4rem;width:36px;text-align:center;}
-.flabel{flex:1;font-size:0.9rem;font-weight:500;}
-.ftog{width:42px;height:24px;border-radius:99px;background:var(--surf2);border:1px solid var(--bord);cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0;}
-.ftog.on{background:var(--a5);border-color:var(--a5);}
-.ftog::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:white;transition:left 0.2s;}
-.ftog.on::after{left:21px;}
-
-/* NOTE */
-.ni{background:var(--surf2);border-left:3px solid var(--a4);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:8px;}
-.ntitle{font-weight:600;font-size:0.88rem;}
-.ntext{font-size:0.8rem;color:var(--muted);margin-top:4px;line-height:1.5;}
-.ndate{font-size:0.7rem;color:var(--dim);margin-top:6px;}
-
-/* HOME */
-.greeting{font-size:1.5rem;font-weight:800;margin-bottom:4px;}
-.gsub{font-size:0.85rem;color:var(--muted);margin-bottom:20px;}
-.qs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px;}
-.qsc{background:var(--surf);border:1px solid var(--bord);border-radius:8px;padding:12px;text-align:center;}
-.qsi{font-size:1.4rem;}
-.qsv{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--a);}
-.qsl{font-size:0.62rem;color:var(--muted);}
-
-/* EXERCISE */
-.ec{background:var(--surf2);border:1px solid var(--bord);border-radius:8px;padding:14px;margin-bottom:10px;}
-.en{font-weight:600;font-size:0.9rem;}
-.ed{font-size:0.78rem;color:var(--muted);margin-top:4px;}
-
-/* DIVIDER */
-.div{height:1px;background:var(--bord);margin:16px 0;}
-
-/* EMPTY */
-.empty{text-align:center;padding:32px 0;color:var(--muted);font-size:0.88rem;}
-.empty .em{font-size:2.5rem;display:block;margin-bottom:10px;}
+/* BIBLE */
+.bible-text{font-family:'Lora',serif;font-size:0.95rem;line-height:1.9;color:var(--txt2);padding:20px;background:var(--surf2);border-radius:var(--r-sm);max-height:340px;overflow-y:auto;border:1px solid var(--bord);}
+.verse-line{margin-bottom:6px;}
+.verse-num{color:var(--blue);font-weight:600;font-size:0.78rem;margin-right:6px;vertical-align:super;}
+.bmark-group{background:var(--surf2);border:1px solid var(--bord);border-radius:var(--r-sm);padding:14px;margin-bottom:10px;}
+.bmark-group-title{font-weight:700;font-size:0.85rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;color:var(--txt);}
+.bmark-verse{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--surf);border-radius:var(--r-xs);margin-bottom:6px;font-size:0.8rem;font-style:italic;color:var(--txt2);border:1px solid var(--bord);}
+.daily-verse-card{background:linear-gradient(135deg,#eff6ff,#f5f3ff);border:1px solid #c7d2fe;border-radius:var(--r);padding:20px;margin-bottom:14px;}
+.dv-ref{font-size:0.72rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.dv-text{font-family:'Lora',serif;font-size:0.95rem;line-height:1.8;color:var(--txt2);font-style:italic;}
+.dv-book{font-size:0.78rem;font-weight:600;color:var(--purple);margin-top:10px;}
 
 /* AI CHAT */
-.chatbox{background:var(--surf);border:1px solid var(--bord);border-radius:14px;overflow:hidden;margin-bottom:14px;}
-.chatheader{background:linear-gradient(135deg,rgba(79,209,197,0.15),rgba(159,122,234,0.15));padding:16px 18px;border-bottom:1px solid var(--bord);display:flex;align-items:center;gap:12px;}
-.chava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--a4));display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
-.chname{font-weight:700;font-size:0.95rem;}
-.chstat{font-size:0.72rem;color:var(--a5);margin-top:2px;}
+.chatbox{background:var(--surf);border:1px solid var(--bord);border-radius:var(--r);overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow);}
+.chatheader{background:linear-gradient(135deg,var(--blue-l),var(--purple-l));padding:16px 18px;border-bottom:1px solid var(--bord);display:flex;align-items:center;gap:12px;}
+.chava{width:44px;height:44px;border-radius:12px;background:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:white;}
+.chname{font-weight:700;font-size:0.92rem;color:var(--txt);}
+.chstat{font-size:0.7rem;color:var(--green);margin-top:2px;display:flex;align-items:center;gap:4px;font-weight:500;}
+.chstat::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;}
 .chatbody{padding:16px;}
-.msgs{height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;margin-bottom:14px;}
+.msgs{height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;margin-bottom:14px;padding:4px 0;}
 .msgs::-webkit-scrollbar{width:4px;}
-.msgs::-webkit-scrollbar-thumb{background:var(--bord);border-radius:99px;}
+.msgs::-webkit-scrollbar-thumb{background:var(--bord2);border-radius:99px;}
 .cmsg{display:flex;gap:8px;align-items:flex-end;}
 .cmsg.user{flex-direction:row-reverse;}
-.cava{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;}
-.cmsg.ai .cava{background:linear-gradient(135deg,var(--a),var(--a4));}
-.cmsg.user .cava{background:rgba(246,173,85,0.2);}
-.cbbl{max-width:78%;padding:11px 14px;border-radius:16px;font-size:0.87rem;line-height:1.6;}
-.cmsg.ai .cbbl{background:var(--surf2);border:1px solid var(--bord);border-bottom-left-radius:4px;}
-.cmsg.user .cbbl{background:linear-gradient(135deg,var(--a),#38b2ac);color:#0f1923;font-weight:500;border-bottom-right-radius:4px;}
-.ctime{font-size:0.62rem;color:var(--dim);margin-top:3px;}
-.cmsg.ai .ctime{text-align:left;}
+.cava{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;color:white;}
+.cmsg.ai .cava{background:var(--blue);}
+.cmsg.user .cava{background:var(--amber);}
+.cbbl{max-width:78%;padding:11px 14px;border-radius:14px;font-size:0.85rem;line-height:1.6;}
+.cmsg.ai .cbbl{background:var(--surf2);border:1px solid var(--bord);border-bottom-left-radius:4px;color:var(--txt);}
+.cmsg.user .cbbl{background:var(--blue);color:#fff;border-bottom-right-radius:4px;}
+.ctime{font-size:0.6rem;color:var(--txt4);margin-top:3px;}
 .cmsg.user .ctime{text-align:right;}
 .cinrow{display:flex;gap:8px;align-items:center;}
-.cinrow input{flex:1;border-radius:99px;padding:11px 16px;}
-.sendbtn{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--a4));border:none;cursor:pointer;font-size:1.1rem;flex-shrink:0;}
+.cinrow input{flex:1;border-radius:99px;}
+.sendbtn{width:40px;height:40px;border-radius:50%;background:var(--blue);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;color:white;}
+.sendbtn:hover{background:var(--blue2);}
 .typing{display:flex;gap:4px;align-items:center;}
-.typing span{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:blink 1.2s infinite;}
-.typing span:nth-child(2){animation-delay:0.2s;}
-.typing span:nth-child(3){animation-delay:0.4s;}
-@keyframes blink{0%,100%{opacity:0.2}50%{opacity:1}}
-.qps{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
-.qpb{background:var(--surf2);border:1px solid var(--bord);color:var(--muted);padding:7px 13px;border-radius:99px;font-size:0.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;}
-.qpb:hover{border-color:var(--a);color:var(--a);}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--txt4);animation:blink 1.2s infinite;}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:.2}50%{opacity:1}}
+.qps{display:flex;flex-wrap:wrap;gap:8px;}
+.qpb{background:var(--surf2);border:1.5px solid var(--bord);color:var(--txt3);padding:7px 13px;border-radius:99px;font-size:0.73rem;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;transition:all .15s;}
+.qpb:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-l);}
 
-@media(min-width:600px){.sg{grid-template-columns:repeat(4,1fr);}.wrap{padding:28px 32px;padding-bottom:110px;}}
+/* GROWTH */
+.growth-card{background:var(--surf2);border:1px solid var(--bord);border-radius:var(--r-sm);padding:16px;margin-bottom:10px;}
+.growth-day{font-size:0.72rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;}
+.growth-title{font-weight:600;font-size:0.88rem;margin-top:4px;}
+.growth-desc{font-size:0.78rem;color:var(--txt3);margin-top:4px;line-height:1.5;}
+.growth-links{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+.glink{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:99px;font-size:0.7rem;font-weight:600;background:var(--blue-l);color:var(--blue);text-decoration:none;transition:background .15s;}
+.glink:hover{background:var(--blue-t);}
+.quiz-item{background:var(--surf2);border:1px solid var(--bord);border-radius:var(--r-sm);padding:14px;margin-bottom:10px;}
+.quiz-q{font-weight:600;font-size:0.85rem;margin-bottom:10px;}
+.quiz-opt{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r-xs);cursor:pointer;font-size:0.82rem;margin-bottom:6px;background:var(--surf);border:1px solid var(--bord);transition:all .15s;}
+.quiz-opt:hover{border-color:var(--blue);background:var(--blue-l);}
+.quiz-opt.correct{background:var(--green-l);border-color:var(--green);color:var(--green);}
+.quiz-opt.wrong{background:var(--red-l);border-color:var(--red);color:var(--red);}
+.motivate-card{background:linear-gradient(135deg,#fef9ee,#fffbeb);border:1px solid #fde68a;border-radius:var(--r);padding:16px;margin-bottom:12px;}
+.motivate-text{font-family:'Lora',serif;font-size:0.9rem;line-height:1.7;font-style:italic;color:var(--txt2);}
+.motivate-author{font-size:0.72rem;font-weight:600;color:var(--amber);margin-top:8px;}
+
+/* HYDRATION */
+.hydro-track{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0;}
+.hydro-glass{width:36px;height:44px;border-radius:8px;border:2px solid var(--blue);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;font-size:1rem;}
+.hydro-glass.filled{background:var(--blue-l);border-color:var(--blue);}
+.hydro-glass.empty{background:var(--surf2);border-color:var(--bord);}
+
+/* MISC */
+.div{height:1px;background:var(--bord);margin:16px 0;}
+.empty{text-align:center;padding:32px 0;color:var(--txt3);font-size:0.85rem;}
+.empty .em{font-size:2.2rem;display:block;margin-bottom:8px;}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:99px;font-size:0.72rem;font-weight:600;cursor:pointer;transition:opacity .15s;}
+.tag:hover{opacity:.8;}
+.notif-banner{background:var(--blue);color:white;padding:12px 16px;border-radius:var(--r-sm);font-size:0.82rem;font-weight:500;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+
+@media(min-width:600px){.sg4{grid-template-columns:repeat(4,1fr);}.qs3{grid-template-columns:repeat(3,1fr);}.wrap{padding:24px 24px 110px;}}
 </style>
 </head>
 <body>
 <div id="app">
 
+<!-- TOPBAR -->
 <div class="topbar">
   <div class="logo">MyLife<span>Hub</span></div>
-  <div class="topdate" id="topdate"></div>
+  <div class="topright">
+    <div class="sync-dot off" id="syncDot" title="Syncing..."></div>
+    <div class="topdate" id="topdate"></div>
+  </div>
 </div>
 
 <div class="wrap">
 
-<!-- HOME -->
+<!-- ═══════════════ HOME ═══════════════ -->
 <div class="pg show" id="pg-home">
-  <div class="greeting" id="gtxt">Good morning 👋</div>
-  <div class="gsub">Here's your day at a glance</div>
-  <div class="qs">
-    <div class="qsc"><div class="qsi">🗂</div><div class="qsv" id="qs-t">0</div><div class="qsl">Tasks Due</div></div>
+  <div class="daily-verse-card" id="home-verse">
+    <div class="dv-ref">✦ Daily Verse</div>
+    <div class="dv-text" id="dv-text">Loading...</div>
+    <div class="dv-book" id="dv-book"></div>
+  </div>
+  <div class="greeting" id="gtxt">Good morning</div>
+  <div class="gsub" id="gsub">Here's your day at a glance</div>
+  <div class="qs3">
+    <div class="qsc"><div class="qsi">📋</div><div class="qsv" id="qs-t">0</div><div class="qsl">Tasks</div></div>
     <div class="qsc"><div class="qsi">🔥</div><div class="qsv" id="qs-s">0</div><div class="qsl">Streak</div></div>
-    <div class="qsc"><div class="qsi">💰</div><div class="qsv" id="qs-e">₱0</div><div class="qsl">Today Spent</div></div>
+    <div class="qsc"><div class="qsi">💰</div><div class="qsv" id="qs-e">₱0</div><div class="qsl">Spent</div></div>
   </div>
-  <div class="card"><div class="ctitle">📋 Today's Priority Tasks</div><div id="h-tasks"></div></div>
-  <div class="card"><div class="ctitle">✝️ Faith Checklist</div><div id="h-faith"></div></div>
-  <div class="card" style="border-color:rgba(79,209,197,0.3);">
-    <div class="ctitle">💡 Daily Spark</div>
-    <div id="h-quote" style="font-size:0.9rem;line-height:1.6;font-style:italic;color:var(--muted);"></div>
-  </div>
+  <div class="card"><div class="ctitle">Priority Tasks</div><div id="h-tasks"></div></div>
+  <div class="card"><div class="ctitle">Faith Checklist</div><div id="h-faith"></div></div>
+  <div class="motivate-card"><div class="motivate-text" id="h-quote"></div><div class="motivate-author" id="h-quote-auth"></div></div>
 </div>
 
-<!-- WORK -->
+<!-- ═══════════════ WORK ═══════════════ -->
 <div class="pg" id="pg-work">
-  <div class="sh"><div class="stitle">🗂 Work Tracker</div><button class="btn bp sm" onclick="openM('m-task')">+ Task</button></div>
+  <div class="sh"><div class="stitle">Work Tracker</div><button class="btn bp bsm" onclick="openM('m-task')">+ Add Task</button></div>
   <div class="tabs">
     <button class="tb on" onclick="ftask('all',this)">All</button>
     <button class="tb" onclick="ftask('urgent',this)">🔴 Urgent</button>
@@ -224,123 +314,200 @@ select option{background:var(--surf2);}
     <button class="tb" onclick="ftask('pending',this)">Pending</button>
     <button class="tb" onclick="ftask('done',this)">Done</button>
   </div>
+  <div class="card" style="padding:14px;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+      <span style="font-size:0.78rem;font-weight:600;color:var(--txt3);">Overall Progress</span>
+      <span style="font-size:0.78rem;font-weight:700;color:var(--blue);" id="ovr-pct">0%</span>
+    </div>
+    <div class="pbar"><div class="pfill" id="ovr-bar" style="width:0%;background:var(--blue);"></div></div>
+  </div>
   <div id="tasklist"></div>
 </div>
 
-<!-- SCHEDULE -->
+<!-- ═══════════════ SCHEDULE ═══════════════ -->
 <div class="pg" id="pg-schedule">
-  <div class="sh"><div class="stitle">📅 Schedule</div><button class="btn bp sm" onclick="openM('m-event')">+ Event</button></div>
+  <div class="sh"><div class="stitle">Schedule</div><button class="btn bp bsm" onclick="openM('m-event')">+ Event</button></div>
   <div class="card">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-      <button class="btn bg sm" onclick="chMonth(-1)">◀</button>
-      <div style="font-weight:700;font-size:0.95rem;" id="cal-lbl"></div>
-      <button class="btn bg sm" onclick="chMonth(1)">▶</button>
+    <div class="cal-header">
+      <button class="btn bg bsm btn-icon" onclick="chMonth(-1)">&#8249;</button>
+      <div class="cal-title" id="cal-lbl"></div>
+      <button class="btn bg bsm btn-icon" onclick="chMonth(1)">&#8250;</button>
     </div>
     <div class="cgrid" id="cal-heads"></div>
-    <div class="cgrid" id="cal-days" style="margin-top:4px;"></div>
+    <div class="cgrid" id="cal-days" style="margin-top:4px;gap:3px;"></div>
   </div>
   <div class="card">
-    <div class="ctitle">📌 Daily To-Do</div>
+    <div class="ctitle">Daily To-Do</div>
     <div id="todolist"></div>
-    <div style="display:flex;gap:8px;margin-top:10px;">
+    <div style="display:flex;gap:8px;margin-top:12px;">
       <input id="todo-in" placeholder="Add a to-do..." onkeydown="if(event.key==='Enter')addTodo()">
-      <button class="btn bp sm" onclick="addTodo()">Add</button>
+      <button class="btn bp bsm" onclick="addTodo()">Add</button>
     </div>
   </div>
-  <div class="card"><div class="ctitle">📆 Events</div><div id="evlist"></div></div>
+  <div class="card"><div class="ctitle">Upcoming Events</div><div id="evlist"></div></div>
 </div>
 
-<!-- EXPENSES -->
+<!-- ═══════════════ EXPENSES ═══════════════ -->
 <div class="pg" id="pg-expenses">
-  <div class="sh"><div class="stitle">💰 Expenses</div><button class="btn bp sm" onclick="openM('m-exp')">+ Add</button></div>
-  <div class="sg">
-    <div class="sc"><div class="sn" id="ex-t" style="color:var(--a);">₱0</div><div class="sl">Today</div></div>
-    <div class="sc"><div class="sn" id="ex-w" style="color:var(--a2);">₱0</div><div class="sl">This Week</div></div>
-    <div class="sc"><div class="sn" id="ex-m" style="color:var(--a4);">₱0</div><div class="sl">This Month</div></div>
-    <div class="sc"><div class="sn" id="ex-c" style="color:var(--a5);">0</div><div class="sl">Entries</div></div>
+  <div class="sh"><div class="stitle">Expenses</div><button class="btn bp bsm" onclick="openM('m-exp')">+ Add</button></div>
+  <div class="sg4">
+    <div class="sc"><div class="sn" id="ex-t" style="color:var(--blue);">₱0</div><div class="sl">Today</div></div>
+    <div class="sc"><div class="sn" id="ex-w" style="color:var(--amber);">₱0</div><div class="sl">This Week</div></div>
+    <div class="sc"><div class="sn" id="ex-m" style="color:var(--purple);">₱0</div><div class="sl">This Month</div></div>
+    <div class="sc"><div class="sn" id="ex-c" style="color:var(--green);">0</div><div class="sl">Entries</div></div>
   </div>
   <div class="tabs">
     <button class="tb on" onclick="fexp('all',this)">All</button>
     <button class="tb" onclick="fexp('week',this)">This Week</button>
     <button class="tb" onclick="fexp('month',this)">This Month</button>
-    <button class="tb" onclick="fexp('chart',this)">📊 Analysis</button>
+    <button class="tb" onclick="fexp('chart',this)">Analysis</button>
   </div>
   <div id="expview"></div>
 </div>
 
-<!-- FAITH -->
+<!-- ═══════════════ FAITH ═══════════════ -->
 <div class="pg" id="pg-faith">
-  <div class="sh"><div class="stitle">✝️ Faith & Sealing</div></div>
-  <div class="card">
-    <div class="ctitle">📖 Today's Checklist</div>
-    <div id="faith-list"></div>
-    <div class="div"></div>
-    <button class="btn bp" style="width:100%" onclick="saveFaith()">Save Today's Progress 🙌</button>
+  <div class="sh"><div class="stitle">Faith & Sealing</div></div>
+
+  <!-- Daily Verse -->
+  <div class="daily-verse-card">
+    <div class="dv-ref">✦ Today's Verse</div>
+    <div class="dv-text" id="faith-dv-text">Loading...</div>
+    <div class="dv-book" id="faith-dv-book"></div>
   </div>
+
+  <!-- Checklist -->
+  <div class="card"><div class="ctitle">Daily Checklist</div><div id="faith-list"></div><div class="div"></div><button class="btn bp" style="width:100%" onclick="saveFaith()">Save Today's Progress</button></div>
+
+  <!-- Bible Reader -->
   <div class="card">
-    <div class="ctitle">📗 Bible Reading Log</div>
-    <div class="ig"><label>Book & Chapter</label><input id="bref" placeholder="e.g. John 3, Psalms 23"></div>
-    <div class="ig"><label>Notes / Reflection</label><textarea id="bnote" placeholder="What did God speak to you today?"></textarea></div>
-    <button class="btn bp" onclick="saveBible()">Save Reading</button>
-    <div id="blist" style="margin-top:14px;"></div>
+    <div class="ctitle">Offline Bible — KJV</div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+      <select id="bible-book" style="flex:1;min-width:120px;" onchange="loadBible()"></select>
+      <select id="bible-chap" style="flex:0;min-width:80px;" onchange="loadBible()"></select>
+    </div>
+    <div class="bible-text" id="bible-text"></div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+      <input id="bmark-group" placeholder="Group name (e.g. Trinity)" style="flex:1;">
+      <button class="btn bp bsm" onclick="addBookmark()">Bookmark</button>
+    </div>
   </div>
+
+  <!-- Bookmarks -->
   <div class="card">
-    <div class="ctitle">🙏 Tithes & Offerings</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+    <div class="ctitle">My Bookmarks</div>
+    <div id="bmark-list"></div>
+    <div class="empty" id="bmark-empty" style="display:none"><span class="em">🔖</span>No bookmarks yet.</div>
+  </div>
+
+  <!-- Tithes - always visible -->
+  <div class="card">
+    <div class="ctitle">Tithes & Offerings</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
       <input id="tamt" type="number" placeholder="Amount (₱)" style="flex:1;min-width:100px;">
-      <select id="ttype" style="flex:1;min-width:100px;"><option>Tithes</option><option>Offering</option><option>Special Offering</option></select>
-      <button class="btn bp sm" onclick="saveTithe()">Add</button>
+      <select id="ttype" style="flex:1;min-width:120px;"><option>Tithes</option><option>Offering</option><option>Special Offering</option><option>Love Offering</option></select>
+      <button class="btn bp bsm" onclick="saveTithe()">Add</button>
     </div>
     <div id="tlist"></div>
   </div>
+
+  <!-- Service Notes -->
   <div class="card">
-    <div class="ctitle">📝 Worship & Service Notes</div>
-    <div class="ig"><label>Title</label><input id="fntitle" placeholder="Sermon title, date..."></div>
-    <div class="ig"><label>Notes</label><textarea id="fntext" placeholder="Your notes from worship service..."></textarea></div>
+    <div class="ctitle">Worship & Service Notes</div>
+    <div class="ig"><label>Title / Sermon</label><input id="fntitle" placeholder="e.g. Sunday Service — May 2025"></div>
+    <div class="ig"><label>Notes</label><textarea id="fntext" placeholder="Write your notes here..." style="min-height:200px;font-family:'Lora',serif;font-size:0.9rem;line-height:1.8;"></textarea></div>
     <button class="btn bp" onclick="saveFNote()">Save Note</button>
-    <div id="fnlist" style="margin-top:14px;"></div>
+    <div id="fnlist" style="margin-top:16px;"></div>
+  </div>
+
+  <!-- Bible Reading Log -->
+  <div class="card">
+    <div class="ctitle">Bible Reading Log</div>
+    <div class="ig"><label>Book & Chapter</label><input id="bref" placeholder="e.g. John 3, Psalms 23"></div>
+    <div class="ig"><label>Reflection</label><textarea id="bnote" placeholder="What did God speak to you today?"></textarea></div>
+    <button class="btn bp" onclick="saveBible()">Save Reading</button>
+    <div id="blist" style="margin-top:14px;"></div>
   </div>
 </div>
 
-<!-- HABITS -->
+<!-- ═══════════════ HABITS ═══════════════ -->
 <div class="pg" id="pg-habits">
-  <div class="sh"><div class="stitle">🔥 Consistency</div><button class="btn bp sm" onclick="openM('m-habit')">+ Habit</button></div>
-  <div class="card" style="background:linear-gradient(135deg,rgba(79,209,197,0.08),rgba(159,122,234,0.08));border-color:rgba(79,209,197,0.2);">
-    <div style="display:flex;align-items:center;gap:14px;">
-      <div style="font-size:2.5rem;">🔥</div>
+  <div class="sh"><div class="stitle">Consistency</div><button class="btn bp bsm" onclick="openM('m-habit')">+ Habit</button></div>
+  <div class="card" style="background:linear-gradient(135deg,#eff6ff,#f5f3ff);border-color:#c7d2fe;">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div style="font-size:2.6rem;">🔥</div>
       <div>
-        <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--a);" id="tot-streak">0</div>
-        <div style="font-size:0.8rem;color:var(--muted);">Longest active streak</div>
+        <div style="font-size:2rem;font-weight:800;color:var(--blue);" id="tot-streak">0</div>
+        <div style="font-size:0.78rem;color:var(--txt3);font-weight:500;">Longest active streak (days)</div>
       </div>
     </div>
   </div>
   <div id="hablist"></div>
 </div>
 
-<!-- EXERCISE -->
+<!-- ═══════════════ FITNESS ═══════════════ -->
 <div class="pg" id="pg-exercise">
-  <div class="sh"><div class="stitle">💪 Exercise Plans</div><button class="btn bp sm" onclick="openM('m-ex')">+ Plan</button></div>
+  <div class="sh"><div class="stitle">Fitness Plans</div><button class="btn bp bsm" onclick="openM('m-ex')">+ Custom</button></div>
+
+  <!-- Hydration -->
   <div class="card">
-    <div class="ctitle">⚡ My Health Status</div>
+    <div class="ctitle">💧 Hydration Tracker</div>
+    <div style="font-size:0.82rem;color:var(--txt3);margin-bottom:8px;">Goal: 8 glasses / day. Tap to log each glass.</div>
+    <div class="hydro-track" id="hydro-track"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+      <span style="font-size:0.8rem;font-weight:600;color:var(--blue);" id="hydro-count">0 / 8 glasses</span>
+      <button class="btn bg bsm" onclick="resetHydro()">Reset</button>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div class="card">
+    <div class="ctitle">My Health Status</div>
     <div class="ig"><label>Fitness Level</label><select id="flevel" onchange="updEx()"><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="active">Active</option></select></div>
-    <div class="ig"><label>Health conditions</label><input id="hcond" placeholder="e.g. bad knees, asthma..." onchange="saveHS()"></div>
+    <div class="ig"><label>Health conditions (optional)</label><input id="hcond" placeholder="e.g. bad knees, asthma..." onchange="saveHS()"></div>
     <div class="ig"><label>Goal</label><select id="fgoal" onchange="updEx()"><option>General fitness</option><option>Weight loss</option><option>Build muscle</option><option>Improve endurance</option><option>Flexibility</option></select></div>
   </div>
-  <div class="card"><div class="ctitle">📅 Suggested Weekly Plan</div><div id="explan"></div></div>
-  <div class="card"><div class="ctitle">🗓 My Custom Plans</div><div id="cexlist"></div></div>
+
+  <div class="card"><div class="ctitle">Suggested Weekly Plan</div><div id="explan"></div></div>
+  <div class="card"><div class="ctitle">My Custom Plans</div><div id="cexlist"></div></div>
 </div>
 
-<!-- GROWTH -->
+<!-- ═══════════════ GROWTH ═══════════════ -->
 <div class="pg" id="pg-growth">
-  <div class="sh"><div class="stitle">🧠 Growth & Learning</div><button class="btn bp sm" onclick="openM('m-grow')">+ Plan</button></div>
-  <div class="card"><div class="ctitle">🎯 Active Learning Plans</div><div id="gplans"></div></div>
-  <div class="card">
-    <div class="ctitle">📚 Topics to Explore</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;" id="gtags"></div>
-    <div style="display:flex;gap:8px;"><input id="gtopic-in" placeholder="Add a topic..."><button class="btn bp sm" onclick="addTopic()">Add</button></div>
+  <div class="sh"><div class="stitle">Growth & Learning</div><button class="btn bp bsm" onclick="openM('m-grow')">+ Plan</button></div>
+
+  <div class="motivate-card" id="grow-motivate">
+    <div class="motivate-text" id="grow-quote"></div>
+    <div class="motivate-author" id="grow-author"></div>
   </div>
-  <div class="card" style="border-color:rgba(159,122,234,0.3);">
-    <div class="ctitle">🌱 Mindset & Mental Health</div>
+
+  <!-- 1 Month Coding Plan -->
+  <div class="card">
+    <div class="ctitle">1-Month Coding Plan</div>
+    <div id="coding-plan"></div>
+  </div>
+
+  <!-- My Plans -->
+  <div class="card"><div class="ctitle">My Learning Plans</div><div id="gplans"></div></div>
+
+  <!-- Daily Quiz -->
+  <div class="card">
+    <div class="ctitle">Daily Quiz</div>
+    <div id="quiz-container"></div>
+    <button class="btn bp" style="margin-top:12px;width:100%" onclick="checkQuiz()">Check Answers</button>
+    <div id="quiz-result" style="margin-top:12px;"></div>
+  </div>
+
+  <!-- Topics -->
+  <div class="card">
+    <div class="ctitle">Topics to Explore</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;" id="gtags"></div>
+    <div style="display:flex;gap:8px;"><input id="gtopic-in" placeholder="Add a topic..."><button class="btn bp bsm" onclick="addTopic()">Add</button></div>
+  </div>
+
+  <!-- Mindset -->
+  <div class="card" style="border-color:#c4b5fd;">
+    <div class="ctitle">Mindset & Mental Health</div>
     <div id="mindset"></div>
     <div class="div"></div>
     <div class="ig"><label>Daily Reflection</label><textarea id="mrefl" placeholder="How are you feeling today?"></textarea></div>
@@ -348,76 +515,112 @@ select option{background:var(--surf2);}
   </div>
 </div>
 
-<!-- AI -->
+<!-- ═══════════════ AI ═══════════════ -->
 <div class="pg" id="pg-ai">
-  <div class="sh"><div class="stitle">🤖 AI Support</div></div>
+  <div class="sh"><div class="stitle">AI Life Coach</div></div>
   <div class="chatbox">
     <div class="chatheader">
-      <div class="chava">🤖</div>
-      <div>
-        <div class="chname">Claude — Your Life Coach</div>
-        <div class="chstat">● Always here for you</div>
+      <div class="chava">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" fill="currentColor" opacity=".3"/><path d="M12 6a6 6 0 1 0 6 6 6 6 0 0 0-6-6zm0 10a4 4 0 1 1 4-4 4 4 0 0 1-4 4z" fill="currentColor"/></svg>
       </div>
-      <button class="btn bg sm" style="margin-left:auto" onclick="clearChat()">Clear</button>
+      <div style="flex:1">
+        <div class="chname">Claude — Your Life Coach</div>
+        <div class="chstat">Online & ready to help</div>
+      </div>
+      <button class="btn bg bsm" onclick="clearChat()">Clear</button>
     </div>
     <div class="chatbody">
       <div class="msgs" id="msgs"></div>
       <div class="cinrow">
-        <input id="cin" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendChat()">
-        <button class="sendbtn" onclick="sendChat()">➤</button>
+        <input id="cin" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="sendbtn" onclick="sendChat()">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
   </div>
-  <div class="card">
-    <div class="ctitle">⚡ Quick Prompts</div>
+  <div class="card"><div class="ctitle">Quick Prompts</div>
     <div class="qps">
       <button class="qpb" onclick="qp('Motivate me to stay consistent today')">🔥 Motivate me</button>
       <button class="qpb" onclick="qp('Help me plan my schedule for today')">📅 Plan my day</button>
       <button class="qpb" onclick="qp('Give me a Bible verse and reflection for today')">✝️ Daily verse</button>
-      <button class="qpb" onclick="qp('Give me a mental health tip for today')">🧠 Mental health tip</button>
+      <button class="qpb" onclick="qp('Give me a mental health tip for today')">🧠 Mental health</button>
       <button class="qpb" onclick="qp('What should I focus on for personal growth this week?')">🌱 Growth tip</button>
-      <button class="qpb" onclick="qp('Give me a beginner-friendly workout for today')">💪 Workout idea</button>
+      <button class="qpb" onclick="qp('Give me a beginner workout with no equipment')">💪 Workout idea</button>
       <button class="qpb" onclick="qp('How do I build better habits and stay consistent?')">⚙️ Build habits</button>
-      <button class="qpb" onclick="qp('Help me manage my finances better')">💰 Finance tips</button>
+      <button class="qpb" onclick="qp('Help me manage my finances and save more money')">💰 Finance tips</button>
+      <button class="qpb" onclick="qp('What coding skills should I learn first as a beginner?')">💻 Learn coding</button>
+      <button class="qpb" onclick="qp('I am feeling overwhelmed. What should I do?')">😔 I need support</button>
     </div>
   </div>
 </div>
 
 </div><!-- end wrap -->
 
-<!-- BOTTOM NAV -->
+<!-- ═══ BOTTOM NAV ═══ -->
 <nav class="bnav">
-  <button class="nb on" onclick="nav('home',this)"><span class="ic">🏠</span>Home</button>
-  <button class="nb" onclick="nav('work',this)"><span class="ic">🗂</span>Work</button>
-  <button class="nb" onclick="nav('schedule',this)"><span class="ic">📅</span>Schedule</button>
-  <button class="nb" onclick="nav('expenses',this)"><span class="ic">💰</span>Expenses</button>
-  <button class="nb" onclick="nav('faith',this)"><span class="ic">✝️</span>Faith</button>
-  <button class="nb" onclick="nav('habits',this)"><span class="ic">🔥</span>Habits</button>
-  <button class="nb" onclick="nav('exercise',this)"><span class="ic">💪</span>Fitness</button>
-  <button class="nb" onclick="nav('growth',this)"><span class="ic">🧠</span>Growth</button>
-  <button class="nb" onclick="nav('ai',this)"><span class="ic">🤖</span>AI</button>
+  <button class="nb on" onclick="nav('home',this)">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Home
+  </button>
+  <button class="nb" onclick="nav('work',this)">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Tasks
+  </button>
+  <button class="nb" onclick="nav('schedule',this)">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="1.8"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="1.8"/></svg>
+    Schedule
+  </button>
+  <button class="nb" onclick="nav('expenses',this)">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Money
+  </button>
+  <button class="nb" onclick="nav('faith',this)">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Faith
+  </button>
+  <button class="nb" onclick="nav('habits',this)">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Habits
+  </button>
+  <button class="nb" onclick="nav('exercise',this)">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M6 4v16M18 4v16M3 8h3M18 8h3M3 16h3M18 16h3M6 12h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    Fitness
+  </button>
+  <button class="nb" onclick="nav('growth',this)">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M2 20h20M6 20V10l6-6 6 6v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 20v-5h4v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Growth
+  </button>
+  <button class="nb" onclick="nav('ai',this)">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    AI Coach
+  </button>
 </nav>
 
-<!-- MODALS -->
+<!-- ═══ MODALS ═══ -->
 <div class="mo" id="m-task"><div class="mdl">
-  <div class="mt">➕ New Task</div>
+  <div class="mdrag"></div>
+  <div class="mt">Add New Task</div>
   <div class="ig"><label>Task Name</label><input id="task-n" placeholder="What needs to be done?"></div>
   <div class="ig"><label>Urgency</label><select id="task-u"><option value="urgent">🔴 Urgent</option><option value="high">🟠 High</option><option value="normal" selected>🔵 Normal</option><option value="low">🟢 Low</option></select></div>
+  <div class="ig"><label>Difficulty (affects progress weight)</label><select id="task-diff"><option value="20">Easy — 20 pts</option><option value="50" selected>Medium — 50 pts</option><option value="80">Hard — 80 pts</option><option value="100">Extreme — 100 pts</option></select></div>
   <div class="ig"><label>Deadline</label><input type="datetime-local" id="task-d"></div>
-  <div class="ig"><label>Notes</label><textarea id="task-notes" placeholder="Optional..."></textarea></div>
+  <div class="ig"><label>Notes</label><textarea id="task-notes" style="min-height:70px;" placeholder="Optional details..."></textarea></div>
   <div class="ma"><button class="btn bp" style="flex:1" onclick="addTask()">Add Task</button><button class="btn bg" onclick="closeM('m-task')">Cancel</button></div>
 </div></div>
 
 <div class="mo" id="m-event"><div class="mdl">
-  <div class="mt">📆 New Event</div>
+  <div class="mdrag"></div>
+  <div class="mt">New Event</div>
   <div class="ig"><label>Event Name</label><input id="ev-n" placeholder="Event title"></div>
   <div class="ig"><label>Date & Time</label><input type="datetime-local" id="ev-dt"></div>
-  <div class="ig"><label>Notes</label><textarea id="ev-notes" placeholder="Optional..."></textarea></div>
+  <div class="ig"><label>Notes</label><textarea id="ev-notes" style="min-height:70px;" placeholder="Optional..."></textarea></div>
   <div class="ma"><button class="btn bp" style="flex:1" onclick="addEvent()">Add Event</button><button class="btn bg" onclick="closeM('m-event')">Cancel</button></div>
 </div></div>
 
 <div class="mo" id="m-exp"><div class="mdl">
-  <div class="mt">💰 Add Expense</div>
+  <div class="mdrag"></div>
+  <div class="mt">Add Expense</div>
   <div class="ig"><label>Description</label><input id="exp-d" placeholder="What did you spend on?"></div>
   <div class="ig"><label>Amount (₱)</label><input type="number" id="exp-a" placeholder="0.00"></div>
   <div class="ig"><label>Category</label><select id="exp-cat"><option>Food</option><option>Transport</option><option>Bills</option><option>Shopping</option><option>Health</option><option>Giving</option><option>Others</option></select></div>
@@ -426,31 +629,116 @@ select option{background:var(--surf2);}
 </div></div>
 
 <div class="mo" id="m-habit"><div class="mdl">
-  <div class="mt">🔥 New Habit</div>
-  <div class="ig"><label>Habit Name</label><input id="hab-n" placeholder="e.g. Morning Prayer, Reading..."></div>
-  <div class="ig"><label>Emoji Icon</label><input id="hab-i" placeholder="📖" maxlength="2"></div>
+  <div class="mdrag"></div>
+  <div class="mt">New Habit</div>
+  <div class="ig"><label>Habit Name</label><input id="hab-n" placeholder="e.g. Morning Prayer, Bible Reading..."></div>
+  <div class="ig"><label>Icon Emoji</label><input id="hab-i" placeholder="🙏" maxlength="2"></div>
   <div class="ma"><button class="btn bp" style="flex:1" onclick="addHabit()">Add Habit</button><button class="btn bg" onclick="closeM('m-habit')">Cancel</button></div>
 </div></div>
 
 <div class="mo" id="m-ex"><div class="mdl">
-  <div class="mt">💪 Custom Exercise Plan</div>
+  <div class="mdrag"></div>
+  <div class="mt">Custom Exercise Plan</div>
   <div class="ig"><label>Plan Name</label><input id="ex-n" placeholder="e.g. Morning Routine"></div>
   <div class="ig"><label>Day</label><select id="ex-day"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></div>
-  <div class="ig"><label>Exercises (one per line)</label><textarea id="ex-exs" placeholder="Push-ups: 3x15&#10;Squats: 3x20"></textarea></div>
+  <div class="ig"><label>Exercises (one per line)</label><textarea id="ex-exs" placeholder="Push-ups: 3x15&#10;Squats: 3x20&#10;Plank: 3x30s"></textarea></div>
   <div class="ma"><button class="btn bp" style="flex:1" onclick="addCEx()">Save Plan</button><button class="btn bg" onclick="closeM('m-ex')">Cancel</button></div>
 </div></div>
 
 <div class="mo" id="m-grow"><div class="mdl">
-  <div class="mt">🧠 Learning Plan</div>
-  <div class="ig"><label>What do you want to learn?</label><input id="grow-t" placeholder="e.g. Public Speaking, Python..."></div>
-  <div class="ig"><label>Why is this important?</label><input id="grow-w" placeholder="Your motivation..."></div>
-  <div class="ig"><label>Daily time</label><select id="grow-time"><option>15 minutes</option><option>30 minutes</option><option>1 hour</option><option>2 hours</option></select></div>
-  <div class="ig"><label>Duration</label><select id="grow-dur"><option>1 week</option><option>2 weeks</option><option>1 month</option><option>3 months</option></select></div>
+  <div class="mdrag"></div>
+  <div class="mt">New Learning Plan</div>
+  <div class="ig"><label>What do you want to learn?</label><input id="grow-t" placeholder="e.g. Public Speaking, Python, Finance..."></div>
+  <div class="ig"><label>Why is this important to you?</label><input id="grow-w" placeholder="Your motivation..."></div>
+  <div class="ig"><label>Daily time commitment</label><select id="grow-time"><option>15 minutes</option><option>30 minutes</option><option>1 hour</option><option>2 hours</option></select></div>
+  <div class="ig"><label>Duration goal</label><select id="grow-dur"><option>1 week</option><option>2 weeks</option><option>1 month</option><option>3 months</option></select></div>
   <div class="ma"><button class="btn bp" style="flex:1" onclick="addGrow()">Start Plan</button><button class="btn bg" onclick="closeM('m-grow')">Cancel</button></div>
 </div></div>
 
+<!-- ═══ FIREBASE + APP SCRIPT ═══ -->
+
+<!-- Global function bridge for onclick handlers -->
 <script>
-// ── STORAGE ──
+// These proxy functions call the real module functions once loaded
+function nav(id, btn) { if(window._nav) window._nav(id, btn); }
+function openM(id) { if(window._openM) window._openM(id); }
+function closeM(id) { if(window._closeM) window._closeM(id); }
+function ftask(f, btn) { if(window._ftask) window._ftask(f, btn); }
+function fexp(f, btn) { if(window._fexp) window._fexp(f, btn); }
+function togTask(id) { if(window._togTask) window._togTask(id); }
+function delTask(id) { if(window._delTask) window._delTask(id); }
+function addTask() { if(window._addTask) window._addTask(); }
+function togTodo(id) { if(window._togTodo) window._togTodo(id); }
+function delTodo(id) { if(window._delTodo) window._delTodo(id); }
+function addTodo() { if(window._addTodo) window._addTodo(); }
+function addEvent() { if(window._addEvent) window._addEvent(); }
+function delEv(id) { if(window._delEv) window._delEv(id); }
+function selDay(ds) { if(window._selDay) window._selDay(ds); }
+function chMonth(d) { if(window._chMonth) window._chMonth(d); }
+function addExp() { if(window._addExp) window._addExp(); }
+function delExp(id) { if(window._delExp) window._delExp(id); }
+function togFaith(k) { if(window._togFaith) window._togFaith(k); }
+function saveFaith() { if(window._saveFaith) window._saveFaith(); }
+function loadBible() { if(window._loadBible) window._loadBible(); }
+function showBibleText() { if(window._showBibleText) window._showBibleText(); }
+function addBookmark() { if(window._addBookmark) window._addBookmark(); }
+function delBookmark(g, r) { if(window._delBookmark) window._delBookmark(g, r); }
+function renameGroup(n) { if(window._renameGroup) window._renameGroup(n); }
+function saveBible() { if(window._saveBible) window._saveBible(); }
+function saveTithe() { if(window._saveTithe) window._saveTithe(); }
+function saveFNote() { if(window._saveFNote) window._saveFNote(); }
+function addHabit() { if(window._addHabit) window._addHabit(); }
+function togHab(hid, ds) { if(window._togHab) window._togHab(hid, ds); }
+function delHabit(id) { if(window._delHabit) window._delHabit(id); }
+function resetHydro() { if(window._resetHydro) window._resetHydro(); }
+function logHydro(i) { if(window._logHydro) window._logHydro(i); }
+function updEx() { if(window._updEx) window._updEx(); }
+function saveHS() { if(window._saveHS) window._saveHS(); }
+function addCEx() { if(window._addCEx) window._addCEx(); }
+function delCEx(id) { if(window._delCEx) window._delCEx(id); }
+function addGrow() { if(window._addGrow) window._addGrow(); }
+function addTopic() { if(window._addTopic) window._addTopic(); }
+function delTopic(i) { if(window._delTopic) window._delTopic(i); }
+function saveRefl() { if(window._saveRefl) window._saveRefl(); }
+function updGrow(id, v) { if(window._updGrow) window._updGrow(id, v); }
+function delGrow(id) { if(window._delGrow) window._delGrow(id); }
+function selQuiz(qi, oi) { if(window._selQuiz) window._selQuiz(qi, oi); }
+function checkQuiz() { if(window._checkQuiz) window._checkQuiz(); }
+function qp(text) { if(window._qp) window._qp(text); }
+function sendChat() { if(window._sendChat) window._sendChat(); }
+function clearChat() { if(window._clearChat) window._clearChat(); }
+</script>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, query, orderBy, deleteDoc, updateDoc, addDoc, enableIndexedDbPersistence } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDcUTLDn9JfcRUDAzUE_XujT_sYyMrBKsI",
+  authDomain: "mylifehub-1a716.firebaseapp.com",
+  projectId: "mylifehub-1a716",
+  storageBucket: "mylifehub-1a716.firebasestorage.app",
+  messagingSenderId: "296758857362",
+  appId: "1:296758857362:web:ff818b6d3639fab56e604b",
+  measurementId: "G-VMGZLTWHYF"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+enableIndexedDbPersistence(db).catch(()=>{});
+
+// User ID (persistent)
+let UID = localStorage.getItem('mlh_uid');
+if(!UID){UID='u_'+Math.random().toString(36).slice(2,10);localStorage.setItem('mlh_uid',UID);}
+
+// Sync dot
+function setSynced(ok){
+  const d=document.getElementById('syncDot');
+  if(d){d.className='sync-dot'+(ok?'':' off');}
+}
+
+// ── LOCAL FALLBACK ──
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function ld(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
 
@@ -459,80 +747,170 @@ let tasks=ld('t',[]),events=ld('ev',[]),todos=ld('td',[]),expenses=ld('ex',[]);
 let habits=ld('hb',[]),faithChecks=ld('fc',{}),bibleNotes=ld('bn',[]);
 let tithes=ld('ti',[]),faithNotes=ld('fn',[]),cExs=ld('ce',[]);
 let grows=ld('gp',[]),topics=ld('tp',['Communication','Leadership','Finance','Faith','Health']);
-let reflections=ld('rf',[]),chatHist=[];
+let reflections=ld('rf',[]),chatHist=[],bookmarks=ld('bm',{});
 let calDate=new Date(),taskFilter='all',expFilter='all';
+let hydro=ld('hydro',0);
 
-const FAITH=[
-  {k:'sealing',i:'📖',l:'Sealing (Word Study)'},
-  {k:'bible',i:'📗',l:'Bible Reading'},
-  {k:'evangelism',i:'🌍',l:'Evangelism'},
-  {k:'tithes',i:'💝',l:'Tithes & Offerings'},
-  {k:'worship',i:'🙌',l:'Worship Service'},
-];
+// ── FIREBASE SYNC ──
+function col(name){return collection(db,'users',UID,name);}
+function docRef(name,id){return doc(db,'users',UID,name,id);}
 
-// ── NAV — THE FIXED VERSION ──
-function nav(id, btn) {
-  // Hide all pages
-  var pages = document.querySelectorAll('.pg');
-  for (var i = 0; i < pages.length; i++) {
-    pages[i].classList.remove('show');
-  }
-  // Show target page
-  var target = document.getElementById('pg-' + id);
-  if (target) {
-    target.classList.add('show');
-  }
-  // Update nav buttons
-  var btns = document.querySelectorAll('.nb');
-  for (var i = 0; i < btns.length; i++) {
-    btns[i].classList.remove('on');
-  }
-  if (btn) btn.classList.add('on');
-  // Render page content
-  if (id==='home') rHome();
-  if (id==='work') rTasks();
-  if (id==='schedule') rCal();
-  if (id==='expenses') rExp();
-  if (id==='faith') rFaith();
-  if (id==='habits') rHabits();
-  if (id==='exercise') rEx();
-  if (id==='growth') rGrow();
-  if (id==='ai' && chatHist.length===0) initChat();
-}
+// Sync tasks
+onSnapshot(query(col('tasks'),orderBy('created','desc')),(snap)=>{
+  tasks=snap.docs.map(d=>({id:d.id,...d.data()}));sv('t',tasks);
+  setSynced(true);rTasks();rHome();
+});
+// Sync events
+onSnapshot(query(col('events'),orderBy('dt','desc')),(snap)=>{
+  events=snap.docs.map(d=>({id:d.id,...d.data()}));sv('ev',events);rEvs();
+});
+// Sync todos
+onSnapshot(query(col('todos'),orderBy('created','desc')),(snap)=>{
+  todos=snap.docs.map(d=>({id:d.id,...d.data()}));sv('td',todos);rTodos();
+});
+// Sync expenses
+onSnapshot(query(col('expenses'),orderBy('date','desc')),(snap)=>{
+  expenses=snap.docs.map(d=>({id:d.id,...d.data()}));sv('ex',expenses);rExp();
+});
+// Sync habits
+onSnapshot(query(col('habits'),orderBy('created','desc')),(snap)=>{
+  habits=snap.docs.map(d=>({id:d.id,...d.data()}));sv('hb',habits);rHabits();rHome();
+});
+// Sync faith checks
+onSnapshot(doc(db,'users',UID,'data','faithChecks'),(snap)=>{
+  if(snap.exists())faithChecks=snap.data();sv('fc',faithChecks);rHome();
+});
+// Sync tithes
+onSnapshot(query(col('tithes'),orderBy('date','desc')),(snap)=>{
+  tithes=snap.docs.map(d=>({id:d.id,...d.data()}));sv('ti',tithes);rTithes();
+});
+// Sync faith notes
+onSnapshot(query(col('faithNotes'),orderBy('date','desc')),(snap)=>{
+  faithNotes=snap.docs.map(d=>({id:d.id,...d.data()}));sv('fn',faithNotes);rFNotes();
+});
+// Sync bible notes
+onSnapshot(query(col('bibleNotes'),orderBy('date','desc')),(snap)=>{
+  bibleNotes=snap.docs.map(d=>({id:d.id,...d.data()}));sv('bn',bibleNotes);rBible();
+});
+// Sync bookmarks
+onSnapshot(doc(db,'users',UID,'data','bookmarks'),(snap)=>{
+  if(snap.exists())bookmarks=snap.data();sv('bm',bookmarks);rBookmarks();
+});
+// Sync grows
+onSnapshot(query(col('grows'),orderBy('started','desc')),(snap)=>{
+  grows=snap.docs.map(d=>({id:d.id,...d.data()}));sv('gp',grows);rGrow();
+});
+// Sync reflections
+onSnapshot(query(col('reflections'),orderBy('date','desc')),(snap)=>{
+  reflections=snap.docs.map(d=>({id:d.id,...d.data()}));sv('rf',reflections);rMindset();
+});
+
+// ── NAVIGATION ──
+window._nav=function(id,btn){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('show'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  const t=document.getElementById('pg-'+id);
+  if(t)t.classList.add('show');
+  if(btn)btn.classList.add('on');
+  if(id==='home')rHome();
+  if(id==='work')rTasks();
+  if(id==='schedule')rCal();
+  if(id==='expenses')rExp();
+  if(id==='faith')rFaith();
+  if(id==='habits')rHabits();
+  if(id==='exercise')rEx();
+  if(id==='growth')rGrow();
+  if(id==='ai'&&chatHist.length===0)initChat();
+};
 
 // ── MODAL ──
-function openM(id){document.getElementById(id).classList.add('open');const n=new Date();const p=x=>String(x).padStart(2,'0');const d=`${n.getFullYear()}-${p(n.getMonth()+1)}-${p(n.getDate())}`;if(id==='m-task')document.getElementById('task-d').value=`${d}T${p(n.getHours())}:${p(n.getMinutes())}`;if(id==='m-event')document.getElementById('ev-dt').value=`${d}T${p(n.getHours())}:${p(n.getMinutes())}`;if(id==='m-exp')document.getElementById('exp-dt').value=d;}
-function closeM(id){document.getElementById(id).classList.remove('open');}
+window._openM=function(id){
+  document.getElementById(id).classList.add('open');
+  const n=new Date();const p=x=>String(x).padStart(2,'0');
+  const d=`${n.getFullYear()}-${p(n.getMonth()+1)}-${p(n.getDate())}`;
+  if(id==='m-task'){const el=document.getElementById('task-d');if(el)el.value=`${d}T${p(n.getHours())}:${p(n.getMinutes())}`;}
+  if(id==='m-event'){const el=document.getElementById('ev-dt');if(el)el.value=`${d}T${p(n.getHours())}:${p(n.getMinutes())}`;}
+  if(id==='m-exp'){const el=document.getElementById('exp-dt');if(el)el.value=d;}
+};
+window._closeM=function(id){document.getElementById(id).classList.remove('open');};
 document.querySelectorAll('.mo').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');}));
 
-// ── UTILS ──
-function tod(){const n=new Date();const p=x=>String(x).padStart(2,'0');return `${n.getFullYear()}-${p(n.getMonth()+1)}-${p(n.getDate())}`;}
+// ── DATE UTILS ──
+function tod(){const n=new Date();const p=x=>String(x).padStart(2,'0');return`${n.getFullYear()}-${p(n.getMonth()+1)}-${p(n.getDate())}`;}
 function fmtDt(s){if(!s)return'';return new Date(s).toLocaleDateString('en-PH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});}
 function fmtD(s){if(!s)return'';return new Date(s).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'});}
 function isWeek(s){const d=new Date(s),n=new Date(),st=new Date(n);st.setDate(n.getDate()-n.getDay());st.setHours(0,0,0,0);const e=new Date(st);e.setDate(st.getDate()+7);return d>=st&&d<e;}
 function isMon(s){const d=new Date(s),n=new Date();return d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear();}
-function gt(){const n=new Date();return `${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;}
+function gt(){const n=new Date();return`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;}
+
+// ── DAILY VERSE DATA ──
+const VERSES=[
+  {text:"For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.",ref:"John 3:16"},
+  {text:"I can do all this through him who gives me strength.",ref:"Philippians 4:13"},
+  {text:"The Lord is my shepherd, I lack nothing.",ref:"Psalm 23:1"},
+  {text:"Trust in the Lord with all your heart and lean not on your own understanding.",ref:"Proverbs 3:5"},
+  {text:"For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.",ref:"Jeremiah 29:11"},
+  {text:"Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.",ref:"Joshua 1:9"},
+  {text:"Come to me, all you who are weary and burdened, and I will give you rest.",ref:"Matthew 11:28"},
+  {text:"And we know that in all things God works for the good of those who love him.",ref:"Romans 8:28"},
+  {text:"The Lord is my light and my salvation — whom shall I fear?",ref:"Psalm 27:1"},
+  {text:"Do not conform to the pattern of this world, but be transformed by the renewing of your mind.",ref:"Romans 12:2"},
+  {text:"But those who hope in the Lord will renew their strength. They will soar on wings like eagles.",ref:"Isaiah 40:31"},
+  {text:"Give thanks to the Lord, for he is good; his love endures forever.",ref:"Psalm 107:1"},
+  {text:"Your word is a lamp for my feet, a light on my path.",ref:"Psalm 119:105"},
+  {text:"The Lord himself goes before you and will be with you; he will never leave you nor forsake you.",ref:"Deuteronomy 31:8"},
+];
+function getDailyVerse(){return VERSES[new Date().getDate()%VERSES.length];}
+
+// ── MOTIVATION QUOTES ──
+const QUOTES=[
+  {text:"Small consistent progress builds extraordinary results. Show up every day.",auth:"— Daily Reminder"},
+  {text:"Discipline is choosing between what you want now and what you want most.",auth:"— Abraham Lincoln"},
+  {text:"Faith is taking the first step even when you don't see the whole staircase.",auth:"— Martin Luther King Jr."},
+  {text:"You don't have to be great to start, but you have to start to be great.",auth:"— Zig Ziglar"},
+  {text:"The secret of getting ahead is getting started.",auth:"— Mark Twain"},
+  {text:"God's timing is always perfect. Keep trusting, keep moving.",auth:"— Daily Reminder"},
+  {text:"Success is the sum of small efforts, repeated day in and day out.",auth:"— Robert Collier"},
+];
 
 // ── HOME ──
 function rHome(){
   const h=new Date().getHours();
-  document.getElementById('gtxt').textContent=h<12?'Good morning 👋':h<17?'Good afternoon 👋':'Good evening 👋';
+  document.getElementById('gtxt').textContent=h<12?'Good morning ☀️':h<17?'Good afternoon 👋':'Good evening 🌙';
+  document.getElementById('gsub').textContent="Here's your day at a glance";
   document.getElementById('qs-t').textContent=tasks.filter(t=>!t.done&&t.dl&&t.dl.startsWith(tod())).length;
   document.getElementById('qs-s').textContent=habits.length?Math.max(...habits.map(h=>h.streak||0),0):0;
   document.getElementById('qs-e').textContent='₱'+expenses.filter(e=>e.date===tod()).reduce((s,e)=>s+e.amt,0).toLocaleString();
+  const v=getDailyVerse();
+  ['dv-text','faith-dv-text'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='"'+v.text+'"';});
+  ['dv-book','faith-dv-book'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='— '+v.ref;});
   const urg=tasks.filter(t=>!t.done&&(t.urg==='urgent'||t.urg==='high')).slice(0,3);
-  document.getElementById('h-tasks').innerHTML=urg.length?urg.map(t=>`<div class="ti"><div style="flex:1"><div class="tn">${t.name}</div><div class="tm"><span class="badge ${t.urg==='urgent'?'bu':'bh'}">${t.urg}</span>${t.dl?fmtDt(t.dl):''}</div></div></div>`).join(''):'<div class="empty"><span class="em">✅</span>No urgent tasks!</div>';
+  document.getElementById('h-tasks').innerHTML=urg.length?urg.map(t=>`<div class="ti"><div style="flex:1"><div class="tname">${t.name}</div><div class="tmeta"><span class="badge ${t.urg==='urgent'?'b-urgent':'b-high'}">${t.urg}</span>${t.dl?fmtDt(t.dl):''}</div></div></div>`).join(''):'<div class="empty"><span class="em">✅</span>No urgent tasks!</div>';
   const tk=tod();
-  document.getElementById('h-faith').innerHTML=FAITH.map(f=>{const done=faithChecks[tk]?.[f.k];return`<div class="fi"><span class="ficon">${f.i}</span><span class="flabel">${f.l}</span><span style="font-size:1.2rem">${done?'✅':'⬜'}</span></div>`;}).join('');
-  const Q=["Every day is a new beginning. Take a deep breath and start again.","Consistency transforms average into excellence.","Your faith is your foundation. Build on it every day.","Small daily improvements lead to staggering results.","You are more capable than you think. Keep going.","Progress over perfection. Show up today.","God's plans for you are greater than your fears.","Your growth is happening even when you can't see it."];
-  document.getElementById('h-quote').textContent=`"${Q[new Date().getDate()%Q.length]}"`;
+  const FAITH_ITEMS=[{k:'sealing',i:'📖',l:'Sealing'},{k:'bible',i:'📗',l:'Bible Reading'},{k:'evangelism',i:'🌍',l:'Evangelism'},{k:'tithes',i:'💝',l:'Tithes & Offerings'},{k:'worship',i:'🙌',l:'Worship Service'}];
+  document.getElementById('h-faith').innerHTML=FAITH_ITEMS.map(f=>{const done=faithChecks[tk]?.[f.k];return`<div class="fi"><div class="fi-icon" style="background:${done?'var(--green-l)':'var(--surf2)'}">${f.i}</div><span class="fi-label">${f.l}</span><span style="font-size:1.1rem">${done?'✅':'⬜'}</span></div>`;}).join('');
+  const q=QUOTES[new Date().getDate()%QUOTES.length];
+  document.getElementById('h-quote').textContent=q.text;
+  document.getElementById('h-quote-auth').textContent=q.auth;
 }
 
 // ── TASKS ──
-function addTask(){const n=document.getElementById('task-n').value.trim();if(!n)return alert('Enter task name.');tasks.push({id:Date.now(),name:n,urg:document.getElementById('task-u').value,dl:document.getElementById('task-d').value,notes:document.getElementById('task-notes').value,done:false});sv('t',tasks);closeM('m-task');document.getElementById('task-n').value='';document.getElementById('task-notes').value='';rTasks();}
-function togTask(id){const t=tasks.find(t=>t.id===id);if(t){t.done=!t.done;sv('t',tasks);rTasks();}}
-function delTask(id){tasks=tasks.filter(t=>t.id!==id);sv('t',tasks);rTasks();}
-function ftask(f,btn){taskFilter=f;document.querySelectorAll('#pg-work .tb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');rTasks();}
+window._addTask=async function(){
+  const n=document.getElementById('task-n').value.trim();
+  if(!n)return alert('Enter task name.');
+  const t={name:n,urg:document.getElementById('task-u').value,diff:parseInt(document.getElementById('task-diff').value),dl:document.getElementById('task-d').value,notes:document.getElementById('task-notes').value,done:false,created:new Date().toISOString()};
+  try{await addDoc(col('tasks'),t);setSynced(true);}catch(e){tasks.unshift({id:'l'+Date.now(),...t});sv('t',tasks);rTasks();}
+  closeM('m-task');document.getElementById('task-n').value='';document.getElementById('task-notes').value='';
+};
+window._togTask=async function(id){
+  const t=tasks.find(t=>t.id===id);if(!t)return;
+  try{await updateDoc(docRef('tasks',id),{done:!t.done});}catch(e){t.done=!t.done;sv('t',tasks);rTasks();}
+};
+window._delTask=async function(id){
+  try{await deleteDoc(docRef('tasks',id));}catch(e){tasks=tasks.filter(t=>t.id!==id);sv('t',tasks);rTasks();}
+};
+window._ftask=function(f,btn){taskFilter=f;document.querySelectorAll('#pg-work .tb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');rTasks();};
+function calcProg(){let tot=0,done=0;tasks.forEach(t=>{tot+=t.diff||50;if(t.done)done+=t.diff||50;});return tot?Math.round(done/tot*100):0;}
 function rTasks(){
   let f=[...tasks];
   if(taskFilter==='urgent')f=f.filter(t=>t.urg==='urgent'&&!t.done);
@@ -540,161 +918,524 @@ function rTasks(){
   else if(taskFilter==='pending')f=f.filter(t=>!t.done);
   else if(taskFilter==='done')f=f.filter(t=>t.done);
   f.sort((a,b)=>{const o={urgent:0,high:1,normal:2,low:3};if(a.done!==b.done)return a.done?1:-1;return(o[a.urg]||2)-(o[b.urg]||2);});
-  const el=document.getElementById('tasklist');
-  if(!f.length){el.innerHTML='<div class="empty"><span class="em">🗂</span>No tasks here.</div>';return;}
-  el.innerHTML=f.map(t=>`<div class="ti"><button class="tc ${t.done?'done':''}" onclick="togTask(${t.id})">${t.done?'✓':''}</button><div style="flex:1"><div class="tn ${t.done?'done':''}">${t.name}</div><div class="tm"><span class="badge ${t.done?'bd2':t.urg==='urgent'?'bu':t.urg==='high'?'bh':t.urg==='low'?'bl':'bn'}">${t.done?'Done':t.urg}</span>${t.dl?'⏰ '+fmtDt(t.dl):''}${t.notes?'📝 '+t.notes.substring(0,30):''}</div></div><button class="btn bd sm" onclick="delTask(${t.id})">✕</button></div>`).join('');
+  const el=document.getElementById('tasklist');if(!el)return;
+  if(!f.length){el.innerHTML='<div class="empty"><span class="em">📋</span>No tasks here.</div>';return;}
+  el.innerHTML=f.map(t=>`<div class="ti ${t.done?'done-item':''}">
+    <button class="tchk ${t.done?'done':''}" onclick="togTask('${t.id}')" style="margin-top:2px;">
+      ${t.done?`<svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>`:''}
+    </button>
+    <div class="tbody">
+      <div class="tname ${t.done?'done':''}">${t.name}</div>
+      <div class="tmeta">
+        <span class="badge ${t.done?'b-done':t.urg==='urgent'?'b-urgent':t.urg==='high'?'b-high':t.urg==='low'?'b-low':'b-normal'}">${t.done?'Done':t.urg}</span>
+        ${t.dl?'<span>⏰ '+fmtDt(t.dl)+'</span>':''}
+        <span style="color:var(--txt4);">${t.diff||50} pts</span>
+      </div>
+      <div class="tprog">
+        <div style="font-size:0.68rem;color:var(--txt4);margin-bottom:3px;">${t.done?'100':'0'}% complete</div>
+        <div class="tpbar"><div class="tpfill" style="width:${t.done?100:0}%;"></div></div>
+      </div>
+      ${t.notes?`<div style="font-size:0.74rem;color:var(--txt3);margin-top:6px;">📝 ${t.notes}</div>`:''}
+    </div>
+    <button class="btn bd bsm btn-icon" onclick="delTask('${t.id}')">✕</button>
+  </div>`).join('');
+  const p=calcProg();
+  const pb=document.getElementById('ovr-bar');if(pb)pb.style.width=p+'%';
+  const pp=document.getElementById('ovr-pct');if(pp)pp.textContent=p+'%';
 }
 
 // ── CALENDAR ──
 function rCal(){
   const y=calDate.getFullYear(),m=calDate.getMonth(),n=new Date();
-  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('cal-lbl').textContent=`${months[m]} ${y}`;
-  document.getElementById('cal-heads').innerHTML=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="cdl">${d}</div>`).join('');
-  const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
+  const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const DAYS=['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  const lbl=document.getElementById('cal-lbl');if(lbl)lbl.textContent=`${MONTHS[m]} ${y}`;
+  const heads=document.getElementById('cal-heads');if(heads)heads.innerHTML=DAYS.map(d=>`<div class="cdl">${d}</div>`).join('');
+  const first=new Date(y,m,1).getDay();
+  const daysInMonth=new Date(y,m+1,0).getDate();
   let h='';
   for(let i=0;i<first;i++)h+='<div class="cd empty"></div>';
-  for(let d=1;d<=days;d++){const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;const isT=d===n.getDate()&&m===n.getMonth()&&y===n.getFullYear();const hasE=events.some(e=>e.dt&&e.dt.startsWith(ds));h+=`<div class="cd ${isT?'today':''} ${hasE?'ev':''}" onclick="selDay('${ds}')">${d}</div>`;}
-  document.getElementById('cal-days').innerHTML=h;
+  for(let d=1;d<=daysInMonth;d++){
+    const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isT=d===n.getDate()&&m===n.getMonth()&&y===n.getFullYear();
+    const hasE=events.some(e=>e.dt&&e.dt.startsWith(ds));
+    h+=`<div class="cd${isT?' today':''}${hasE?' has-ev':''}" onclick="selDay('${ds}')">${d}</div>`;
+  }
+  const grid=document.getElementById('cal-days');if(grid)grid.innerHTML=h;
   rTodos();rEvs();
 }
-function chMonth(d){calDate.setMonth(calDate.getMonth()+d);rCal();}
-function selDay(ds){rEvs(ds);}
-function addTodo(){const v=document.getElementById('todo-in').value.trim();if(!v)return;todos.push({id:Date.now(),text:v,done:false,date:tod()});sv('td',todos);document.getElementById('todo-in').value='';rTodos();}
-function togTodo(id){const t=todos.find(t=>t.id===id);if(t){t.done=!t.done;sv('td',todos);rTodos();}}
-function delTodo(id){todos=todos.filter(t=>t.id!==id);sv('td',todos);rTodos();}
-function rTodos(){const tt=todos.filter(t=>t.date===tod());const el=document.getElementById('todolist');if(!tt.length){el.innerHTML='<div class="empty"><span class="em">📌</span>No to-dos yet.</div>';return;}el.innerHTML=tt.map(t=>`<div class="ti" style="padding:10px 12px"><button class="tc ${t.done?'done':''}" onclick="togTodo(${t.id})">${t.done?'✓':''}</button><div class="tn ${t.done?'done':''}" style="flex:1">${t.text}</div><button class="btn bd sm" onclick="delTodo(${t.id})">✕</button></div>`).join('');}
-function addEvent(){const n=document.getElementById('ev-n').value.trim();if(!n)return alert('Enter event name.');events.push({id:Date.now(),name:n,dt:document.getElementById('ev-dt').value,notes:document.getElementById('ev-notes').value});sv('ev',events);closeM('m-event');document.getElementById('ev-n').value='';document.getElementById('ev-notes').value='';rCal();}
-function rEvs(filter){let ev=[...events];if(filter)ev=ev.filter(e=>e.dt&&e.dt.startsWith(filter));ev.sort((a,b)=>a.dt>b.dt?1:-1);const el=document.getElementById('evlist');if(!ev.length){el.innerHTML='<div class="empty"><span class="em">📆</span>No events.</div>';return;}el.innerHTML=ev.map(e=>`<div class="ti" style="padding:10px 12px"><div style="flex:1"><div class="tn">${e.name}</div><div class="tm">📅 ${fmtDt(e.dt)}${e.notes?' · '+e.notes:''}</div></div><button class="btn bd sm" onclick="delEv(${e.id})">✕</button></div>`).join('');}
-function delEv(id){events=events.filter(e=>e.id!==id);sv('ev',events);rCal();}
+window._chMonth=function(d){calDate.setMonth(calDate.getMonth()+d);rCal();};
+window._selDay=function(ds){rEvs(ds);};
+
+window._addTodo=async function(){
+  const v=document.getElementById('todo-in').value.trim();if(!v)return;
+  const t={text:v,done:false,date:tod(),created:new Date().toISOString()};
+  try{await addDoc(col('todos'),t);}catch(e){todos.unshift({id:'l'+Date.now(),...t});sv('td',todos);rTodos();}
+  document.getElementById('todo-in').value='';
+};
+window._togTodo=async function(id){
+  const t=todos.find(t=>t.id===id);if(!t)return;
+  try{await updateDoc(docRef('todos',id),{done:!t.done});}catch(e){t.done=!t.done;sv('td',todos);rTodos();}
+};
+window._delTodo=async function(id){
+  try{await deleteDoc(docRef('todos',id));}catch(e){todos=todos.filter(t=>t.id!==id);sv('td',todos);rTodos();}
+};
+function rTodos(){
+  const tt=todos.filter(t=>t.date===tod());
+  const el=document.getElementById('todolist');if(!el)return;
+  if(!tt.length){el.innerHTML='<div class="empty"><span class="em">📌</span>No to-dos yet.</div>';return;}
+  el.innerHTML=tt.map(t=>`<div class="ti" style="padding:11px 12px">
+    <button class="tchk ${t.done?'done':''}" onclick="togTodo('${t.id}')">
+      ${t.done?`<svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>`:''}
+    </button>
+    <div class="tname ${t.done?'done':''}" style="flex:1;font-size:0.85rem;">${t.text}</div>
+    <button class="btn bd bsm btn-icon" onclick="delTodo('${t.id}')">✕</button>
+  </div>`).join('');
+}
+
+window._addEvent=async function(){
+  const n=document.getElementById('ev-n').value.trim();if(!n)return alert('Enter event name.');
+  const e={name:n,dt:document.getElementById('ev-dt').value,notes:document.getElementById('ev-notes').value,created:new Date().toISOString()};
+  try{await addDoc(col('events'),e);}catch(e2){events.unshift({id:'l'+Date.now(),...e});sv('ev',events);rEvs();rCal();}
+  closeM('m-event');document.getElementById('ev-n').value='';document.getElementById('ev-notes').value='';
+};
+window._delEv=async function(id){
+  try{await deleteDoc(docRef('events',id));}catch(e){events=events.filter(e=>e.id!==id);sv('ev',events);rEvs();rCal();}
+};
+function rEvs(filter){
+  let ev=[...events];
+  if(filter)ev=ev.filter(e=>e.dt&&e.dt.startsWith(filter));
+  ev.sort((a,b)=>a.dt>b.dt?1:-1);
+  const el=document.getElementById('evlist');if(!el)return;
+  if(!ev.length){el.innerHTML='<div class="empty"><span class="em">📆</span>No events.</div>';return;}
+  el.innerHTML=ev.map(e=>`<div class="ti" style="padding:11px 12px">
+    <div style="flex:1"><div class="tname">${e.name}</div><div class="tmeta">📅 ${fmtDt(e.dt)}${e.notes?' · '+e.notes:''}</div></div>
+    <button class="btn bd bsm btn-icon" onclick="delEv('${e.id}')">✕</button>
+  </div>`).join('');
+}
 
 // ── EXPENSES ──
-function addExp(){const d=document.getElementById('exp-d').value.trim();const a=parseFloat(document.getElementById('exp-a').value);if(!d||isNaN(a)||a<=0)return alert('Enter valid description and amount.');expenses.push({id:Date.now(),desc:d,amt:a,cat:document.getElementById('exp-cat').value,date:document.getElementById('exp-dt').value||tod()});sv('ex',expenses);closeM('m-exp');document.getElementById('exp-d').value='';document.getElementById('exp-a').value='';rExp();}
-function fexp(f,btn){expFilter=f;document.querySelectorAll('#pg-expenses .tb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');rExp();}
-function delExp(id){expenses=expenses.filter(e=>e.id!==id);sv('ex',expenses);rExp();}
+window._addExp=async function(){
+  const d=document.getElementById('exp-d').value.trim();
+  const a=parseFloat(document.getElementById('exp-a').value);
+  if(!d||isNaN(a)||a<=0)return alert('Enter valid description and amount.');
+  const e={desc:d,amt:a,cat:document.getElementById('exp-cat').value,date:document.getElementById('exp-dt').value||tod(),created:new Date().toISOString()};
+  try{await addDoc(col('expenses'),e);}catch(err){expenses.unshift({id:'l'+Date.now(),...e});sv('ex',expenses);rExp();}
+  closeM('m-exp');document.getElementById('exp-d').value='';document.getElementById('exp-a').value='';
+};
+window._fexp=function(f,btn){expFilter=f;document.querySelectorAll('#pg-expenses .tb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');rExp();};
+window._delExp=async function(id){
+  try{await deleteDoc(docRef('expenses',id));}catch(e){expenses=expenses.filter(e=>e.id!==id);sv('ex',expenses);rExp();}
+};
 function rExp(){
   const te=expenses.filter(e=>e.date===tod()).reduce((s,e)=>s+e.amt,0);
   const we=expenses.filter(e=>isWeek(e.date)).reduce((s,e)=>s+e.amt,0);
   const me=expenses.filter(e=>isMon(e.date)).reduce((s,e)=>s+e.amt,0);
-  document.getElementById('ex-t').textContent='₱'+te.toLocaleString();
-  document.getElementById('ex-w').textContent='₱'+we.toLocaleString();
-  document.getElementById('ex-m').textContent='₱'+me.toLocaleString();
-  document.getElementById('ex-c').textContent=expenses.length;
+  const et=document.getElementById('ex-t');if(et)et.textContent='₱'+te.toLocaleString();
+  const ew=document.getElementById('ex-w');if(ew)ew.textContent='₱'+we.toLocaleString();
+  const em=document.getElementById('ex-m');if(em)em.textContent='₱'+me.toLocaleString();
+  const ec=document.getElementById('ex-c');if(ec)ec.textContent=expenses.length;
   let f=[...expenses];
   if(expFilter==='week')f=f.filter(e=>isWeek(e.date));
   else if(expFilter==='month')f=f.filter(e=>isMon(e.date));
-  const el=document.getElementById('expview');
+  const el=document.getElementById('expview');if(!el)return;
   if(expFilter==='chart'){rExpChart(el);return;}
   f.sort((a,b)=>b.date>a.date?1:-1);
   if(!f.length){el.innerHTML='<div class="empty"><span class="em">💰</span>No expenses yet.</div>';return;}
-  const ci={'Food':'🍽','Transport':'🚗','Bills':'💡','Shopping':'🛍','Health':'💊','Giving':'🙏','Others':'📦'};
-  el.innerHTML=f.map(e=>`<div class="ti" style="padding:10px 12px"><div style="font-size:1.4rem">${ci[e.cat]||'📦'}</div><div style="flex:1"><div class="tn">${e.desc}</div><div class="tm">${e.cat} · ${fmtD(e.date)}</div></div><div style="font-weight:700;color:var(--a3);">₱${e.amt.toLocaleString()}</div><button class="btn bd sm" onclick="delExp(${e.id})">✕</button></div>`).join('');
+  const ci={Food:'🍽',Transport:'🚗',Bills:'💡',Shopping:'🛍',Health:'💊',Giving:'🙏',Others:'📦'};
+  el.innerHTML=f.map(e=>`<div class="ti" style="padding:11px 12px">
+    <div style="font-size:1.4rem;flex-shrink:0">${ci[e.cat]||'📦'}</div>
+    <div style="flex:1"><div class="tname">${e.desc}</div><div class="tmeta">${e.cat} · ${fmtD(e.date)}</div></div>
+    <div style="font-weight:700;color:var(--red);font-size:0.88rem;">₱${e.amt.toLocaleString()}</div>
+    <button class="btn bd bsm btn-icon" style="margin-left:6px" onclick="delExp('${e.id}')">✕</button>
+  </div>`).join('');
 }
 function rExpChart(el){
   const cats=['Food','Transport','Bills','Shopping','Health','Giving','Others'];
-  const cols=['var(--a)','var(--a2)','var(--a4)','var(--a5)','var(--a3)','#b794f4','#76e4f7'];
+  const cols=['var(--blue)','var(--amber)','var(--purple)','var(--green)','var(--red)','#ec4899','#64748b'];
   const me=expenses.filter(e=>isMon(e.date));
   const mt=cats.map(c=>me.filter(e=>e.cat===c).reduce((s,e)=>s+e.amt,0));
   const mx=Math.max(...mt,1);
   const we=expenses.filter(e=>isWeek(e.date));
   const wt=cats.map(c=>we.filter(e=>e.cat===c).reduce((s,e)=>s+e.amt,0));
-  el.innerHTML=`<div class="card"><div class="ctitle">📊 This Month</div><div class="cbw">${cats.map((c,i)=>`<div class="cr"><div class="cl">${c}</div><div class="cbg"><div class="cbf" style="width:${(mt[i]/mx*100).toFixed(0)}%;background:${cols[i]}"></div></div><div class="cv" style="color:${cols[i]}">₱${mt[i].toLocaleString()}</div></div>`).join('')}</div></div><div class="card"><div class="ctitle">📊 This Week</div><div class="cbw">${cats.map((c,i)=>`<div class="cr"><div class="cl">${c}</div><div class="cbg"><div class="cbf" style="width:${(wt[i]/Math.max(...wt,1)*100).toFixed(0)}%;background:${cols[i]}"></div></div><div class="cv" style="color:${cols[i]}">₱${wt[i].toLocaleString()}</div></div>`).join('')}</div></div>`;
+  el.innerHTML=`<div class="card"><div class="ctitle">This Month by Category</div><div class="cbw">${cats.map((c,i)=>`<div class="cr"><div class="cl">${c}</div><div class="cbg"><div class="cbf" style="width:${(mt[i]/mx*100).toFixed(0)}%;background:${cols[i]}"></div></div><div class="cv" style="color:${cols[i]}">₱${mt[i].toLocaleString()}</div></div>`).join('')}</div></div>
+  <div class="card"><div class="ctitle">This Week by Category</div><div class="cbw">${cats.map((c,i)=>`<div class="cr"><div class="cl">${c}</div><div class="cbg"><div class="cbf" style="width:${(wt[i]/Math.max(...wt,1)*100).toFixed(0)}%;background:${cols[i]}"></div></div><div class="cv" style="color:${cols[i]}">₱${wt[i].toLocaleString()}</div></div>`).join('')}</div></div>`;
 }
 
 // ── FAITH ──
-function rFaith(){const tk=tod();const s=faithChecks[tk]||{};document.getElementById('faith-list').innerHTML=FAITH.map(f=>`<div class="fi"><span class="ficon">${f.i}</span><span class="flabel">${f.l}</span><div class="ftog ${s[f.k]?'on':''}" id="ft-${f.k}" onclick="togFaith('${f.k}')"></div></div>`).join('');rBible();rTithes();rFNotes();}
-function togFaith(k){const tk=tod();if(!faithChecks[tk])faithChecks[tk]={};faithChecks[tk][k]=!faithChecks[tk][k];document.getElementById('ft-'+k).classList.toggle('on',faithChecks[tk][k]);}
-function saveFaith(){sv('fc',faithChecks);alert('Saved! 🙌');}
-function saveBible(){const r=document.getElementById('bref').value.trim();if(!r)return;bibleNotes.unshift({id:Date.now(),ref:r,note:document.getElementById('bnote').value,date:tod()});sv('bn',bibleNotes);document.getElementById('bref').value='';document.getElementById('bnote').value='';rBible();}
-function rBible(){const el=document.getElementById('blist');if(!bibleNotes.length){el.innerHTML='<div class="empty">No readings yet.</div>';return;}el.innerHTML=bibleNotes.slice(0,5).map(n=>`<div class="ni"><div class="ntitle">📗 ${n.ref}</div>${n.note?`<div class="ntext">${n.note}</div>`:''}<div class="ndate">${fmtD(n.date)}</div></div>`).join('');}
-function saveTithe(){const a=parseFloat(document.getElementById('tamt').value);if(isNaN(a)||a<=0)return;tithes.unshift({id:Date.now(),amt:a,type:document.getElementById('ttype').value,date:tod()});sv('ti',tithes);document.getElementById('tamt').value='';rTithes();}
-function rTithes(){const el=document.getElementById('tlist');if(!tithes.length){el.innerHTML='<div class="empty">No records yet.</div>';return;}el.innerHTML=tithes.slice(0,5).map(t=>`<div class="ti" style="padding:8px 10px"><div style="flex:1"><div class="tn">${t.type}</div><div class="tm">${fmtD(t.date)}</div></div><div style="font-weight:700;color:var(--a5)">₱${t.amt.toLocaleString()}</div></div>`).join('');}
-function saveFNote(){const title=document.getElementById('fntitle').value.trim();if(!title)return;faithNotes.unshift({id:Date.now(),title,text:document.getElementById('fntext').value,date:tod()});sv('fn',faithNotes);document.getElementById('fntitle').value='';document.getElementById('fntext').value='';rFNotes();}
-function rFNotes(){const el=document.getElementById('fnlist');if(!faithNotes.length){el.innerHTML='<div class="empty">No notes yet.</div>';return;}el.innerHTML=faithNotes.slice(0,5).map(n=>`<div class="ni"><div class="ntitle">📝 ${n.title}</div>${n.text?`<div class="ntext">${n.text}</div>`:''}<div class="ndate">${fmtD(n.date)}</div></div>`).join('');}
+const FAITH_ITEMS=[
+  {k:'sealing',i:'📖',l:'Sealing (Word Study)',sub:'Daily study of the Word'},
+  {k:'bible',i:'📗',l:'Bible Reading',sub:'Read Scripture daily'},
+  {k:'evangelism',i:'🌍',l:'Evangelism',sub:'Share the Gospel'},
+  {k:'tithes',i:'💝',l:'Tithes & Offerings',sub:'Give to the Lord'},
+  {k:'worship',i:'🙌',l:'Worship Service',sub:'Attend & participate'},
+];
+function rFaith(){
+  const tk=tod();const s=faithChecks[tk]||{};
+  const el=document.getElementById('faith-list');
+  if(el)el.innerHTML=FAITH_ITEMS.map(f=>`<div class="fi">
+    <div class="fi-icon" style="background:${s[f.k]?'var(--green-l)':'var(--surf2)'}">${f.i}</div>
+    <div style="flex:1"><div class="fi-label">${f.l}</div><div class="fi-sub">${f.sub}</div></div>
+    <div class="ftog ${s[f.k]?'on':''}" id="ft-${f.k}" onclick="togFaith('${f.k}')"></div>
+  </div>`).join('');
+  rBible();rTithes();rFNotes();rBookmarks();
+}
+window._togFaith=function(k){
+  const tk=tod();if(!faithChecks[tk])faithChecks[tk]={};
+  faithChecks[tk][k]=!faithChecks[tk][k];
+  const el=document.getElementById('ft-'+k);if(el)el.classList.toggle('on',faithChecks[tk][k]);
+  const icon=el?.parentElement?.querySelector('.fi-icon');if(icon)icon.style.background=faithChecks[tk][k]?'var(--green-l)':'var(--surf2)';
+  setDoc(doc(db,'users',UID,'data','faithChecks'),faithChecks,{merge:true}).catch(()=>sv('fc',faithChecks));
+};
+window._saveFaith=function(){
+  setDoc(doc(db,'users',UID,'data','faithChecks'),faithChecks,{merge:true}).catch(()=>sv('fc',faithChecks));
+  alert("Today's progress saved! 🙌");
+};
+
+// BIBLE DATA (Offline KJV excerpts)
+const BIBLE={
+  "Genesis":{1:["In the beginning God created the heaven and the earth.","And the earth was without form, and void; and darkness was upon the face of the deep.","And the Spirit of God moved upon the face of the waters.","And God said, Let there be light: and there was light.","And God saw the light, that it was good: and God divided the light from the darkness."]},
+  "Psalms":{1:["Blessed is the man that walketh not in the counsel of the ungodly, nor standeth in the way of sinners, nor sitteth in the seat of the scornful.","But his delight is in the law of the LORD; and in his law doth he meditate day and night.","And he shall be like a tree planted by the rivers of water, that bringeth forth his fruit in his season."],23:["The LORD is my shepherd; I shall not want.","He maketh me to lie down in green pastures: he leadeth me beside the still waters.","He restoreth my soul: he leadeth me in the paths of righteousness for his name's sake.","Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me.","Surely goodness and mercy shall follow me all the days of my life."],91:["He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty.","I will say of the LORD, He is my refuge and my fortress: my God; in him will I trust."]},
+  "Proverbs":{3:["Trust in the LORD with all thine heart; and lean not unto thine own understanding.","In all thy ways acknowledge him, and he shall direct thy paths.","Be not wise in thine own eyes: fear the LORD, and depart from evil."],31:["Who can find a virtuous woman? for her price is far above rubies.","Strength and honour are her clothing; and she shall rejoice in time to come."]},
+  "Isaiah":{53:["But he was wounded for our transgressions, he was bruised for our iniquities: the chastisement of our peace was upon him; and with his stripes we are healed.","All we like sheep have gone astray; we have turned every one to his own way; and the LORD hath laid on him the iniquity of us all."]},
+  "Jeremiah":{29:["For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.","Then shall ye call upon me, and ye shall go and pray unto me, and I will hearken unto you."]},
+  "Matthew":{5:["Blessed are the poor in spirit: for theirs is the kingdom of heaven.","Blessed are they that mourn: for they shall be comforted.","Blessed are the meek: for they shall inherit the earth.","Blessed are they which do hunger and thirst after righteousness: for they shall be filled."],6:["But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you."]},
+  "John":{1:["In the beginning was the Word, and the Word was with God, and the Word was God.","The same was in the beginning with God.","All things were made by him; and without him was not any thing made that was made."],3:["For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.","For God sent not his Son into the world to condemn the world; but that the world through him might be saved."],14:["Let not your heart be troubled: ye believe in God, believe also in me.","In my Father's house are many mansions: if it were not so, I would have told you.","I am the way, the truth, and the life: no man cometh unto the Father, but by me."]},
+  "Romans":{8:["There is therefore now no condemnation to them which are in Christ Jesus.","And we know that all things work together for good to them that love God.","If God be for us, who can be against us?"],12:["I beseech you therefore, brethren, by the mercies of God, that ye present your bodies a living sacrifice, holy, acceptable unto God.","And be not conformed to this world: but be ye transformed by the renewing of your mind."]},
+  "Philippians":{4:["I can do all things through Christ which strengtheneth me.","But my God shall supply all your need according to his riches in glory by Christ Jesus."]},
+  "1 Corinthians":{13:["Though I speak with the tongues of men and of angels, and have not charity, I am become as sounding brass, or a tinkling cymbal.","Charity suffereth long, and is kind; charity envieth not; charity vaunteth not itself, is not puffed up.","And now abideth faith, hope, charity, these three; but the greatest of these is charity."]},
+  "Revelation":{1:["I am Alpha and Omega, the beginning and the ending, saith the Lord, which is, and which was, and which is to come, the Almighty."],21:["And God shall wipe away all tears from their eyes; and there shall be no more death, neither sorrow, nor crying, neither shall there be any more pain.","And he said unto me, It is done. I am Alpha and Omega, the beginning and the end."]}
+};
+
+function initBible(){
+  const bs=document.getElementById('bible-book');if(!bs||bs.options.length>0)return;
+  Object.keys(BIBLE).forEach(b=>{const o=document.createElement('option');o.value=b;o.textContent=b;bs.appendChild(o);});
+  loadBible();
+}
+window._loadBible=function(){
+  const bs=document.getElementById('bible-book');const cs=document.getElementById('bible-chap');if(!bs||!cs)return;
+  const book=bs.value;cs.innerHTML='';
+  Object.keys(BIBLE[book]||{}).forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent='Chapter '+c;cs.appendChild(o);});
+  showBibleText();
+};
+window._showBibleText=function(){
+  const bs=document.getElementById('bible-book');const cs=document.getElementById('bible-chap');
+  const bt=document.getElementById('bible-text');if(!bs||!cs||!bt)return;
+  const verses=BIBLE[bs.value]?.[cs.value]||[];
+  bt.innerHTML=verses.map((v,i)=>`<div class="verse-line"><span class="verse-num">${i+1}</span>${v}</div>`).join('');
+};
+document.getElementById('bible-chap')?.addEventListener('change',()=>window.showBibleText());
+
+window._addBookmark=async function(){
+  const bs=document.getElementById('bible-book');const cs=document.getElementById('bible-chap');
+  const g=document.getElementById('bmark-group').value.trim()||'General';
+  if(!bs||!cs)return;
+  const ref=`${bs.value} ${cs.value}`;
+  if(!bookmarks[g])bookmarks[g]=[];
+  if(!bookmarks[g].includes(ref)){
+    bookmarks[g].push(ref);
+    setDoc(doc(db,'users',UID,'data','bookmarks'),bookmarks,{merge:true}).catch(()=>sv('bm',bookmarks));
+    rBookmarks();
+    alert(`Bookmarked: ${ref} → "${g}" group ✅`);
+  }else{alert('Already bookmarked!');}
+};
+window._delBookmark=async function(group,ref){
+  bookmarks[group]=bookmarks[group].filter(r=>r!==ref);
+  if(!bookmarks[group].length)delete bookmarks[group];
+  setDoc(doc(db,'users',UID,'data','bookmarks'),bookmarks,{merge:true}).catch(()=>sv('bm',bookmarks));
+  rBookmarks();
+};
+window._renameGroup=function(oldName){
+  const newName=prompt('Rename group:',oldName);
+  if(!newName||newName===oldName)return;
+  bookmarks[newName]=bookmarks[oldName];
+  delete bookmarks[oldName];
+  setDoc(doc(db,'users',UID,'data','bookmarks'),bookmarks,{merge:true}).catch(()=>sv('bm',bookmarks));
+  rBookmarks();
+};
+function rBookmarks(){
+  const el=document.getElementById('bmark-list');const emp=document.getElementById('bmark-empty');if(!el)return;
+  const groups=Object.keys(bookmarks);
+  if(!groups.length){if(emp)emp.style.display='block';el.innerHTML='';return;}
+  if(emp)emp.style.display='none';
+  el.innerHTML=groups.map(g=>`<div class="bmark-group">
+    <div class="bmark-group-title">
+      <span>🔖 ${g}</span>
+      <div style="display:flex;gap:6px;">
+        <button class="btn bg bsm" onclick="renameGroup('${g}')">Rename</button>
+      </div>
+    </div>
+    ${bookmarks[g].map(r=>`<div class="bmark-verse">
+      <span>${r}</span>
+      <button class="btn bd bsm" onclick="delBookmark('${g}','${r}')">✕</button>
+    </div>`).join('')}
+  </div>`).join('');
+}
+
+window._saveBible=async function(){
+  const r=document.getElementById('bref').value.trim();if(!r)return;
+  const n={ref:r,note:document.getElementById('bnote').value,date:tod(),created:new Date().toISOString()};
+  try{await addDoc(col('bibleNotes'),n);}catch(e){bibleNotes.unshift({id:'l'+Date.now(),...n});sv('bn',bibleNotes);rBible();}
+  document.getElementById('bref').value='';document.getElementById('bnote').value='';
+};
+function rBible(){const el=document.getElementById('blist');if(!el)return;if(!bibleNotes.length){el.innerHTML='<div class="empty">No readings yet.</div>';return;}el.innerHTML=bibleNotes.slice(0,5).map(n=>`<div class="ni"><div class="ntitle">📗 ${n.ref}</div>${n.note?`<div class="ntext">${n.note}</div>`:''}<div class="ndate">${fmtD(n.date)}</div></div>`).join('');}
+
+window._saveTithe=async function(){
+  const a=parseFloat(document.getElementById('tamt').value);if(isNaN(a)||a<=0)return;
+  const t={amt:a,type:document.getElementById('ttype').value,date:tod(),created:new Date().toISOString()};
+  try{await addDoc(col('tithes'),t);}catch(e){tithes.unshift({id:'l'+Date.now(),...t});sv('ti',tithes);rTithes();}
+  document.getElementById('tamt').value='';
+};
+function rTithes(){const el=document.getElementById('tlist');if(!el)return;if(!tithes.length){el.innerHTML='<div class="empty">No records yet.</div>';return;}el.innerHTML=tithes.slice(0,8).map(t=>`<div class="ti" style="padding:10px 12px"><div style="flex:1"><div class="tname">${t.type}</div><div class="tmeta">${fmtD(t.date)}</div></div><div style="font-weight:700;color:var(--green);font-size:0.88rem;">₱${t.amt.toLocaleString()}</div></div>`).join('');}
+
+window._saveFNote=async function(){
+  const title=document.getElementById('fntitle').value.trim();if(!title)return;
+  const n={title,text:document.getElementById('fntext').value,date:tod(),created:new Date().toISOString()};
+  try{await addDoc(col('faithNotes'),n);}catch(e){faithNotes.unshift({id:'l'+Date.now(),...n});sv('fn',faithNotes);rFNotes();}
+  document.getElementById('fntitle').value='';document.getElementById('fntext').value='';
+};
+function rFNotes(){const el=document.getElementById('fnlist');if(!el)return;if(!faithNotes.length){el.innerHTML='<div class="empty">No notes yet.</div>';return;}el.innerHTML=faithNotes.slice(0,5).map(n=>`<div class="ni"><div class="ntitle">📝 ${n.title}</div>${n.text?`<div class="ntext">${n.text}</div>`:''}<div class="ndate">${fmtD(n.date)}</div></div>`).join('');}
 
 // ── HABITS ──
-function addHabit(){const n=document.getElementById('hab-n').value.trim();if(!n)return;habits.push({id:Date.now(),name:n,icon:document.getElementById('hab-i').value||'⭐',streak:0,log:{}});sv('hb',habits);closeM('m-habit');document.getElementById('hab-n').value='';document.getElementById('hab-i').value='';rHabits();}
-function togHab(hid,ds){const h=habits.find(h=>h.id===hid);if(!h)return;h.log[ds]=!h.log[ds];let s=0;const d=new Date();while(true){const k=d.toISOString().split('T')[0];if(h.log[k]){s++;d.setDate(d.getDate()-1);}else break;}h.streak=s;sv('hb',habits);rHabits();}
-function delHabit(id){habits=habits.filter(h=>h.id!==id);sv('hb',habits);rHabits();}
+window._addHabit=async function(){
+  const n=document.getElementById('hab-n').value.trim();if(!n)return;
+  const h={name:n,icon:document.getElementById('hab-i').value||'⭐',streak:0,log:{},created:new Date().toISOString()};
+  try{await addDoc(col('habits'),h);}catch(e){habits.unshift({id:'l'+Date.now(),...h});sv('hb',habits);rHabits();}
+  closeM('m-habit');document.getElementById('hab-n').value='';document.getElementById('hab-i').value='';
+};
+window._togHab=async function(hid,ds){
+  const h=habits.find(h=>h.id===hid);if(!h)return;
+  if(!h.log)h.log={};
+  h.log[ds]=!h.log[ds];
+  let s=0;const d=new Date();
+  while(true){const k=d.toISOString().split('T')[0];if(h.log[k]){s++;d.setDate(d.getDate()-1);}else break;}
+  h.streak=s;
+  try{await updateDoc(docRef('habits',hid),{log:h.log,streak:s});}catch(e){sv('hb',habits);}
+  rHabits();
+};
+window._delHabit=async function(id){
+  try{await deleteDoc(docRef('habits',id));}catch(e){habits=habits.filter(h=>h.id!==id);sv('hb',habits);rHabits();}
+};
 function rHabits(){
   const ls=habits.length?Math.max(...habits.map(h=>h.streak||0),0):0;
-  document.getElementById('tot-streak').textContent=ls;
-  const el=document.getElementById('hablist');
+  const ts=document.getElementById('tot-streak');if(ts)ts.textContent=ls;
+  const el=document.getElementById('hablist');if(!el)return;
   if(!habits.length){el.innerHTML='<div class="empty"><span class="em">🔥</span>No habits yet. Add one!</div>';return;}
   const now=new Date();
-  el.innerHTML=habits.map(h=>{let dots='';for(let i=20;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);const k=d.toISOString().split('T')[0];dots+=`<div class="sd ${h.log[k]?'done':'empty'}" onclick="togHab(${h.id},'${k}')" title="${k}">${d.getDate()}</div>`;}return`<div class="card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><span style="font-size:1.4rem">${h.icon}</span><div style="flex:1"><div style="font-weight:600">${h.name}</div><div style="font-size:0.75rem;color:var(--a)">🔥 ${h.streak} day streak</div></div><button class="btn bd sm" onclick="delHabit(${h.id})">✕</button></div><div class="sgrid">${dots}</div></div>`;}).join('');
+  el.innerHTML=habits.map(h=>{
+    let dots='';
+    for(let i=20;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);const k=d.toISOString().split('T')[0];const done=(h.log||{})[k];dots+=`<div class="sd ${done?'done':'empty'}" onclick="togHab('${h.id}','${k}')" title="${k}">${d.getDate()}</div>`;}
+    return`<div class="card">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:var(--blue-l);display:flex;align-items:center;justify-content:center;font-size:1.3rem;">${h.icon}</div>
+        <div style="flex:1"><div style="font-weight:600;font-size:0.9rem;">${h.name}</div><div style="font-size:0.73rem;color:var(--green);font-weight:600;margin-top:2px;">🔥 ${h.streak||0} day streak</div></div>
+        <button class="btn bd bsm btn-icon" onclick="delHabit('${h.id}')">✕</button>
+      </div>
+      <div class="sgrid">${dots}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── HYDRATION ──
+window._resetHydro=function(){hydro=0;sv('hydro',hydro);rHydro();};
+window._logHydro=function(idx){hydro=idx+1;sv('hydro',hydro);rHydro();};
+function rHydro(){
+  const el=document.getElementById('hydro-track');if(!el)return;
+  el.innerHTML=Array.from({length:8},(_,i)=>`<div class="hydro-glass ${i<hydro?'filled':'empty'}" onclick="logHydro(${i})">💧</div>`).join('');
+  const cnt=document.getElementById('hydro-count');if(cnt)cnt.textContent=`${hydro} / 8 glasses`;
 }
 
 // ── EXERCISE ──
-const EXP={beginner:{'General fitness':[{day:'Mon',name:'Walk + Stretch',detail:'30min brisk walk, 10min stretching'},{day:'Tue',name:'Rest or Light Yoga',detail:'Gentle stretching, breathing'},{day:'Wed',name:'Bodyweight Basics',detail:'Push-ups 2x10, Squats 2x15, Plank 2x20s'},{day:'Thu',name:'Walk',detail:'30min walk at comfortable pace'},{day:'Fri',name:'Core & Balance',detail:'Crunches 2x15, Bird-dog, Single leg stand'},{day:'Sat',name:'Active Play',detail:'Dance, swim, bike — any fun movement'},{day:'Sun',name:'Rest & Recovery',detail:'Full rest or gentle walk'}],'Weight loss':[{day:'Mon',name:'Cardio Walk',detail:'40min brisk walk'},{day:'Tue',name:'Bodyweight Circuit',detail:'Jumping jacks 3x20, Squats 3x15, Mountain climbers 3x10'},{day:'Wed',name:'Rest',detail:'Active rest: light stretching'},{day:'Thu',name:'Cardio',detail:'40min walk or beginner jog'},{day:'Fri',name:'Full Body',detail:'Push-ups, Squats, Lunges — 2 rounds each'},{day:'Sat',name:'Fun Activity',detail:'Swimming, dancing, cycling'},{day:'Sun',name:'Rest',detail:'Full rest'}]},intermediate:{'General fitness':[{day:'Mon',name:'Upper Body',detail:'Push-ups 3x15, Dips 3x12, Shoulder press 3x12'},{day:'Tue',name:'Cardio',detail:'30min jog or cycling'},{day:'Wed',name:'Lower Body',detail:'Squats 3x20, Lunges 3x15, Calf raises 3x20'},{day:'Thu',name:'Rest / Yoga',detail:'Stretching and recovery'},{day:'Fri',name:'Full Body HIIT',detail:'20min HIIT: burpees, jump squats, push-ups'},{day:'Sat',name:'Core',detail:'Plank 3x45s, Russian twists, Bicycle crunches'},{day:'Sun',name:'Rest',detail:'Full recovery'}]},active:{'General fitness':[{day:'Mon',name:'Strength - Push',detail:'Bench press, Overhead press, Tricep dips'},{day:'Tue',name:'Cardio HIIT',detail:'45min intense cardio or interval training'},{day:'Wed',name:'Strength - Pull',detail:'Rows, Pull-ups, Bicep curls'},{day:'Thu',name:'Active Recovery',detail:'Yoga, swimming, or easy cycle'},{day:'Fri',name:'Strength - Legs',detail:'Squats, Deadlifts, Leg press, Lunges'},{day:'Sat',name:'Sport / Cardio',detail:'Basketball, running, cycling, any sport'},{day:'Sun',name:'Rest',detail:'Full recovery'}]}};
-function updEx(){saveHS();rEx2();}
-function saveHS(){sv('hs',{level:document.getElementById('flevel').value,cond:document.getElementById('hcond').value,goal:document.getElementById('fgoal').value});}
-function rEx(){const hs=ld('hs',{});if(hs.level)document.getElementById('flevel').value=hs.level;if(hs.cond)document.getElementById('hcond').value=hs.cond;if(hs.goal)document.getElementById('fgoal').value=hs.goal;rEx2();}
-function rEx2(){const lv=document.getElementById('flevel').value,gl=document.getElementById('fgoal').value;const plans=(EXP[lv]&&EXP[lv][gl])||(EXP[lv]&&EXP[lv]['General fitness'])||EXP.beginner['General fitness'];document.getElementById('explan').innerHTML=plans.map(p=>`<div class="ec"><div style="display:flex;gap:10px;align-items:center"><div style="background:rgba(79,209,197,0.1);border-radius:6px;padding:4px 10px;font-size:0.75rem;font-weight:700;color:var(--a)">${p.day}</div><div><div class="en">${p.name}</div><div class="ed">${p.detail}</div></div></div></div>`).join('');const el=document.getElementById('cexlist');if(!cExs.length){el.innerHTML='<div class="empty">No custom plans yet.</div>';return;}el.innerHTML=cExs.map(e=>`<div class="ec"><div style="display:flex;justify-content:space-between"><div><div class="en">${e.name} <span style="color:var(--muted);font-size:0.75rem">(${e.day})</span></div><div class="ed" style="white-space:pre-line">${e.exs}</div></div><button class="btn bd sm" onclick="delCEx(${e.id})">✕</button></div></div>`).join('');}
-function addCEx(){const n=document.getElementById('ex-n').value.trim();if(!n)return;cExs.push({id:Date.now(),name:n,day:document.getElementById('ex-day').value,exs:document.getElementById('ex-exs').value});sv('ce',cExs);closeM('m-ex');document.getElementById('ex-n').value='';document.getElementById('ex-exs').value='';rEx2();}
-function delCEx(id){cExs=cExs.filter(e=>e.id!==id);sv('ce',cExs);rEx2();}
+const EXP={
+  beginner:{'General fitness':[{day:'Mon',name:'Walk + Stretch',detail:'30min brisk walk, 10min stretching',alt:'March in place for 30 minutes'},{day:'Tue',name:'Rest or Light Yoga',detail:'Gentle stretching, deep breathing',alt:'Watch a 10-min YouTube yoga video'},{day:'Wed',name:'Bodyweight Basics',detail:'Push-ups 2×10, Squats 2×15, Plank 2×20s',alt:'Wall push-ups, chair squats, knee plank'},{day:'Thu',name:'Walk',detail:'30min comfortable walk',alt:'March in place or go up/down stairs'},{day:'Fri',name:'Core & Balance',detail:'Crunches 2×15, Bird-dog, Single leg stand',alt:'Lying leg raises, seated twists'},{day:'Sat',name:'Active Play',detail:'Dance, swim, or any fun movement',alt:'Home dance video for 20 minutes'},{day:'Sun',name:'Rest & Recovery',detail:'Full rest or gentle walk',alt:'Light stretching only'}],
+    'Weight loss':[{day:'Mon',name:'Cardio Walk',detail:'40min brisk walk',alt:'March in place 40 min'},{day:'Tue',name:'Bodyweight Circuit',detail:'Jumping jacks 3×20, Squats 3×15, Mountain climbers 3×10',alt:'Step side-to-side instead of jumping'},{day:'Wed',name:'Rest',detail:'Light stretching only',alt:'5-min gentle stretch'},{day:'Thu',name:'Cardio',detail:'40min walk or light jog',alt:'Walk fast indoors'},{day:'Fri',name:'Full Body',detail:'Push-ups, Squats, Lunges — 2 rounds',alt:'Wall push-ups, chair squats, step lunges'},{day:'Sat',name:'Fun Activity',detail:'Swimming, dancing, cycling',alt:'YouTube dance workout at home'},{day:'Sun',name:'Rest',detail:'Full rest',alt:'Rest'}]},
+  intermediate:{'General fitness':[{day:'Mon',name:'Upper Body',detail:'Push-ups 3×15, Dips 3×12, Shoulder press 3×12',alt:'Use water bottles as weights'},{day:'Tue',name:'Cardio',detail:'30min jog or cycling',alt:'High knees in place 3×3 min'},{day:'Wed',name:'Lower Body',detail:'Squats 3×20, Lunges 3×15, Calf raises 3×20',alt:'Slow tempo to increase difficulty'},{day:'Thu',name:'Rest / Yoga',detail:'Stretching and recovery',alt:'YouTube yoga for athletes'},{day:'Fri',name:'Full Body HIIT',detail:'20min HIIT: burpees, jump squats, push-ups',alt:'Remove jumps: squat pulses, step instead'},{day:'Sat',name:'Core',detail:'Plank 3×45s, Russian twists, Bicycle crunches',alt:'On knees for plank if needed'},{day:'Sun',name:'Rest',detail:'Full recovery',alt:'Rest'}]},
+  active:{'General fitness':[{day:'Mon',name:'Strength — Push',detail:'Bench press, Overhead press, Tricep dips',alt:'Use heavy water jugs or backpack'},{day:'Tue',name:'Cardio HIIT',detail:'45min intense cardio or intervals',alt:'Tabata circuits at home'},{day:'Wed',name:'Strength — Pull',detail:'Rows, Pull-ups, Bicep curls',alt:'Door-frame rows, resistance bands'},{day:'Thu',name:'Active Recovery',detail:'Yoga, swimming, or easy cycle',alt:'Mobility flow on YouTube'},{day:'Fri',name:'Strength — Legs',detail:'Squats, Deadlifts, Leg press, Lunges',alt:'Bulgarian split squats, jump squats'},{day:'Sat',name:'Sport / Cardio',detail:'Basketball, running, cycling, any sport',alt:'Any sport you enjoy'},{day:'Sun',name:'Rest',detail:'Full recovery',alt:'Rest only'}]}
+};
+window._updEx=function(){saveHS();rEx2();};
+window._saveHS=function(){sv('hs',{level:document.getElementById('flevel').value,cond:document.getElementById('hcond').value,goal:document.getElementById('fgoal').value});};
+function rEx(){
+  const hs=ld('hs',{});
+  if(hs.level){const el=document.getElementById('flevel');if(el)el.value=hs.level;}
+  if(hs.cond){const el=document.getElementById('hcond');if(el)el.value=hs.cond;}
+  if(hs.goal){const el=document.getElementById('fgoal');if(el)el.value=hs.goal;}
+  rEx2();rHydro();
+}
+function rEx2(){
+  const lv=document.getElementById('flevel')?.value||'beginner';
+  const gl=document.getElementById('fgoal')?.value||'General fitness';
+  const plans=(EXP[lv]&&EXP[lv][gl])||(EXP[lv]&&EXP[lv]['General fitness'])||EXP.beginner['General fitness'];
+  const ep=document.getElementById('explan');
+  if(ep)ep.innerHTML=plans.map(p=>`<div class="ec">
+    <div class="ec-day">${p.day}</div>
+    <div class="en">${p.name}</div>
+    <div class="ed">${p.detail}</div>
+    <div class="alt">💡 No equipment alt: ${p.alt}</div>
+  </div>`).join('');
+  const cel=document.getElementById('cexlist');
+  if(cel){if(!cExs.length){cel.innerHTML='<div class="empty">No custom plans yet.</div>';}
+  else{cel.innerHTML=cExs.map(e=>`<div class="ec"><div class="ec-day">${e.day}</div><div class="en">${e.name}</div><div class="ed" style="white-space:pre-line">${e.exs}</div><button class="btn bd bsm" style="margin-top:8px" onclick="delCEx('${e.id}')">Delete</button></div>`).join('');}}
+}
+window._addCEx=function(){const n=document.getElementById('ex-n').value.trim();if(!n)return;cExs.push({id:'l'+Date.now(),name:n,day:document.getElementById('ex-day').value,exs:document.getElementById('ex-exs').value});sv('ce',cExs);closeM('m-ex');document.getElementById('ex-n').value='';document.getElementById('ex-exs').value='';rEx2();};
+window._delCEx=function(id){cExs=cExs.filter(e=>e.id!==id);sv('ce',cExs);rEx2();};
 
 // ── GROWTH ──
-function addGrow(){const t=document.getElementById('grow-t').value.trim();if(!t)return;grows.push({id:Date.now(),topic:t,why:document.getElementById('grow-w').value,time:document.getElementById('grow-time').value,dur:document.getElementById('grow-dur').value,prog:0,started:tod()});sv('gp',grows);closeM('m-grow');document.getElementById('grow-t').value='';document.getElementById('grow-w').value='';rGrow();}
-function addTopic(){const t=document.getElementById('gtopic-in').value.trim();if(!t)return;topics.push(t);sv('tp',topics);document.getElementById('gtopic-in').value='';rTopics();}
-function delTopic(i){topics.splice(i,1);sv('tp',topics);rTopics();}
-function rTopics(){const cols=['var(--a)','var(--a2)','var(--a4)','var(--a5)','var(--a3)'];document.getElementById('gtags').innerHTML=topics.map((t,i)=>`<span style="background:rgba(79,209,197,0.1);color:${cols[i%cols.length]};padding:5px 12px;border-radius:99px;font-size:0.78rem;cursor:pointer" onclick="delTopic(${i})">${t} ✕</span>`).join('');}
-function saveRefl(){const t=document.getElementById('mrefl').value.trim();if(!t)return;reflections.unshift({id:Date.now(),text:t,date:tod()});sv('rf',reflections);document.getElementById('mrefl').value='';rMindset();}
-function rMindset(){const el=document.getElementById('mindset');const tips=['🌱 Embrace a growth mindset — every failure is feedback.','🧘 Practice gratitude: name 3 things you\'re thankful for today.','💭 Your thoughts shape your reality. Choose them wisely.','🤝 Surround yourself with people who push you to grow.','⏰ Focus on progress, not perfection.'];const tip=tips[new Date().getDate()%tips.length];let h=`<div style="background:rgba(159,122,234,0.1);border-radius:8px;padding:12px;font-size:0.85rem;color:var(--a4);margin-bottom:12px">${tip}</div>`;if(reflections.length)h+=reflections.slice(0,3).map(r=>`<div class="ni" style="border-color:var(--a4)"><div class="ntext">${r.text}</div><div class="ndate">${fmtD(r.date)}</div></div>`).join('');el.innerHTML=h;}
-function updGrow(id,v){const p=grows.find(p=>p.id===id);if(p){p.prog=parseInt(v);sv('gp',grows);}}
-function delGrow(id){grows=grows.filter(p=>p.id!==id);sv('gp',grows);rGrow();}
-function rGrow(){
-  const el=document.getElementById('gplans');
-  if(!grows.length){el.innerHTML='<div class="empty"><span class="em">🧠</span>No learning plans yet.</div>';}
-  else{el.innerHTML=grows.map(p=>`<div class="card" style="padding:14px;margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="flex:1"><div style="font-weight:700">📚 ${p.topic}</div>${p.why?`<div style="font-size:0.78rem;color:var(--muted);margin-top:3px">Why: ${p.why}</div>`:''}<div style="font-size:0.75rem;color:var(--a);margin-top:4px">⏱ ${p.time}/day · ${p.dur}</div></div><button class="btn bd sm" onclick="delGrow(${p.id})">✕</button></div><div style="margin-top:10px"><div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--muted);margin-bottom:4px"><span>Progress</span><span id="gpl-${p.id}">${p.prog||0}%</span></div><div class="pbar"><div class="pfill" style="width:${p.prog||0}%;background:var(--a4)"></div></div><input type="range" min="0" max="100" value="${p.prog||0}" style="width:100%;margin-top:6px;accent-color:var(--a4)" oninput="document.getElementById('gpl-${p.id}').textContent=this.value+'%'" onchange="updGrow(${p.id},this.value)"></div></div>`).join('');}
-  rTopics();rMindset();
+const CODING_PLAN=[
+  {days:'Day 1–7',title:'HTML + CSS Foundations',desc:'Learn the building blocks of the web. Build a personal webpage.',links:[{label:'freeCodeCamp',url:'https://www.freecodecamp.org'},{label:'MDN Web Docs',url:'https://developer.mozilla.org'},{label:'Kevin Powell (YouTube)',url:'https://www.youtube.com/@KevinPowell'}]},
+  {days:'Day 8–14',title:'JavaScript Basics',desc:'Add interactivity. Variables, functions, DOM manipulation.',links:[{label:'JavaScript.info',url:'https://javascript.info'},{label:'The Odin Project',url:'https://www.theodinproject.com'},{label:'Traversy Media (YouTube)',url:'https://www.youtube.com/@TraversyMedia'}]},
+  {days:'Day 15–21',title:'Firebase + APIs',desc:'Connect your app to real databases and external data.',links:[{label:'Firebase Docs',url:'https://firebase.google.com/docs'},{label:'Fireship (YouTube)',url:'https://www.youtube.com/@Fireship'},{label:'REST API Tutorial',url:'https://restfulapi.net'}]},
+  {days:'Day 22–30',title:'React + Full App',desc:'Build your first complete app with React.',links:[{label:'React Docs',url:'https://react.dev'},{label:'Net Ninja (YouTube)',url:'https://www.youtube.com/@NetNinja'},{label:'Web Dev Simplified',url:'https://www.youtube.com/@WebDevSimplified'}]},
+];
+const QUIZZES=[
+  {q:'What does HTML stand for?',opts:['Hyper Text Markup Language','High Tech Modern Language','Home Tool Markup Language'],ans:0},
+  {q:'Which tag is used for a paragraph in HTML?',opts:['<par>','<p>','<paragraph>'],ans:1},
+  {q:'What does CSS stand for?',opts:['Computer Style System','Cascading Style Sheets','Creative Styling Script'],ans:1},
+  {q:'Which keyword declares a variable in modern JavaScript?',opts:['var','let / const','define'],ans:1},
+  {q:'What does API stand for?',opts:['Application Programming Interface','Automated Program Index','App Protocol Integration'],ans:0},
+];
+window._addGrow=async function(){
+  const t=document.getElementById('grow-t').value.trim();if(!t)return;
+  const p={topic:t,why:document.getElementById('grow-w').value,time:document.getElementById('grow-time').value,dur:document.getElementById('grow-dur').value,prog:0,started:tod(),created:new Date().toISOString()};
+  try{await addDoc(col('grows'),p);}catch(e){grows.unshift({id:'l'+Date.now(),...p});sv('gp',grows);rGrow();}
+  closeM('m-grow');document.getElementById('grow-t').value='';document.getElementById('grow-w').value='';
+};
+window._addTopic=function(){const t=document.getElementById('gtopic-in').value.trim();if(!t)return;topics.push(t);sv('tp',topics);document.getElementById('gtopic-in').value='';rTopics();};
+window._delTopic=function(i){topics.splice(i,1);sv('tp',topics);rTopics();};
+function rTopics(){const cols=['var(--blue)','var(--amber)','var(--purple)','var(--green)','var(--red)'];document.getElementById('gtags').innerHTML=topics.map((t,i)=>`<span class="tag" style="background:${cols[i%cols.length]}1a;color:${cols[i%cols.length]};border:1px solid ${cols[i%cols.length]}33" onclick="delTopic(${i})">${t} ✕</span>`).join('');}
+window._saveRefl=async function(){const t=document.getElementById('mrefl').value.trim();if(!t)return;const r={text:t,date:tod(),created:new Date().toISOString()};try{await addDoc(col('reflections'),r);}catch(e){reflections.unshift({id:'l'+Date.now(),...r});sv('rf',reflections);rMindset();}document.getElementById('mrefl').value='';};
+function rMindset(){
+  const el=document.getElementById('mindset');if(!el)return;
+  const tips=['🌱 Every failure is feedback. Embrace the growth mindset.','🧘 Gratitude unlocks the fullness of life — name 3 things today.','💭 What you think, you become. Guard your mind.','🤝 Surround yourself with people who challenge you to grow.','⏰ Progress, not perfection. Just start.'];
+  const tip=tips[new Date().getDate()%tips.length];
+  let h=`<div style="background:var(--purple-l);border:1px solid #c4b5fd;border-radius:var(--r-sm);padding:14px;font-size:0.85rem;color:var(--purple);font-weight:500;margin-bottom:12px;">${tip}</div>`;
+  if(reflections.length)h+=reflections.slice(0,3).map(r=>`<div class="ni" style="border-color:var(--purple)"><div class="ntext">${r.text}</div><div class="ndate">${fmtD(r.date)}</div></div>`).join('');
+  el.innerHTML=h;
 }
+window._updGrow=function(id,v){const p=grows.find(p=>p.id===id);if(p){p.prog=parseInt(v);sv('gp',grows);}};
+window._delGrow=async function(id){try{await deleteDoc(docRef('grows',id));}catch(e){grows=grows.filter(p=>p.id!==id);sv('gp',grows);rGrow();}};
+function rGrow(){
+  const q=QUOTES[new Date().getDate()%QUOTES.length];
+  const gq=document.getElementById('grow-quote');if(gq)gq.textContent=q.text;
+  const ga=document.getElementById('grow-author');if(ga)ga.textContent=q.auth;
+  const cp=document.getElementById('coding-plan');
+  if(cp)cp.innerHTML=CODING_PLAN.map(p=>`<div class="growth-card">
+    <div class="growth-day">${p.days}</div>
+    <div class="growth-title">${p.title}</div>
+    <div class="growth-desc">${p.desc}</div>
+    <div class="growth-links">${p.links.map(l=>`<a href="${l.url}" target="_blank" class="glink">↗ ${l.label}</a>`).join('')}</div>
+  </div>`).join('');
+  const el=document.getElementById('gplans');if(!el)return;
+  if(!grows.length){el.innerHTML='<div class="empty"><span class="em">🧠</span>No learning plans yet. Add one!</div>';}
+  else{el.innerHTML=grows.map(p=>`<div class="card" style="padding:14px;margin-bottom:10px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:0.9rem;">📚 ${p.topic}</div>
+        ${p.why?`<div style="font-size:0.78rem;color:var(--txt3);margin-top:3px;">Why: ${p.why}</div>`:''}
+        <div style="font-size:0.72rem;color:var(--blue);margin-top:4px;font-weight:600;">⏱ ${p.time}/day · ${p.dur}</div>
+      </div>
+      <button class="btn bd bsm btn-icon" onclick="delGrow('${p.id}')">✕</button>
+    </div>
+    <div style="margin-top:12px;">
+      <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--txt3);margin-bottom:4px;">
+        <span>Progress</span><span id="gpl-${p.id}" style="font-weight:700;color:var(--blue);">${p.prog||0}%</span>
+      </div>
+      <div class="pbar"><div class="pfill" style="width:${p.prog||0}%;background:var(--blue);"></div></div>
+      <input type="range" min="0" max="100" value="${p.prog||0}" style="width:100%;margin-top:8px;accent-color:var(--blue);" oninput="document.getElementById('gpl-${p.id}').textContent=this.value+'%'" onchange="updGrow('${p.id}',this.value)">
+    </div>
+  </div>`).join('');}
+  rTopics();rMindset();
+  renderQuiz();
+}
+function renderQuiz(){
+  const el=document.getElementById('quiz-container');if(!el)return;
+  el.innerHTML=QUIZZES.map((q,i)=>`<div class="quiz-item">
+    <div class="quiz-q">Q${i+1}: ${q.q}</div>
+    ${q.opts.map((o,j)=>`<div class="quiz-opt" id="qo-${i}-${j}" onclick="selQuiz(${i},${j})">${String.fromCharCode(65+j)}. ${o}</div>`).join('')}
+  </div>`).join('');
+}
+let quizAnswers={};
+window._selQuiz=function(qi,oi){
+  quizAnswers[qi]=oi;
+  document.querySelectorAll(`[id^="qo-${qi}-"]`).forEach(el=>el.style.background='');
+  const sel=document.getElementById(`qo-${qi}-${oi}`);
+  if(sel)sel.style.background='var(--blue-l)';
+};
+window._checkQuiz=function(){
+  let score=0;
+  QUIZZES.forEach((q,i)=>{
+    const sel=quizAnswers[i];
+    if(sel===undefined)return;
+    const correct=sel===q.ans;
+    if(correct)score++;
+    document.querySelectorAll(`[id^="qo-${i}-"]`).forEach((el,j)=>{
+      el.className='quiz-opt';
+      if(j===q.ans)el.classList.add('correct');
+      else if(j===sel&&!correct)el.classList.add('wrong');
+    });
+  });
+  const res=document.getElementById('quiz-result');
+  if(res)res.innerHTML=`<div style="background:var(--blue-l);border:1px solid #bfdbfe;border-radius:var(--r-sm);padding:14px;font-weight:600;color:var(--blue);">Score: ${score}/${QUIZZES.length} — ${score===QUIZZES.length?'🎉 Perfect!':score>=3?'👍 Good job! Keep studying.':'📖 Review the topics you missed.'}</div>`;
+};
 
 // ── AI CHAT ──
 function initChat(){
   chatHist=[];
-  addMsg('ai',"Hi! I'm Claude, your personal AI life coach inside MyLife Hub. 😊\n\nI can help you with:\n• 🗂 Work & productivity\n• ✝️ Faith & spiritual growth\n• 💪 Health & fitness\n• 💰 Finances & budgeting\n• 🧠 Mindset & personal growth\n• 🔥 Habits & consistency\n\nWhat's on your mind today?");
+  addMsg('ai',"Hi! I'm Claude, your personal AI life coach inside MyLife Hub. 😊\n\nI'm here to help you with anything:\n• 🗂 Work tasks & productivity\n• ✝️ Faith & spiritual growth\n• 💪 Health & fitness\n• 💰 Finances & budgeting\n• 🧠 Personal growth & mindset\n• 🔥 Building consistency\n\nWhat's on your mind today?");
 }
-function clearChat(){chatHist=[];document.getElementById('msgs').innerHTML='';initChat();}
+window._clearChat=function(){chatHist=[];document.getElementById('msgs').innerHTML='';initChat();};
 function addMsg(role,text){
-  const el=document.getElementById('msgs');
-  const d=document.createElement('div');
-  d.className=`cmsg ${role}`;
+  const el=document.getElementById('msgs');if(!el)return;
+  const d=document.createElement('div');d.className=`cmsg ${role}`;
   d.innerHTML=`<div class="cava">${role==='ai'?'🤖':'👤'}</div><div><div class="cbbl">${text.replace(/\n/g,'<br>')}</div><div class="ctime">${gt()}</div></div>`;
   el.appendChild(d);el.scrollTop=el.scrollHeight;
 }
-function showTyping(){const el=document.getElementById('msgs');const d=document.createElement('div');d.className='cmsg ai';d.id='typing';d.innerHTML=`<div class="cava">🤖</div><div class="cbbl"><div class="typing"><span></span><span></span><span></span></div></div>`;el.appendChild(d);el.scrollTop=el.scrollHeight;}
+function showTyping(){const el=document.getElementById('msgs');if(!el)return;const d=document.createElement('div');d.className='cmsg ai';d.id='typing';d.innerHTML=`<div class="cava">🤖</div><div class="cbbl"><div class="typing"><span></span><span></span><span></span></div></div>`;el.appendChild(d);el.scrollTop=el.scrollHeight;}
 function rmTyping(){const t=document.getElementById('typing');if(t)t.remove();}
-function qp(text){document.getElementById('cin').value=text;sendChat();}
-async function sendChat(){
-  const inp=document.getElementById('cin');
-  const msg=inp.value.trim();
-  if(!msg)return;
-  inp.value='';
-  addMsg('user',msg);
-  chatHist.push({role:'user',content:msg});
-  showTyping();
+window._qp=function(text){document.getElementById('cin').value=text;sendChat();};
+window._sendChat=async function(){
+  const inp=document.getElementById('cin');const msg=inp.value.trim();if(!msg)return;
+  inp.value='';addMsg('user',msg);chatHist.push({role:'user',content:msg});showTyping();
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:'You are Claude, a warm encouraging personal life coach inside MyLife Hub for a Filipino user. Help with work tasks, daily planning, expense management (Philippine Peso ₱), faith journey (Bible reading, evangelism, tithes, worship service, sealing/studying the Word), habits, exercise, personal growth, mindset and mental health. Be concise, warm, practical, uplifting. Use emojis naturally. Give actionable advice. Connect faith with practical life when relevant.',messages:chatHist})});
-    const data=await r.json();
-    rmTyping();
-    const reply=data.content?.map(c=>c.text||'').join('')||"Sorry, I couldn't respond. Try again!";
-    addMsg('ai',reply);
-    chatHist.push({role:'assistant',content:reply});
-  }catch(e){
-    rmTyping();
-    addMsg('ai',"I'm having trouble connecting. Please check your internet and try again. 🙏");
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:'You are Claude, a warm and encouraging personal AI life coach inside MyLife Hub, a life management app built for a Filipino Christian user. Help with: work tasks and productivity, daily planning and scheduling, expense management (Philippine Peso ₱), faith journey (Bible reading, evangelism, tithes and offerings, worship service attendance, sealing which means studying the Word of God), building consistency and good habits, exercise and physical health (suggest no-equipment alternatives), personal growth and learning new skills, mindset and mental health. Be concise, warm, practical, uplifting. Use emojis naturally. Give actionable advice. Connect faith principles with practical daily life when relevant. Address the user directly and personally.',messages:chatHist})});
+    const data=await r.json();rmTyping();
+    const reply=data.content?.map(c=>c.text||'').join('')||"Sorry, I couldn't respond. Please try again!";
+    addMsg('ai',reply);chatHist.push({role:'assistant',content:reply});
+  }catch(e){rmTyping();addMsg('ai',"I'm having trouble connecting right now. Please check your internet and try again. 🙏");}
+};
+
+// ── NOTIFICATIONS ──
+function requestNotifications(){
+  if('Notification' in window&&Notification.permission==='default'){
+    Notification.requestPermission();
   }
 }
+function sendNotif(title,body){
+  if('Notification' in window&&Notification.permission==='granted'){
+    new Notification(title,{body,icon:'/favicon.ico'});
+  }
+}
+// Daily reminders
+function setupReminders(){
+  const now=new Date();const h=now.getHours();const m=now.getMinutes();
+  if(h===7&&m===0)sendNotif('Good morning! 🌅','Time for your morning prayer and Bible reading!');
+  if(h===12&&m===0)sendNotif('Lunch reminder 💧','Stay hydrated! Have you logged your water intake?');
+  if(h===20&&m===0)sendNotif('Evening check-in 🌙','Review your tasks and faith checklist for today.');
+}
+setInterval(setupReminders,60000);
+requestNotifications();
 
 // ── INIT ──
-(function(){
+function init(){
   const n=new Date();
-  document.getElementById('topdate').textContent=n.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});
-  rHome();
-  rTasks();
-  rCal();
-})();
+  const td=document.getElementById('topdate');
+  if(td)td.textContent=n.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});
+  rHome();rTasks();rCal();initBible();rHydro();
+  // Show offline status initially
+  setSynced(false);
+  window.addEventListener('online',()=>setSynced(true));
+  window.addEventListener('offline',()=>setSynced(false));
+}
+init();
 </script>
 </body>
 </html>
